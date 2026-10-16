@@ -68,6 +68,7 @@ label.btn{display:inline-block;margin:0;text-align:center}
 .ob-card{background:var(--panel);color:var(--ink);border-radius:14px;padding:22px;max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.35)}
 .ob-card h2{font:700 1.2rem/1.3 Literata,Georgia,serif;margin:0 0 8px}
 .ob-btns{display:grid;gap:10px;margin-top:16px}
+.rv-card{max-width:520px;max-height:88vh;display:flex;flex-direction:column}.rv-body{overflow:auto;margin:10px 0}.rv-g{border:1px solid var(--line);border-radius:10px;padding:8px 14px 12px;margin-top:10px}.rv-g h3{font:600 .95rem Literata,Georgia,serif;margin:6px 0 0;color:var(--acc)}.rv-g .check{margin-top:8px;align-items:flex-start;overflow-wrap:anywhere}.rv-g .check input{margin-top:4px;flex:none}
 .sprow{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:10px}
 .sprow .check{margin-top:0}
 .sprow .ctx{margin:6px 0;overflow-wrap:anywhere}
@@ -213,6 +214,16 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
       <label class="check"><input type="checkbox" id="t-dash"> Dialoghi con trattino lungo (—)</label>
     </details>
 
+    <details class="opt"><summary>Pulizia da scansione (OCR)</summary>
+      <div class="small">Per libri convertiti da PDF o da scansioni. «Analizza» mostra cosa verrebbe corretto, senza cambiare nulla.</div>
+      <label class="check"><input type="checkbox" id="t-hyph"> Unisci le parole spezzate dal trattino a fine riga</label>
+      <label class="check"><input type="checkbox" id="t-merge"> Unisci i paragrafi interrotti a metà frase</label>
+      <label class="check"><input type="checkbox" id="t-pages"> Togli i numeri di pagina isolati</label>
+      <div class="actions"><button class="btn ghost" id="sc-run" type="button">Analizza il libro</button></div>
+      <div class="small" id="sc-out" style="margin-top:8px"></div>
+      <div id="sc-list"></div>
+    </details>
+
     <details class="opt"><summary>Cerca, sostituisci ed elimina</summary>
       <label for="r-del">Elimina questi testi <span class="small">(uno per riga)</span></label>
       <textarea id="r-del" style="min-height:70px"></textarea>
@@ -249,6 +260,15 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
       <label class="check"><input type="checkbox" id="c-font"> Togli caratteri e dimensioni imposti</label>
       <label class="check"><input type="checkbox" id="c-all"> Togli tutti i fogli di stile e gli stili nel testo</label>
     </details>
+    <details class="opt"><summary>Ottimizza le immagini</summary>
+      <div class="small">Ricomprime le immagini (copertina compresa) per ridurre il peso del file. Le immagini già leggere non vengono toccate.</div>
+      <label for="i-width">Larghezza massima</label>
+      <select id="i-width"><option value="">Invariata</option><option value="800">800 px</option><option value="1000">1000 px</option><option value="1200">1200 px</option><option value="1600">1600 px</option><option value="2000">2000 px</option></select>
+      <label for="i-q">Qualità JPG</label>
+      <select id="i-q"><option value="">Non ottimizzare</option><option value="0.6">Bassa (60)</option><option value="0.75">Media (75)</option><option value="0.85">Alta (85)</option><option value="0.92">Molto alta (92)</option></select>
+      <div class="actions"><button class="btn ghost" id="i-run" type="button">Calcola il risparmio</button></div>
+      <div class="small" id="i-out" style="margin-top:8px"></div>
+    </details>
     <details class="opt"><summary>Indice del libro</summary>
       <div class="small">Rinomina, sposta o elimina le voci. Il rientro mostra il livello.</div>
       <div id="toc"></div>
@@ -273,6 +293,14 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
   </section>
   <div class="msg" id="msg" role="status"></div>
 </main>
+<div class="ob" id="review" role="dialog" aria-modal="true" aria-labelledby="rv-title" hidden>
+  <div class="ob-card rv-card">
+    <h2 id="rv-title">Riepilogo delle modifiche</h2>
+    <div class="small">Togli la spunta alle modifiche che non vuoi applicare.</div>
+    <div class="rv-body" id="rv-body"></div>
+    <div class="ob-btns" style="grid-template-columns:1fr 1fr;margin-top:6px"><button class="btn" id="rv-ok" type="button">Salva EPUB</button><button class="btn ghost" id="rv-cancel" type="button">Torna indietro</button></div>
+  </div>
+</div>
 <div class="ob" id="onboard" role="dialog" aria-modal="true" aria-labelledby="ob-title" data-notr hidden>
   <div class="ob-card">
     <h2 id="ob-title">Scegli la lingua · Choose your language</h2>
@@ -289,6 +317,7 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
   var zip, opfPath, doc, meta, fileName, initial = {}, newCover = null;
   var ids = ["title", "authors", "series", "index", "publisher", "lang", "date", "tags", "desc"];
   var EN = {"Colophon – Editor EPUB": "Colophon – EPUB editor", "Apri un EPUB, modifica titolo, autori, serie e copertina, poi salva. Il file resta sul tuo dispositivo.": "Open an EPUB, edit title, authors, series and cover, then save. Your file stays on your device.", "Apri un EPUB, modifica metadati, copertina, stile e indice, poi salva. Il file resta sul tuo dispositivo.": "Open an EPUB, edit metadata, cover, style and table of contents, then save. Your file stays on your device.", "Scegli un file EPUB": "Choose an EPUB file", "Tocca qui oppure trascina il file": "Tap here or drag the file in", "Cambia copertina": "Change cover", "Cerca online": "Search online", "Titolo": "Title", "Autori": "Authors", "(separati da punto e virgola)": "(separated by semicolons)", "Serie": "Series", "Numero": "Number", "Editore": "Publisher", "Lingua": "Language", "Data di pubblicazione": "Publication date", "Tag": "Tags", "(separati da virgola)": "(separated by commas)", "Descrizione": "Description", "Anteprima del primo capitolo con testo (si aggiorna mentre cambi le opzioni)": "Preview of the first chapter with text (updates as you change the options)", "Anteprima del primo capitolo con testo": "Preview of the first chapter with text", "Nascondi": "Hide", "Mostra": "Show", "Stile e impaginazione": "Style and layout", "Lascia vuoto per non cambiare nulla.": "Leave empty to keep things unchanged.", "Margini laterali (%)": "Side margins (%)", "Interlinea": "Line spacing", "Spazio tra paragrafi (em)": "Paragraph spacing (em)", "Rientro prima riga (em)": "First-line indent (em)", "Dimensione testo (%)": "Text size (%)", "Allineamento": "Alignment", "Invariato": "Unchanged", "Invariata": "Unchanged", "Invariati": "Unchanged", "Invariate": "Unchanged", "A sinistra": "Left", "Giustificato": "Justified", "Sillabazione": "Hyphenation", "Attiva": "On", "Disattivata": "Off", "Carattere": "Font", "Serif": "Serif", "Sans serif": "Sans serif", "Capolettera": "Drop cap", "Nessuno": "None", "Dopo i titoli": "After headings", "Titoli": "Headings", "Centrati": "Centered", "Pulizia del testo": "Text cleanup", "Virgolette": "Quotation marks", "Caporali «…»": "Guillemets «…»", "Inglesi “…”": "English “…”", "Apostrofi tipografici (l’amico)": "Typographic apostrophes (don’t)", "Tre puntini diventano …": "Three dots become …", "Elimina gli spazi doppi": "Remove double spaces", "Elimina lo spazio prima della punteggiatura": "Remove space before punctuation", "Dialoghi con trattino lungo (—)": "Dialogue lines with an em dash (—)", "Cerca, sostituisci ed elimina": "Find, replace and delete", "Elimina questi testi": "Delete these texts", "(uno per riga)": "(one per line)", "Sostituisci": "Replace", "(una regola per riga: cerca => sostituisci)": "(one rule per line: find => replace)", "Distingui maiuscole e minuscole": "Match case", "Usa espressioni regolari (avanzato)": "Use regular expressions (advanced)", "Conta le occorrenze": "Count matches", "Controllo ortografico": "Spell check", "Cerca le parole che non sono nel dizionario e propone una correzione. Scegli tu quali applicare: la correzione vale per tutto il libro e viene scritta quando salvi.": "Finds words that are not in the dictionary and suggests a correction. You choose which ones to apply: the correction applies to the whole book and is written when you save.", "Dizionario": "Dictionary", "Italiano": "Italian", "English": "English", "Ignora le parole con l'iniziale maiuscola (nomi propri)": "Ignore words starting with a capital letter (proper names)", "Controlla l'ortografia": "Check spelling", "Seleziona tutte": "Select all", "Deseleziona tutte": "Deselect all", "Dimentica le parole ignorate": "Forget ignored words", "Preset di stile": "Style presets", "Salva le impostazioni di stile, pulizia e ricerca per riapplicarle ad altri libri.": "Save your style, cleanup and search settings to reuse them on other books.", "Nome del preset": "Preset name", "Salva preset": "Save preset", "Preset salvati": "Saved presets", "Applica": "Apply", "Elimina": "Delete", "Pulizia dello stile del libro": "Book style cleanup", "Toglie ciò che l'editore ha imposto, così il tuo lettore usa le sue impostazioni.": "Removes what the publisher imposed, so your reader app uses its own settings.", "Togli i colori (testo e sfondo)": "Remove colors (text and background)", "Togli caratteri e dimensioni imposti": "Remove imposed fonts and sizes", "Togli tutti i fogli di stile e gli stili nel testo": "Remove all stylesheets and inline styles", "Indice del libro": "Table of contents", "Rinomina, sposta o elimina le voci. Il rientro mostra il livello.": "Rename, move or delete entries. Indentation shows the level.", "Rigenera dai capitoli": "Rebuild from chapters", "Controllo del libro": "Book check", "Controlla il libro": "Check the book", "Statistiche del libro": "Book statistics", "Calcola": "Calculate", "Rinomina il file con questo modello": "Rename the file with this template", "Modello del nome del file": "File name template", "Puoi usare {autore} {titolo} {serie} {numero} {anno}": "You can use {author} {title} {series} {number} {year}", "{autore} - {titolo}": "{author} - {title}", "Salva EPUB": "Save EPUB", "Apri un altro file": "Open another file", "AAAA-MM-GG": "YYYY-MM-DD", "es. 1.4": "e.g. 1.4", "es. 100": "e.g. 100", "es. Romanzi": "e.g. Novels", "Scrivi la correzione": "Type the correction", "Apro il file…": "Opening the file…", "Libreria non caricata. Ricarica la pagina.": "Library not loaded. Reload the page.", "Questo file non sembra un EPUB valido. Scegli un altro file.": "This file doesn't look like a valid EPUB. Choose another file.", "File salvato: {0}": "File saved: {0}", "Salvataggio annullato.": "Save cancelled.", "Non sono riuscito a salvare il file. Riprova.": "I couldn't save the file. Try again.", "Usa un'immagine JPG o PNG.": "Use a JPG or PNG image.", "Nuova copertina pronta: verrà applicata al salvataggio.": "New cover ready: it will be applied when you save.", "Scrivi almeno il titolo per cercare.": "Enter at least the title to search.", "Cerco online…": "Searching online…", "rete": "network", "Ricerca non riuscita ({0}).": "Search failed ({0}).", "Nessun risultato. Prova a correggere titolo o autore.": "No results. Try correcting the title or author.", "Tocca un risultato per applicarlo ai campi.": "Tap a result to apply it to the fields.", "(senza titolo)": "(untitled)", "Dati applicati. Controlla i campi e salva.": "Data applied. Check the fields and save.", "Dati e copertina applicati. Controlla i campi e salva.": "Data and cover applied. Check the fields and save.", "Dati applicati. Copertina non scaricata ({0}): puoi sceglierla con “Cambia copertina”.": "Data applied. Cover not downloaded ({0}): you can choose it with “Change cover”.", "Elaboro i capitoli…": "Processing the chapters…", "{0} capitoli aggiornati": "{0} chapters updated", "1 capitolo aggiornato": "1 chapter updated", "{0} saltati": "{0} skipped", "Nessun capitolo da mostrare.": "No chapter to show.", "Nessuna voce di indice trovata.": "No table of contents entries found.", "Sposta su": "Move up", "Sposta giù": "Move down", "Livello precedente": "Previous level", "Livello successivo": "Next level", "Il libro non ha un file di indice da aggiornare.": "The book has no table of contents file to update.", "Capitolo": "Chapter", "Controllo in corso…": "Checking…", "Manca il file mimetype.": "The mimetype file is missing.", "Il file mimetype ha un contenuto errato.": "The mimetype file has wrong content.", "File dichiarato ma mancante: {0}": "File declared but missing: {0}", "File non dichiarato nel libro: {0}": "File not declared in the book: {0}", "La sequenza di lettura cita un elemento inesistente: {0}": "The reading order refers to a missing item: {0}", "Codice non valido (XML) in {0}": "Invalid code (XML) in {0}", "Collegamento rotto in {0}: {1}": "Broken link in {0}: {1}", "Manca il titolo.": "Title is missing.", "Manca l'autore.": "Author is missing.", "Manca la lingua.": "Language is missing.", "Manca la copertina.": "Cover is missing.", "Manca il file dell'indice.": "Table of contents file is missing.", "Non sono riuscito a completare il controllo.": "I couldn't complete the check.", "…e altri {0}": "…and {0} more", "✓ Nessun problema trovato.": "✓ No problems found.", "Problemi": "Problems", "Avvisi": "Warnings", "Scrivi almeno un testo da cercare.": "Enter at least one text to search for.", "Conto…": "Counting…", "{0} occorrenze trovate (in ogni capitolo, dentro lo stesso blocco di testo).": "{0} matches found (within a single block of text in each chapter).", "Calcolo…": "Calculating…", "Capitoli con testo: {0} · Parole: {1} · Lettura: circa {2} (a 230 parole al minuto)": "Chapters with text: {0} · Words: {1} · Reading time: about {2} (at 230 words per minute)", "Nessun preset salvato": "No saved presets", "Scrivi un nome per il preset.": "Enter a name for the preset.", "Preset salvato: {0}": "Preset saved: {0}", "Non riesco a salvare il preset in questo browser.": "I can't save the preset in this browser.", "Scegli un preset salvato.": "Choose a saved preset.", "Preset applicato.": "Preset applied.", "Preset eliminato.": "Preset deleted.", "file mancante: {0}": "missing file: {0}", "dizionario non trovato": "dictionary not found", "errore": "error", "Correzione per {0}": "Correction for {0}", "Ignora": "Ignore", "({0} volte)": "({0} times)", "(1 volta)": "(1 time)", "Carico il dizionario…": "Loading the dictionary…", "Non riesco a caricare il dizionario ({0}).": "I can't load the dictionary ({0}).", "Controllo il testo… ({0}/{1})": "Checking the text… ({0}/{1})", "✓ Nessuna parola sospetta trovata.": "✓ No suspicious words found.", "Preparo i suggerimenti… ({0}/{1})": "Preparing suggestions… ({0}/{1})", "{0} parole sospette (mostro le prime {1}, dalle più rare). Spunta quelle da correggere e controlla la correzione proposta; i nomi propri puoi ignorarli.": "{0} suspicious words (showing the first {1}, rarest first). Tick the ones to fix and check the suggested correction; you can ignore proper names.", "{0} parole sospette. Spunta quelle da correggere e controlla la correzione proposta; i nomi propri puoi ignorarli.": "{0} suspicious words. Tick the ones to fix and check the suggested correction; you can ignore proper names.", "Parole ignorate dimenticate. Rilancia il controllo.": "Ignored words forgotten. Run the check again."};
+  Object.assign(EN, {"Pulizia da scansione (OCR)": "Scan cleanup (OCR)", "Per libri convertiti da PDF o da scansioni. «Analizza» mostra cosa verrebbe corretto, senza cambiare nulla.": "For books converted from PDF or scans. “Analyze” shows what would be fixed, without changing anything.", "Unisci le parole spezzate dal trattino a fine riga": "Join words split by a hyphen at the end of a line", "Unisci i paragrafi interrotti a metà frase": "Join paragraphs interrupted mid-sentence", "Togli i numeri di pagina isolati": "Remove stray page numbers", "Analizza il libro": "Analyze the book", "Analizzo…": "Analyzing…", "Nessun difetto da scansione trovato.": "No scan defects found.", "Trovati: {0} parole spezzate, {1} paragrafi interrotti, {2} numeri di pagina, {3} righe ripetute (intestazioni o piè di pagina).": "Found: {0} split words, {1} interrupted paragraphs, {2} page numbers, {3} repeated lines (headers or footers).", "Righe che si ripetono nel libro: spunta quelle da togliere.": "Lines repeated throughout the book: tick the ones to remove.", "{0} volte": "{0} times", "1 volta": "1 time", "Ottimizza le immagini": "Optimize images", "Ricomprime le immagini (copertina compresa) per ridurre il peso del file. Le immagini già leggere non vengono toccate.": "Recompresses images (cover included) to reduce the file size. Images that are already light are left alone.", "Larghezza massima": "Maximum width", "Qualità JPG": "JPG quality", "Non ottimizzare": "Don't optimize", "Bassa (60)": "Low (60)", "Media (75)": "Medium (75)", "Alta (85)": "High (85)", "Molto alta (92)": "Very high (92)", "Calcola il risparmio": "Estimate savings", "Scegli una larghezza massima o una qualità.": "Choose a maximum width or a quality.", "Nessuna immagine JPG o PNG nel libro.": "No JPG or PNG images in the book.", "{0} di {1} immagini ottimizzate: {2} → {3} (−{4}%)": "{0} of {1} images optimized: {2} → {3} (−{4}%)", "immagini: {0} → {1}": "images: {0} → {1}", "Riepilogo delle modifiche": "Summary of changes", "Togli la spunta alle modifiche che non vuoi applicare.": "Untick the changes you don't want to apply.", "Torna indietro": "Go back", "Preparo il riepilogo…": "Preparing the summary…", "Non riesco a preparare il riepilogo.": "Couldn't prepare the summary.", "Nessuna modifica rilevata: verrà salvata una copia del libro.": "No changes detected: a copy of the book will be saved.", "Metadati": "Metadata", "Copertina": "Cover", "Indice": "Table of contents", "Testo": "Text", "Stile del libro": "Book style", "Immagini": "Images", "File": "File", "(vuoto)": "(empty)", "Titolo": "Title", "Autori": "Authors", "Serie": "Series", "Numero": "Number", "Editore": "Publisher", "Lingua": "Language", "Data": "Date", "Tag": "Tags", "Descrizione": "Description", "Nuova copertina: {0}": "New cover: {0}", "Indice modificato": "Table of contents edited", "{0} impostazioni di stile": "{0} style settings", "virgolette": "quotes", "apostrofi": "apostrophes", "puntini": "ellipses", "spazi doppi": "double spaces", "spazi prima della punteggiatura": "spaces before punctuation", "trattini nei dialoghi": "dialogue dashes", "Pulizia del testo: {0}": "Text cleanup: {0}", "Elimina «{0}» ({1})": "Delete “{0}” ({1})", "«{0}» → «{1}» ({2})": "“{0}” → “{1}” ({2})", "Pulizia da scansione: {0} parole spezzate, {1} paragrafi uniti, {2} numeri di pagina, {3} righe ripetute": "Scan cleanup: {0} split words, {1} paragraphs joined, {2} page numbers, {3} repeated lines", "Capitoli modificati: {0}": "Chapters changed: {0}", "colori": "colors", "caratteri e dimensioni": "fonts and sizes", "tutti gli stili": "all styles", "Pulizia dello stile del libro: {0}": "Book style cleanup: {0}", "Rinomina in: {0}": "Rename to: {0}"});
   var LKEY = "epubLang", LANG = "it", TXT = new WeakMap(), ATT = new WeakMap();
   function T(s) { return LANG === "en" && Object.prototype.hasOwnProperty.call(EN, s) ? EN[s] : s; }
   function TF(s) { var a = Array.prototype.slice.call(arguments, 1); return T(s).replace(/\{(\d)\}/g, function (m, i) { return a[+i]; }); }
@@ -324,7 +353,7 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
     if (persist) { try { localStorage.setItem(LKEY, l); } catch (e) {} }
     applyLang();
     if (!initial) {
-      ["report", "stats", "r-out", "sp-out", "results", "sp-list"].forEach(function (id) { $(id).textContent = ""; });
+      ["report", "stats", "r-out", "sp-out", "results", "sp-list", "sc-out", "sc-list", "i-out"].forEach(function (id) { $(id).textContent = ""; });
       $("sp-bulk").style.display = "none"; say("");
       if (toc.length) renderToc();
     }
@@ -352,6 +381,7 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
   function plain(s) { return s ? (new DOMParser().parseFromString(s, "text/html").body.textContent || "").trim() : ""; }
 
   async function openFile(file) {
+    IMG.cache = null;
     say(T("Apro il file…"));
     try {
       if (typeof JSZip === "undefined") { say(T("Libreria non caricata. Ricarica la pagina."), true); return; }
@@ -412,19 +442,21 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
   function changed(k) { return val(k) !== initial[k]; }
   function split(s, sep) { return s.split(sep).map(function (x) { return x.trim(); }).filter(Boolean); }
 
-  async function save() {
+  async function save(sk) {
+    sk = sk || {};
+    var ch = function (k) { return changed(k) && !sk["f:" + k]; };
     try {
-      if (changed("title")) setDC("title", val("title") ? [val("title")] : []);
-      if (changed("authors")) setDC("creator", split(val("authors"), ";"));
-      if (changed("publisher")) setDC("publisher", val("publisher") ? [val("publisher")] : []);
-      if (changed("lang")) setDC("language", val("lang") ? [val("lang")] : []);
-      if (changed("date")) setDC("date", val("date") ? [val("date")] : []);
-      if (changed("tags")) setDC("subject", split(val("tags"), ","));
-      if (changed("desc")) setDC("description", val("desc") ? [val("desc")] : []);
-      if (changed("series")) setMeta("calibre:series", val("series"));
-      if (changed("index") || changed("series")) setMeta("calibre:series_index", val("series") ? val("index") : "");
+      if (ch("title")) setDC("title", val("title") ? [val("title")] : []);
+      if (ch("authors")) setDC("creator", split(val("authors"), ";"));
+      if (ch("publisher")) setDC("publisher", val("publisher") ? [val("publisher")] : []);
+      if (ch("lang")) setDC("language", val("lang") ? [val("lang")] : []);
+      if (ch("date")) setDC("date", val("date") ? [val("date")] : []);
+      if (ch("tags")) setDC("subject", split(val("tags"), ","));
+      if (ch("desc")) setDC("description", val("desc") ? [val("desc")] : []);
+      if (ch("series")) setMeta("calibre:series", val("series"));
+      if (ch("index") || ch("series")) setMeta("calibre:series_index", val("series") ? val("index") : "");
 
-      if (newCover) {
+      if (newCover && !sk.cover) {
         var mt = newCover.type, ext = mt === "image/png" ? "png" : "jpg";
         var buf = await newCover.arrayBuffer(), it = coverItem();
         if (it) {
@@ -442,21 +474,14 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
         }
       }
 
-      await writeToc();
-      await applyBook();
+      if (!sk.toc) await writeToc();
+      await applyBook(sk);
+      if (!sk.img) { var ir = await optimizeImages(true); if (ir && ir.n) bookNote += ", " + TF("immagini: {0} → {1}", fmtSize(ir.before), fmtSize(ir.after)); }
       zip.file(opfPath, new XMLSerializer().serializeToString(doc));
       zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
       var blob = await zip.generateAsync({ type: "blob", mimeType: "application/epub+zip", compression: "DEFLATE" });
 
-      var name = fileName;
-      if ($("rename").checked) {
-        var idx = val("index");
-        var vals = { autore: split(val("authors"), ";")[0] || "", titolo: val("title"), serie: val("series"), numero: idx ? String(idx).padStart(2, "0") : "", anno: (val("date").match(/\d{4}/) || [""])[0] };
-        vals.author = vals.autore; vals.title = vals.titolo; vals.series = vals.serie; vals.number = vals.numero; vals.year = vals.anno;
-        var nm = ($("f-tpl").value || T("{autore} - {titolo}")).replace(/\{(\w+)\}/g, function (m, k) { return vals[k] || ""; });
-        nm = nm.replace(/[\\\/:*?"<>|]+/g, "").replace(/(\s*-\s*){2,}/g, " - ").replace(/\s{2,}/g, " ").replace(/^[\s-]+|[\s-]+$/g, "");
-        if (nm) name = nm.slice(0, 150) + ".epub";
-      }
+      var name = outName(sk);
       var dl = (window.claude && window.claude.use) ? await window.claude.use("downloads") : null;
       if (dl) {
         await dl.save({ filename: name, data: blob });
@@ -566,7 +591,7 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
   var bookNote = "";
   function num(id) { var v = parseFloat($(id).value); return isNaN(v) ? "" : v; }
 
-  function readOpts() {
+  function readOpts(sk) {
     var o = { css: [], quotes: $("t-quotes").value, apos: $("t-apos").checked, dots: $("t-dots").checked,
       spaces: $("t-spaces").checked, punct: $("t-punct").checked, dash: $("t-dash").checked };
     function rule(sel, props) { o.css.push(sel + "{" + props + "}"); }
@@ -582,25 +607,35 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
     if ($("s-drop").value) rule("h1+p::first-letter,h2+p::first-letter", "float:left;font-size:3em;line-height:.85;padding:.04em .08em 0 0;font-weight:bold");
     if ($("s-heads").value) rule("h1,h2,h3", "text-align:" + $("s-heads").value + " !important");
     o.rules = [];
-    function mk(pat, to) {
+    function mk(pat, to, kind) {
       try {
         var rx = $("r-rx").checked;
-        o.rules.push({ re: new RegExp(rx ? pat : pat.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $("r-case").checked ? "g" : "gi"), to: rx ? to : to.replace(/\$/g, "$$$$") });
+        o.rules.push({ re: new RegExp(rx ? pat : pat.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $("r-case").checked ? "g" : "gi"), to: rx ? to : to.replace(/\$/g, "$$$$"), from: pat, rep: to, kind: kind });
       } catch (e) {}
     }
-    $("r-del").value.split("\n").forEach(function (l) { l = l.replace(/\r$/, ""); if (l.trim()) mk(l, ""); });
-    $("r-rep").value.split("\n").forEach(function (l) { var k = l.indexOf("=>"); if (k > 0 && l.slice(0, k).trim()) mk(l.slice(0, k).trim(), l.slice(k + 2).trim()); });
+    $("r-del").value.split("\n").forEach(function (l) { l = l.replace(/\r$/, ""); if (l.trim()) mk(l, "", "del"); });
+    $("r-rep").value.split("\n").forEach(function (l) { var k = l.indexOf("=>"); if (k > 0 && l.slice(0, k).trim()) mk(l.slice(0, k).trim(), l.slice(k + 2).trim(), "rep"); });
     document.querySelectorAll("#sp-list .sprow").forEach(function (r) {
       if (!r.querySelector(".sp-on").checked) return;
       var from = r.getAttribute("data-w"), to = r.querySelector(".sp-to").value.trim();
       if (!to || to === from) return;
-      o.rules.push({ re: new RegExp("(?<![\\p{L}\\p{M}])" + from + "(?![\\p{L}\\p{M}])", "gu"), to: to.replace(/\$/g, "$$$$") });
+      o.rules.push({ re: new RegExp("(?<![\\p{L}\\p{M}])" + from + "(?![\\p{L}\\p{M}])", "gu"), to: to.replace(/\$/g, "$$$$"), from: from, rep: to, kind: "sp" });
     });
+    o.scan = { hyph: $("t-hyph").checked, merge: $("t-merge").checked, pages: $("t-pages").checked, heads: new Set() };
+    document.querySelectorAll("#sc-list .sc-on").forEach(function (cb) { if (cb.checked) o.scan.heads.add(cb.getAttribute("data-h")); });
+    if (sk) {
+      if (sk.style) o.css = [];
+      if (sk.fmt) { o.quotes = ""; o.apos = o.dots = o.spaces = o.punct = o.dash = false; }
+      o.rules = o.rules.filter(function (r, i) { return !sk["rule:" + i]; });
+      if (sk.scan) o.scan = { hyph: false, merge: false, pages: false, heads: new Set() };
+    }
+    o.scanOn = !!(o.scan.hyph || o.scan.merge || o.scan.pages || o.scan.heads.size);
     return o;
   }
 
   function fixText(t, o, prev, first) {
     o.rules.forEach(function (r) { t = t.replace(r.re, r.to); });
+    if (o.scan && o.scan.hyph) t = t.replace(/(\p{L})[-\u00AD][ \t]*\r?\n\s*(\p{Ll})/gu, "$1$2").replace(/\u00AD/g, "");
     if (o.dash && first) t = t.replace(/^(\s*)[-–]\s+/, "$1— ");
     if (o.dots) t = t.replace(/\.{3,}/g, "…");
     if (o.spaces) t = t.replace(/[ \t]{2,}/g, " ");
@@ -620,9 +655,10 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
     return t;
   }
 
-  function fixDoc(d, o) {
+  function fixDoc(d, o, noScan) {
     var root = d.getElementsByTagName("body")[0];
     if (!root) return;
+    if (!noScan && o.scanOn) scanDoc(d, o, o.st || (o.st = { hyph: 0, merged: 0, pages: 0, heads: 0 }));
     var w = d.createTreeWalker(root, NodeFilter.SHOW_TEXT), n, lastBlock = null, prev = "";
     while ((n = w.nextNode())) {
       var par = n.parentNode;
@@ -637,11 +673,267 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
     }
   }
 
-  async function applyBook() {
+  // ---- Pulizia da scansione (OCR) ----
+  var TERM = /[.!?…:;»”"')\]]\s*$/;
+  function scKey(t) { return t.replace(/\d+/g, "#").replace(/\s+/g, " ").trim().toLowerCase(); }
+  function hasMedia(e) { return !!e.querySelector("img,svg,image,table,video,audio,object"); }
+  function lastTextNode(e) {
+    var w = e.ownerDocument.createTreeWalker(e, NodeFilter.SHOW_TEXT), n, l = null;
+    while ((n = w.nextNode())) if (n.nodeValue.trim()) l = n;
+    return l;
+  }
+  function scanDoc(d, o, st) {
+    var sc = o.scan, body = d.getElementsByTagName("body")[0];
+    if (!sc || !body) return;
+    function tx(e) { return (e.textContent || "").replace(/\s+/g, " ").trim(); }
+    var fb = null, w0 = d.createTreeWalker(body, NodeFilter.SHOW_TEXT), n0;
+    while ((n0 = w0.nextNode())) if (n0.nodeValue.trim()) { fb = n0.parentNode.closest("p,div,li,h1,h2,h3,h4,h5,h6,blockquote"); break; }
+    if (sc.pages || sc.heads.size) {
+      Array.prototype.slice.call(body.getElementsByTagName("p")).forEach(function (p) {
+        if (hasMedia(p)) return;
+        var t = tx(p);
+        if (!t) return;
+        if (sc.pages && p !== fb && !p.closest("td,th,li,blockquote") && /^[-–—~\s]*(?:(?:pagina|pag\.|page|p\.)\s*)?\d{1,3}[-–—~\s]*$/i.test(t)) { p.parentNode.removeChild(p); st.pages++; return; }
+        if (sc.heads.size && sc.heads.has(scKey(t))) { p.parentNode.removeChild(p); st.heads++; }
+      });
+    }
+    if (sc.hyph || sc.merge) {
+      Array.prototype.slice.call(body.getElementsByTagName("br")).forEach(function (br) {
+        var pv = br.previousSibling, nx = br.nextSibling;
+        if (!pv || !nx || pv.nodeType !== 3 || nx.nodeType !== 3) return;
+        var pt = pv.nodeValue.replace(/\s+$/, ""), nt = nx.nodeValue.replace(/^\s+/, "");
+        if (!pt || !/^\p{Ll}/u.test(nt)) return;
+        if (/\p{L}[-­]$/u.test(pt)) {
+          if (!sc.hyph) return;
+          pv.nodeValue = pt.replace(/[-­]$/, ""); nx.nodeValue = nt; st.hyph++;
+        } else if (sc.merge && !TERM.test(pt)) {
+          pv.nodeValue = pt + " "; nx.nodeValue = nt; st.merged++;
+        } else return;
+        br.parentNode.removeChild(br);
+      });
+      Array.prototype.slice.call(body.getElementsByTagName("p")).forEach(function (cur) {
+        if (!cur.parentNode) return;
+        for (;;) {
+          var nx = cur.nextElementSibling;
+          if (!nx || nx.localName !== "p" || hasMedia(cur) || hasMedia(nx)) return;
+          var a = tx(cur), b = tx(nx);
+          if (!a || !b || !/^\p{Ll}/u.test(b)) return;
+          var hy = /\p{L}[-­]$/u.test(a);
+          if (hy && sc.hyph) {
+            var ln = lastTextNode(cur);
+            if (!ln) return;
+            ln.nodeValue = ln.nodeValue.replace(/[-­]\s*$/, ""); st.hyph++;
+          } else if (!hy && sc.merge && !TERM.test(a)) {
+            cur.appendChild(d.createTextNode(" ")); st.merged++;
+          } else return;
+          while (nx.firstChild) cur.appendChild(nx.firstChild);
+          nx.parentNode.removeChild(nx);
+        }
+      });
+    }
+  }
+
+  async function scanRun() {
+    var out = $("sc-out"), list = $("sc-list");
+    out.textContent = T("Analizzo…"); list.innerHTML = "";
+    var chs = xhtmlItems(), dp = new DOMParser(), docs = [], counts = {}, sample = {};
+    for (var i = 0; i < chs.length; i++) {
+      var pth = resolve(chs[i].getAttribute("href")), f = zip.file(pth);
+      if (!f || pth === tocSrc.nav) continue;
+      var d = dp.parseFromString(await f.async("string"), "application/xml");
+      if (d.getElementsByTagName("parsererror").length) continue;
+      docs.push(d);
+      Array.prototype.forEach.call(d.getElementsByTagName("p"), function (p) {
+        if (hasMedia(p)) return;
+        var t = norm(p.textContent || "");
+        if (t.length < 4 || t.length > 80 || TERM.test(t) || /^[—–-]/.test(t) || /[-\u00AD]$/.test(t) || /^\p{Ll}/u.test(t)) return;
+        var k = scKey(t);
+        if (!/\p{L}{3}/u.test(k)) return;
+        counts[k] = (counts[k] || 0) + 1;
+        if (!sample[k]) sample[k] = t;
+      });
+    }
+    var heads = Object.keys(counts).filter(function (k) { return counts[k] >= 4; }).sort(function (a, b) { return counts[b] - counts[a]; }).slice(0, 30);
+    var o2 = { scan: { hyph: true, merge: true, pages: true, heads: new Set(heads) } }, st = { hyph: 0, merged: 0, pages: 0, heads: 0 };
+    docs.forEach(function (d) { scanDoc(d, o2, st); });
+    if (!st.hyph && !st.merged && !st.pages && !st.heads) { out.textContent = T("Nessun difetto da scansione trovato."); return; }
+    out.textContent = TF("Trovati: {0} parole spezzate, {1} paragrafi interrotti, {2} numeri di pagina, {3} righe ripetute (intestazioni o piè di pagina).", st.hyph, st.merged, st.pages, st.heads);
+    if (heads.length) {
+      var hd = document.createElement("div"); hd.className = "small"; hd.style.marginTop = "10px";
+      hd.textContent = T("Righe che si ripetono nel libro: spunta quelle da togliere.");
+      list.appendChild(hd);
+      heads.forEach(function (k) {
+        var lb = document.createElement("label"), cb = document.createElement("input"), sp = document.createElement("span");
+        lb.className = "check"; cb.type = "checkbox"; cb.className = "sc-on"; cb.setAttribute("data-h", k);
+        sp.textContent = "«" + sample[k] + "» (" + TF("{0} volte", counts[k]) + ")";
+        lb.appendChild(cb); lb.appendChild(sp); list.appendChild(lb);
+      });
+    }
+  }
+
+  // ---- Ottimizzazione immagini ----
+  var IMG = { cache: null };
+  function imgOpts() {
+    var w = parseInt($("i-width").value, 10) || 0, q = parseFloat($("i-q").value) || 0;
+    return (!w && !q) ? null : { w: w, q: q || 0.85 };
+  }
+  function fmtSize(b) { return b >= 1048576 ? (b / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(b / 1024)) + " KB"; }
+  async function optimizeImages(apply) {
+    var io = imgOpts();
+    if (!io) return null;
+    var sig = io.w + "/" + io.q, its = items().filter(function (i) { return /^image\/(jpeg|png)$/.test(i.getAttribute("media-type")); });
+    var r = { n: 0, total: its.length, before: 0, after: 0 }, blobs = {};
+    if (apply && IMG.cache && IMG.cache.sig === sig && !newCover) {
+      var c = IMG.cache; r = c.r; blobs = c.blobs;
+      for (var k in blobs) zip.file(k, await blobs[k].arrayBuffer());
+      IMG.cache = null; return r;
+    }
+    for (var i = 0; i < its.length; i++) {
+      var type = its[i].getAttribute("media-type"), path = resolve(its[i].getAttribute("href")), f = zip.file(path);
+      if (!f) continue;
+      var buf = await f.async("arraybuffer"), size = buf.byteLength, best = size, nb = null;
+      r.before += size;
+      try {
+        var bm = await createImageBitmap(new Blob([buf], { type: type }));
+        var sc = io.w && bm.width > io.w ? io.w / bm.width : 1, w = Math.round(bm.width * sc), h = Math.round(bm.height * sc);
+        if (type === "image/jpeg" || sc < 1) {
+          var cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+          var cx = cv.getContext("2d");
+          if (type === "image/jpeg") { cx.fillStyle = "#fff"; cx.fillRect(0, 0, w, h); }
+          cx.imageSmoothingQuality = "high"; cx.drawImage(bm, 0, 0, w, h);
+          var b = await new Promise(function (res) { cv.toBlob(res, type, io.q); });
+          if (b && b.size < size * 0.97) { nb = b; best = b.size; }
+        }
+        if (bm.close) bm.close();
+      } catch (e) {}
+      r.after += best;
+      if (nb) { r.n++; blobs[path] = nb; if (apply) zip.file(path, await nb.arrayBuffer()); }
+    }
+    IMG.cache = apply ? null : { sig: sig, r: r, blobs: blobs };
+    return r;
+  }
+  function imgReport(r) {
+    return TF("{0} di {1} immagini ottimizzate: {2} → {3} (−{4}%)", r.n, r.total, fmtSize(r.before), fmtSize(r.after), r.before ? Math.round(100 - r.after * 100 / r.before) : 0);
+  }
+  async function imgRun() {
+    var out = $("i-out");
+    if (!imgOpts()) { out.textContent = T("Scegli una larghezza massima o una qualità."); return; }
+    out.textContent = T("Calcolo…");
+    var r = await optimizeImages(false);
+    out.textContent = r.total ? imgReport(r) : T("Nessuna immagine JPG o PNG nel libro.");
+  }
+
+  // ---- Riepilogo prima di salvare ----
+  function shortTxt(s) { s = (s || "").replace(/\s+/g, " ").trim(); return s ? (s.length > 60 ? s.slice(0, 57) + "…" : s) : T("(vuoto)"); }
+  async function dryText(o) {
+    var res = { changed: 0, rules: o.rules.map(function () { return 0; }), st: { hyph: 0, merged: 0, pages: 0, heads: 0 } };
+    var chs = xhtmlItems(), dp = new DOMParser(), ser = new XMLSerializer();
+    for (var i = 0; i < chs.length; i++) {
+      var f = zip.file(resolve(chs[i].getAttribute("href")));
+      if (!f) continue;
+      var d = dp.parseFromString(await f.async("string"), "application/xml");
+      if (d.getElementsByTagName("parsererror").length) continue;
+      var before = ser.serializeToString(d);
+      if (o.scanOn) scanDoc(d, o, res.st);
+      if (o.rules.length) {
+        var w = d.createTreeWalker(d.documentElement, NodeFilter.SHOW_TEXT), n;
+        while ((n = w.nextNode())) {
+          if (n.parentNode.closest && n.parentNode.closest("script,style,pre,code")) continue;
+          o.rules.forEach(function (r, k) { var m = n.nodeValue.match(r.re); if (m) res.rules[k] += m.length; });
+        }
+      }
+      fixDoc(d, o, true);
+      if (ser.serializeToString(d) !== before) res.changed++;
+    }
+    return res;
+  }
+  function outName(sk) {
+    var name = fileName;
+    if ($("rename").checked && !(sk && sk.rename)) {
+      var idx = val("index");
+      var vals = { autore: split(val("authors"), ";")[0] || "", titolo: val("title"), serie: val("series"), numero: idx ? String(idx).padStart(2, "0") : "", anno: (val("date").match(/\d{4}/) || [""])[0] };
+      vals.author = vals.autore; vals.title = vals.titolo; vals.series = vals.serie; vals.number = vals.numero; vals.year = vals.anno;
+      var nm = ($("f-tpl").value || T("{autore} - {titolo}")).replace(/\{(\w+)\}/g, function (m, k) { return vals[k] || ""; });
+      nm = nm.replace(/[\\\/:*?"<>|]+/g, "").replace(/(\s*-\s*){2,}/g, " - ").replace(/\s{2,}/g, " ").replace(/^[\s-]+|[\s-]+$/g, "");
+      if (nm) name = nm.slice(0, 150) + ".epub";
+    }
+    return name;
+  }
+  async function buildReview() {
+    var G = [], o = readOpts();
+    function grp(t) { var g = { t: T(t), rows: [] }; G.push(g); return g; }
+    function row(g, k, text) { g.rows.push({ k: k, text: text }); }
+    var lab = { title: "Titolo", authors: "Autori", series: "Serie", index: "Numero", publisher: "Editore", lang: "Lingua", date: "Data", tags: "Tag", desc: "Descrizione" };
+    var g = grp("Metadati");
+    ids.forEach(function (k) { if (changed(k)) row(g, "f:" + k, T(lab[k]) + ": " + shortTxt(initial[k]) + " → " + shortTxt(val(k))); });
+    if (!g.rows.length) G.pop();
+    if (newCover) row(grp("Copertina"), "cover", TF("Nuova copertina: {0}", newCover.name || ""));
+    if (tocDirty && toc.length) row(grp("Indice"), "toc", T("Indice modificato"));
+    if (o.css.length) row(grp("Stile e impaginazione"), "style", TF("{0} impostazioni di stile", o.css.length));
+    var gt = grp("Testo"), fm = [];
+    if (o.quotes) fm.push(T("virgolette")); if (o.apos) fm.push(T("apostrofi")); if (o.dots) fm.push(T("puntini"));
+    if (o.spaces) fm.push(T("spazi doppi")); if (o.punct) fm.push(T("spazi prima della punteggiatura")); if (o.dash) fm.push(T("trattini nei dialoghi"));
+    if (fm.length) row(gt, "fmt", TF("Pulizia del testo: {0}", fm.join(", ")));
+    var hasTxt = !!(o.quotes || o.apos || o.dots || o.spaces || o.punct || o.dash || o.rules.length || o.scanOn), dr = null;
+    if (hasTxt) {
+      dr = await dryText(o);
+      o.rules.forEach(function (r, i) {
+        var n = dr.rules[i], cnt = n === 1 ? T("1 volta") : TF("{0} volte", n);
+        row(gt, "rule:" + i, r.kind === "del" ? TF("Elimina «{0}» ({1})", r.from, cnt) : TF("«{0}» → «{1}» ({2})", r.from, r.rep, cnt));
+      });
+      if (o.scanOn) row(gt, "scan", TF("Pulizia da scansione: {0} parole spezzate, {1} paragrafi uniti, {2} numeri di pagina, {3} righe ripetute", dr.st.hyph, dr.st.merged, dr.st.pages, dr.st.heads));
+    }
+    if (!gt.rows.length) G.pop();
+    else if (dr) gt.info = TF("Capitoli modificati: {0}", dr.changed);
+    var cl = [];
+    if ($("c-color").checked) cl.push(T("colori")); if ($("c-font").checked) cl.push(T("caratteri e dimensioni")); if ($("c-all").checked) cl.push(T("tutti gli stili"));
+    if (cl.length) row(grp("Stile del libro"), "clean", TF("Pulizia dello stile del libro: {0}", cl.join(", ")));
+    if (imgOpts()) {
+      var r = await optimizeImages(false);
+      if (r && r.n) row(grp("Immagini"), "img", imgReport(r));
+    }
+    var nm = outName({});
+    if (nm !== fileName) row(grp("File"), "rename", TF("Rinomina in: {0}", nm));
+    return G;
+  }
+  async function openReview() {
+    if (!zip) return;
+    var body = $("rv-body"), ok = $("rv-ok");
+    body.textContent = T("Preparo il riepilogo…"); ok.disabled = true; $("review").hidden = false;
+    try {
+      var G = await buildReview(), n = 0;
+      body.textContent = "";
+      G.forEach(function (g) {
+        var box = document.createElement("div"), h = document.createElement("h3");
+        box.className = "rv-g"; h.textContent = g.t; box.appendChild(h);
+        g.rows.forEach(function (r) {
+          n++;
+          var lb = document.createElement("label"), cb = document.createElement("input"), sp = document.createElement("span");
+          lb.className = "check"; cb.type = "checkbox"; cb.checked = true; cb.setAttribute("data-k", r.k);
+          sp.textContent = r.text; lb.appendChild(cb); lb.appendChild(sp); box.appendChild(lb);
+        });
+        if (g.info) { var inf = document.createElement("div"); inf.className = "small"; inf.style.marginTop = "6px"; inf.textContent = g.info; box.appendChild(inf); }
+        body.appendChild(box);
+      });
+      if (!n) { var em = document.createElement("div"); em.className = "small"; em.textContent = T("Nessuna modifica rilevata: verrà salvata una copia del libro."); body.appendChild(em); }
+    } catch (e) { body.textContent = T("Non riesco a preparare il riepilogo."); }
+    ok.disabled = false; ok.focus();
+  }
+  function closeReview() { $("review").hidden = true; }
+  $("rv-cancel").addEventListener("click", closeReview);
+  $("rv-ok").addEventListener("click", async function () {
+    var sk = {};
+    Array.prototype.forEach.call(document.querySelectorAll("#rv-body input[data-k]"), function (cb) { if (!cb.checked) sk[cb.getAttribute("data-k")] = true; });
+    closeReview(); await save(sk);
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("review").hidden) closeReview(); });
+
+  async function applyBook(sk) {
+    sk = sk || {};
     bookNote = "";
-    var o = readOpts(), hasCss = o.css.length > 0;
-    var hasTxt = !!(o.quotes || o.apos || o.dots || o.spaces || o.punct || o.dash || o.rules.length);
-    var fl = { color: $("c-color").checked, font: $("c-font").checked, all: $("c-all").checked }, hasFil = fl.color || fl.font || fl.all;
+    var o = readOpts(sk), hasCss = o.css.length > 0;
+    var hasTxt = !!(o.quotes || o.apos || o.dots || o.spaces || o.punct || o.dash || o.rules.length || o.scanOn);
+    var fl = sk.clean ? { color: false, font: false, all: false } : { color: $("c-color").checked, font: $("c-font").checked, all: $("c-all").checked }, hasFil = fl.color || fl.font || fl.all;
     if (!hasCss && !hasTxt && !hasFil) return;
     say(T("Elaboro i capitoli…"));
     var dir = dirOf(opfPath), cssName = "editor-style.css";
@@ -701,7 +993,7 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
       if ((t.documentElement.textContent || "").replace(/\s+/g, " ").length >= 300) { d = t; break; }
     }
     if (!d) { pv.textContent = T("Nessun capitolo da mostrare."); return; }
-    if (o.quotes || o.apos || o.dots || o.spaces || o.punct || o.dash || o.rules.length) fixDoc(d, o);
+    if (o.quotes || o.apos || o.dots || o.spaces || o.punct || o.dash || o.rules.length || o.scanOn) fixDoc(d, o);
     $("pvstyle").textContent = o.css.map(function (r) {
       var k = r.indexOf("{");
       return r.slice(0, k).split(",").map(function (x) { return x === "body" ? "#pv" : "#pv " + x; }).join(",") + r.slice(k);
@@ -960,7 +1252,7 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
     out.textContent = TF("Capitoli con testo: {0} · Parole: {1} · Lettura: circa {2} (a 230 parole al minuto)", nch, words.toLocaleString(LANG === "it" ? "it-IT" : "en-US"), (h ? h + " h " : "") + (mins % 60) + " min");
   }
 
-  var PIDS = ["s-margin", "s-line", "s-gap", "s-indent", "s-size", "s-align", "s-hyph", "s-font", "s-drop", "s-heads", "t-quotes", "t-apos", "t-dots", "t-spaces", "t-punct", "t-dash", "c-color", "c-font", "c-all", "r-del", "r-rep", "r-case", "r-rx", "sp-names", "f-tpl", "rename"];
+  var PIDS = ["s-margin", "s-line", "s-gap", "s-indent", "s-size", "s-align", "s-hyph", "s-font", "s-drop", "s-heads", "t-quotes", "t-apos", "t-dots", "t-spaces", "t-punct", "t-dash", "c-color", "c-font", "c-all", "r-del", "r-rep", "r-case", "r-rx", "sp-names", "f-tpl", "rename", "t-hyph", "t-merge", "t-pages", "i-width", "i-q"];
   function presets() { try { return JSON.parse(localStorage.getItem("epubPresets") || "{}"); } catch (e) { return {}; } }
   function savePresets(ps) { try { localStorage.setItem("epubPresets", JSON.stringify(ps)); return true; } catch (e) { return false; } }
   function listPresets() {
@@ -1121,7 +1413,9 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
   ow.addEventListener("input", renderPreview);
   ow.addEventListener("change", renderPreview);
   $("search").addEventListener("click", search);
-  $("save").addEventListener("click", save);
+  $("save").addEventListener("click", openReview);
+  $("sc-run").addEventListener("click", scanRun);
+  $("i-run").addEventListener("click", imgRun);
   $("another").addEventListener("click", function () {
     $("book").style.display = "none"; $("drop").style.display = ""; zip = doc = meta = null; say("");
   });

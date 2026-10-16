@@ -19,7 +19,13 @@
     <td align="center"><img src="docs/screenshots/02-metadati.png" width="200" alt=""><br><sub>Metadati · Metadata</sub></td>
     <td align="center"><img src="docs/screenshots/03-stile-anteprima.png" width="200" alt=""><br><sub>Stile · Style</sub></td>
     <td align="center"><img src="docs/screenshots/05-ortografia.png" width="200" alt=""><br><sub>Ortografia · Spell check</sub></td>
+    <td align="center"><img src="docs/screenshots/08-scansione.png" width="200" alt=""><br><sub>Scansioni · Scan cleanup</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/09-immagini.png" width="200" alt=""><br><sub>Immagini · Images</sub></td>
+    <td align="center"><img src="docs/screenshots/10-riepilogo.png" width="200" alt=""><br><sub>Riepilogo · Summary</sub></td>
     <td align="center"><img src="docs/screenshots/06-indice.png" width="200" alt=""><br><sub>Indice · Contents</sub></td>
+    <td align="center"><img src="docs/screenshots/07-controllo.png" width="200" alt=""><br><sub>Controllo · Book check</sub></td>
   </tr>
 </table>
 
@@ -35,7 +41,8 @@
 
 1. Apri un file EPUB (anche da Google Drive, tramite il selettore file del dispositivo).
 2. Modifica i campi e le opzioni che ti servono: le sezioni lasciate vuote non cambiano nulla.
-3. Salva: scarichi un nuovo EPUB con le modifiche.
+3. Prima di salvare, un **riepilogo** elenca ogni modifica (con numero di occorrenze e risparmio sulle immagini): puoi togliere la spunta a quelle che non vuoi applicare.
+4. Salva: scarichi un nuovo EPUB con le modifiche.
 
 Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (OPF). Colophon lo legge nel browser, applica le modifiche ai file interessati e lo ricompone rispettando le regole del formato.
 
@@ -59,10 +66,18 @@ Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (O
 - Tre puntini in …, spazi doppi, spazio prima della punteggiatura, dialoghi con il trattino lungo
 - **Cerca, sostituisci ed elimina** in tutto il libro, anche con espressioni regolari, con conteggio delle occorrenze
 
+**Pulizia da scansione (OCR)**, per libri convertiti da PDF o da scansioni
+- Unisce le parole spezzate dal trattino a fine riga ("impera-" / "tore") e i paragrafi interrotti a metà frase
+- Toglie i numeri di pagina isolati e le intestazioni o i piè di pagina che si ripetono (scegli tu quali)
+- **Analizza** mostra cosa verrebbe corretto, senza cambiare nulla
+
 **Controllo ortografico**
 - Trova le parole non presenti nel dizionario, in **italiano o inglese** (per esempio errori di scansione come "vImperatore")
 - Mostra la frase in cui compaiono e propone una correzione; scegli tu quali applicare a tutto il libro
 - Funziona offline (motore Hunspell compilato in WebAssembly) e può ignorare i nomi propri
+
+**Immagini**
+- **Ottimizzazione:** ricomprime JPG e PNG (copertina compresa) con larghezza massima e qualità a scelta, mostrando in anticipo il risparmio di spazio
 
 **Struttura del libro**
 - **Indice:** rinomina, sposta, cambia livello o elimina le voci; rigenera l'indice dai capitoli
@@ -71,6 +86,7 @@ Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (O
 
 **Interfaccia**
 - **Italiano e inglese:** al primo avvio propone la lingua del dispositivo; si cambia in ogni momento con i pulsanti IT / EN
+- **Riepilogo prima del salvataggio:** ogni modifica è elencata e si può escludere singolarmente
 - Tema chiaro e scuro automatico, adatta a telefono, tablet e computer
 - Installabile e utilizzabile offline (tranne la ricerca online)
 
@@ -95,7 +111,8 @@ Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (O
 
 1. Open an EPUB file (Google Drive files work too, through your device's file picker).
 2. Change the fields and options you need: sections left empty change nothing.
-3. Save: you download a new EPUB with your changes.
+3. Before saving, a **summary** lists every change (with occurrence counts and image savings): untick the ones you don't want to apply.
+4. Save: you download a new EPUB with your changes.
 
 An EPUB is a ZIP archive of XHTML pages, images and a description file (OPF). Colophon reads it in the browser, applies your changes to the files involved and repackages it following the format's rules.
 
@@ -119,10 +136,18 @@ An EPUB is a ZIP archive of XHTML pages, images and a description file (OPF). Co
 - Three dots to an ellipsis …, double spaces, space before punctuation, dialogue with em dashes
 - **Find, replace and delete** across the whole book, with optional regular expressions and occurrence counts
 
+**Scan cleanup (OCR)**, for books converted from PDF or scans
+- Joins words split by a hyphen at the end of a line ("impera-" / "tore") and paragraphs interrupted mid-sentence
+- Removes stray page numbers and repeated headers or footers (you choose which)
+- **Analyze** shows what would be fixed without changing anything
+
 **Spell checker**
 - Finds words missing from the dictionary, in **Italian or English** (for example scanning errors such as "vImperatore")
 - Shows the sentence where each word appears and suggests a fix; you choose which ones to apply to the whole book
 - Works offline (Hunspell compiled to WebAssembly) and can ignore proper names
+
+**Images**
+- **Optimization:** recompresses JPG and PNG (cover included) with a maximum width and quality of your choice, showing the space saved beforehand
 
 **Book structure**
 - **Table of contents:** rename, move, change level or delete entries; regenerate it from the chapters
@@ -131,6 +156,7 @@ An EPUB is a ZIP archive of XHTML pages, images and a description file (OPF). Co
 
 **Interface**
 - **Italian and English:** on first launch it proposes your device's language; switch at any time with the IT / EN buttons
+- **Summary before saving:** every change is listed and can be excluded individually
 - Automatic light and dark theme, designed for phones, tablets and desktops
 - Installable and usable offline (except online lookup)
 
