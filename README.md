@@ -27,6 +27,12 @@
     <td align="center"><img src="docs/screenshots/06-indice.png" width="200" alt=""><br><sub>Indice · Contents</sub></td>
     <td align="center"><img src="docs/screenshots/07-controllo.png" width="200" alt=""><br><sub>Controllo · Book check</sub></td>
   </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/11-carattere.png" width="200" alt=""><br><sub>Font incorporato · Embedded font</sub></td>
+    <td align="center"><img src="docs/screenshots/12-epub3.png" width="200" alt=""><br><sub>EPUB 3 e accessibilità · EPUB 3 and accessibility</sub></td>
+    <td></td>
+    <td></td>
+  </tr>
 </table>
 
 ---
@@ -60,6 +66,7 @@ Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (O
 - Capolettera dopo i titoli, titoli centrati o a sinistra
 - **Preset di stile** da salvare e riapplicare ad altri libri
 - Pulizia dello stile imposto dall'editore (colori, caratteri, dimensioni) o di tutti gli stili
+- **Carattere incorporato:** carica un font (TTF, OTF, WOFF, WOFF2; normale, grassetto, corsivo) e lo inserisce nel libro, così appare uguale su tutti i lettori; l'anteprima lo mostra subito
 
 **Pulizia del testo**
 - Virgolette caporali «…» o inglesi “…”, apostrofi tipografici
@@ -75,6 +82,12 @@ Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (O
 - Trova le parole non presenti nel dizionario, in **italiano o inglese** (per esempio errori di scansione come "vImperatore")
 - Mostra la frase in cui compaiono e propone una correzione; scegli tu quali applicare a tutto il libro
 - Funziona offline (motore Hunspell compilato in WebAssembly) e può ignorare i nomi propri
+
+**EPUB 3 e accessibilità**
+- **Aggiornamento a EPUB 3** dei libri in EPUB 2: nuovo indice di navigazione (quello vecchio resta per i lettori datati), codice delle pagine aggiornato, ruoli e ordinamento degli autori convertiti. I libri aggiornati superano la verifica ufficiale di [EPUBCheck](https://www.w3.org/publishing/epubcheck/) senza errori né avvisi
+- **Lingua** impostata in ogni pagina
+- **Descrizioni delle immagini:** elenca le immagini senza testo alternativo, con anteprima, e permette di scriverlo o di segnarle come decorative
+- **Metadati di accessibilità** (schema.org) in base a ciò che l'app riconosce: testo, immagini, indice, ordine di lettura
 
 **Immagini**
 - **Ottimizzazione:** ricomprime JPG e PNG (copertina compresa) con larghezza massima e qualità a scelta, mostrando in anticipo il risparmio di spazio
@@ -130,6 +143,7 @@ An EPUB is a ZIP archive of XHTML pages, images and a description file (OPF). Co
 - Drop caps after headings, centered or left-aligned headings
 - **Style presets** you can save and reapply to other books
 - Removal of publisher-imposed styles (colors, fonts, sizes) or of all styles
+- **Embedded font:** load a font (TTF, OTF, WOFF, WOFF2; regular, bold, italic) and embed it in the book so it looks the same on every reader; the preview shows it immediately
 
 **Text cleanup**
 - Guillemets «…» or curly quotes “…”, typographic apostrophes
@@ -145,6 +159,12 @@ An EPUB is a ZIP archive of XHTML pages, images and a description file (OPF). Co
 - Finds words missing from the dictionary, in **Italian or English** (for example scanning errors such as "vImperatore")
 - Shows the sentence where each word appears and suggests a fix; you choose which ones to apply to the whole book
 - Works offline (Hunspell compiled to WebAssembly) and can ignore proper names
+
+**EPUB 3 and accessibility**
+- **Upgrade to EPUB 3** for EPUB 2 books: new navigation document (the old one is kept for legacy readers), updated page markup, author roles and sort names converted. Upgraded books pass the official [EPUBCheck](https://www.w3.org/publishing/epubcheck/) validation with no errors or warnings
+- **Language** set on every page
+- **Image descriptions:** lists images without alternative text, with a thumbnail, and lets you write it or mark them as decorative
+- **Accessibility metadata** (schema.org) based on what the app detects: text, images, table of contents, reading order
 
 **Images**
 - **Optimization:** recompresses JPG and PNG (cover included) with a maximum width and quality of your choice, showing the space saved beforehand
