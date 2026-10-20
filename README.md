@@ -15,7 +15,7 @@
 
 ---
 
-## 🇬🇧 English
+<h2 id="english">🇬🇧 English</h2>
 
 **Colophon** is a web app (PWA) to edit **EPUB** files directly in your browser: metadata, cover, style, table of contents, and text. It is a lightweight alternative to Calibre's editing features, working on Chromebook, Android, Windows, macOS, and Linux. It can be installed like a regular app and used offline after the first visit.
 
@@ -70,7 +70,7 @@ A static site: no build step, no backend.
 
 ---
 
-## 🇮🇹 Italiano
+<h2 id="italiano">🇮🇹 Italiano</h2>
 
 **Colophon** è una web app (PWA) per modificare file **EPUB** direttamente dal browser: metadati, copertina, stile, indice e testo. È un'alternativa leggera alle funzioni di modifica di Calibre e funziona su Chromebook, Android, Windows, macOS e Linux. Si può installare come una normale app e usare offline dopo la prima apertura.
 
