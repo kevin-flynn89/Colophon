@@ -100,6 +100,7 @@ Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (O
 **Interfaccia**
 - **Italiano e inglese:** al primo avvio propone la lingua del dispositivo; si cambia in ogni momento con i pulsanti IT / EN
 - **Riepilogo prima del salvataggio:** ogni modifica è elencata e si può escludere singolarmente
+- Interfaccia in stile **Material 3 Expressive**: forme morbide e animate, colori tonali generati da un unico colore di base, interruttori, pulsanti a pillola e icone Google Material Symbols incorporate (funzionano offline)
 - Tema chiaro e scuro automatico, adatta a telefono, tablet e computer
 - Installabile e utilizzabile offline (tranne la ricerca online)
 
@@ -177,6 +178,7 @@ An EPUB is a ZIP archive of XHTML pages, images and a description file (OPF). Co
 **Interface**
 - **Italian and English:** on first launch it proposes your device's language; switch at any time with the IT / EN buttons
 - **Summary before saving:** every change is listed and can be excluded individually
+- **Material 3 Expressive** interface: soft animated shapes, tonal colors generated from a single seed color, switches, pill buttons and built-in Google Material Symbols icons (work offline)
 - Automatic light and dark theme, designed for phones, tablets and desktops
 - Installable and usable offline (except online lookup)
 
@@ -202,4 +204,4 @@ A static site: no build step, no backend. / Un sito statico: nessuna compilazion
 | `icon.svg`, `icon-192.png`, `icon-512.png` | Icons / Icone |
 | `hunspell.bundle.js`, `dict/` | Spell checker engine and dictionaries / Motore e dizionari del correttore |
 
-**Libraries / Librerie:** [JSZip](https://stuk.github.io/jszip/) (read and write EPUB archives), [hunspell-asm](https://github.com/kwonoj/hunspell-asm) (MIT), Italian dictionary from [wooorm/dictionaries](https://github.com/wooorm/dictionaries) (GPL-3.0) and English dictionary (MIT and BSD). License texts are in `dict/`.
+**Libraries / Librerie:** [JSZip](https://stuk.github.io/jszip/) (read and write EPUB archives), [hunspell-asm](https://github.com/kwonoj/hunspell-asm) (MIT), Italian dictionary from [wooorm/dictionaries](https://github.com/wooorm/dictionaries) (GPL-3.0) and English dictionary (MIT and BSD). Icons: [Material Symbols](https://fonts.google.com/icons) by Google (Apache 2.0). License texts are in `dict/`.

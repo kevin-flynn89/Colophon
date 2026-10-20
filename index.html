@@ -5,145 +5,255 @@
 <title>Colophon – Editor EPUB</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#0e6e7e">
+<meta name="theme-color" content="#a6eeff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#004e5b" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Literata:wght@600;700&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eef1f4;--panel:#fff;--ink:#16202b;--mute:#5d6b7a;--line:#d3dae1;--acc:#0e6e7e;--acc-ink:#fff;--err:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f161d;--panel:#18222c;--ink:#e7edf2;--mute:#92a1b0;--line:#2b3947;--acc:#4fb3c4;--acc-ink:#06242a;--err:#ff8a80}}
-:root[data-theme="dark"]{--bg:#0f161d;--panel:#18222c;--ink:#e7edf2;--mute:#92a1b0;--line:#2b3947;--acc:#4fb3c4;--acc-ink:#06242a;--err:#ff8a80}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{--s-cookie:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50.00 0.00 L51.31 0.13 L52.59 0.52 L53.85 1.14 L55.05 1.97 L56.19 2.95 L57.28 4.06 L58.30 5.22 L59.27 6.38 L60.20 7.49 L61.12 8.51 L62.03 9.39 L62.96 10.11 L63.94 10.64 L64.98 10.98 L66.09 11.14 L67.30 11.15 L68.59 11.02 L69.97 10.80 L71.43 10.53 L72.94 10.27 L74.47 10.07 L76.00 9.96 L77.50 9.99 L78.93 10.19 L80.25 10.58 L81.43 11.18 L82.46 11.99 L83.32 12.99 L84.00 14.17 L84.50 15.50 L84.84 16.94 L85.04 18.45 L85.13 20.00 L85.15 21.54 L85.14 23.04 L85.15 24.46 L85.22 25.80 L85.39 27.02 L85.69 28.13 L86.15 29.13 L86.78 30.03 L87.59 30.84 L88.57 31.60 L89.69 32.33 L90.92 33.05 L92.22 33.79 L93.55 34.58 L94.84 35.43 L96.05 36.36 L97.13 37.37 L98.03 38.47 L98.71 39.65 L99.15 40.89 L99.33 42.19 L99.26 43.51 L98.94 44.86 L98.40 46.19 L97.68 47.50 L96.82 48.77 L95.87 50.00 L94.89 51.18 L93.94 52.30 L93.06 53.39 L92.30 54.45 L91.70 55.49 L91.28 56.54 L91.06 57.61 L91.03 58.72 L91.18 59.89 L91.49 61.12 L91.91 62.42 L92.41 63.78 L92.94 65.20 L93.43 66.67 L93.84 68.16 L94.12 69.64 L94.24 71.10 L94.15 72.50 L93.84 73.80 L93.30 75.00 L92.53 76.07 L91.56 76.99 L90.39 77.76 L89.07 78.39 L87.65 78.89 L86.15 79.27 L84.63 79.58 L83.14 79.84 L81.71 80.09 L80.37 80.37 L79.15 80.72 L78.07 81.17 L77.12 81.75 L76.30 82.48 L75.60 83.37 L75.00 84.41 L74.46 85.59 L73.96 86.90 L73.46 88.29 L72.94 89.73 L72.35 91.16 L71.68 92.54 L70.90 93.82 L70.02 94.96 L69.01 95.90 L67.90 96.63 L66.69 97.12 L65.39 97.36 L64.03 97.36 L62.63 97.13 L61.21 96.70 L59.80 96.12 L58.42 95.42 L57.07 94.67 L55.78 93.91 L54.54 93.21 L53.35 92.60 L52.21 92.14 L51.10 91.84 L50.00 91.74 L48.90 91.84 L47.79 92.14 L46.65 92.60 L45.46 93.21 L44.22 93.91 L42.93 94.67 L41.58 95.42 L40.20 96.12 L38.79 96.70 L37.37 97.13 L35.97 97.36 L34.61 97.36 L33.31 97.12 L32.10 96.63 L30.99 95.90 L29.98 94.96 L29.10 93.82 L28.32 92.54 L27.65 91.16 L27.06 89.73 L26.54 88.29 L26.04 86.90 L25.54 85.59 L25.00 84.41 L24.40 83.37 L23.70 82.48 L22.88 81.75 L21.93 81.17 L20.85 80.72 L19.63 80.37 L18.29 80.09 L16.86 79.84 L15.37 79.58 L13.85 79.27 L12.35 78.89 L10.93 78.39 L9.61 77.76 L8.44 76.99 L7.47 76.07 L6.70 75.00 L6.16 73.80 L5.85 72.50 L5.76 71.10 L5.88 69.64 L6.16 68.16 L6.57 66.67 L7.06 65.20 L7.59 63.78 L8.09 62.42 L8.51 61.12 L8.82 59.89 L8.97 58.72 L8.94 57.61 L8.72 56.54 L8.30 55.49 L7.70 54.45 L6.94 53.39 L6.06 52.30 L5.11 51.18 L4.13 50.00 L3.18 48.77 L2.32 47.50 L1.60 46.19 L1.06 44.86 L0.74 43.51 L0.67 42.19 L0.85 40.89 L1.29 39.65 L1.97 38.47 L2.87 37.37 L3.95 36.36 L5.16 35.43 L6.45 34.58 L7.78 33.79 L9.08 33.05 L10.31 32.33 L11.43 31.60 L12.41 30.84 L13.22 30.03 L13.85 29.13 L14.31 28.13 L14.61 27.02 L14.78 25.80 L14.85 24.46 L14.86 23.04 L14.85 21.54 L14.87 20.00 L14.96 18.45 L15.16 16.94 L15.50 15.50 L16.00 14.17 L16.68 12.99 L17.54 11.99 L18.57 11.18 L19.75 10.58 L21.07 10.19 L22.50 9.99 L24.00 9.96 L25.53 10.07 L27.06 10.27 L28.57 10.53 L30.03 10.80 L31.41 11.02 L32.70 11.15 L33.91 11.14 L35.02 10.98 L36.06 10.64 L37.04 10.11 L37.97 9.39 L38.88 8.51 L39.80 7.49 L40.73 6.38 L41.70 5.22 L42.72 4.06 L43.81 2.95 L44.95 1.97 L46.15 1.14 L47.41 0.52 L48.69 0.13Z' fill='black'/%3E%3C/svg%3E");--s-clover:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50.00 0.00 L51.31 0.05 L52.61 0.22 L53.90 0.49 L55.16 0.87 L56.41 1.34 L57.62 1.92 L58.79 2.58 L59.92 3.32 L61.01 4.15 L62.05 5.03 L63.04 5.98 L63.98 6.98 L64.87 8.02 L65.71 9.09 L66.49 10.18 L67.24 11.28 L67.94 12.39 L68.60 13.49 L69.23 14.59 L69.83 15.66 L70.40 16.70 L70.96 17.72 L71.51 18.70 L72.06 19.64 L72.60 20.54 L73.16 21.40 L73.73 22.21 L74.33 22.98 L74.95 23.71 L75.60 24.40 L76.29 25.05 L77.02 25.67 L77.79 26.27 L78.60 26.84 L79.46 27.40 L80.36 27.94 L81.30 28.49 L82.28 29.04 L83.30 29.60 L84.34 30.17 L85.41 30.77 L86.51 31.40 L87.61 32.06 L88.72 32.76 L89.82 33.51 L90.91 34.29 L91.98 35.13 L93.02 36.02 L94.02 36.96 L94.97 37.95 L95.85 38.99 L96.68 40.08 L97.42 41.21 L98.08 42.38 L98.66 43.59 L99.13 44.84 L99.51 46.10 L99.78 47.39 L99.95 48.69 L100.00 50.00 L99.95 51.31 L99.78 52.61 L99.51 53.90 L99.13 55.16 L98.66 56.41 L98.08 57.62 L97.42 58.79 L96.68 59.92 L95.85 61.01 L94.97 62.05 L94.02 63.04 L93.02 63.98 L91.98 64.87 L90.91 65.71 L89.82 66.49 L88.72 67.24 L87.61 67.94 L86.51 68.60 L85.41 69.23 L84.34 69.83 L83.30 70.40 L82.28 70.96 L81.30 71.51 L80.36 72.06 L79.46 72.60 L78.60 73.16 L77.79 73.73 L77.02 74.33 L76.29 74.95 L75.60 75.60 L74.95 76.29 L74.33 77.02 L73.73 77.79 L73.16 78.60 L72.60 79.46 L72.06 80.36 L71.51 81.30 L70.96 82.28 L70.40 83.30 L69.83 84.34 L69.23 85.41 L68.60 86.51 L67.94 87.61 L67.24 88.72 L66.49 89.82 L65.71 90.91 L64.87 91.98 L63.98 93.02 L63.04 94.02 L62.05 94.97 L61.01 95.85 L59.92 96.68 L58.79 97.42 L57.62 98.08 L56.41 98.66 L55.16 99.13 L53.90 99.51 L52.61 99.78 L51.31 99.95 L50.00 100.00 L48.69 99.95 L47.39 99.78 L46.10 99.51 L44.84 99.13 L43.59 98.66 L42.38 98.08 L41.21 97.42 L40.08 96.68 L38.99 95.85 L37.95 94.97 L36.96 94.02 L36.02 93.02 L35.13 91.98 L34.29 90.91 L33.51 89.82 L32.76 88.72 L32.06 87.61 L31.40 86.51 L30.77 85.41 L30.17 84.34 L29.60 83.30 L29.04 82.28 L28.49 81.30 L27.94 80.36 L27.40 79.46 L26.84 78.60 L26.27 77.79 L25.67 77.02 L25.05 76.29 L24.40 75.60 L23.71 74.95 L22.98 74.33 L22.21 73.73 L21.40 73.16 L20.54 72.60 L19.64 72.06 L18.70 71.51 L17.72 70.96 L16.70 70.40 L15.66 69.83 L14.59 69.23 L13.49 68.60 L12.39 67.94 L11.28 67.24 L10.18 66.49 L9.09 65.71 L8.02 64.87 L6.98 63.98 L5.98 63.04 L5.03 62.05 L4.15 61.01 L3.32 59.92 L2.58 58.79 L1.92 57.62 L1.34 56.41 L0.87 55.16 L0.49 53.90 L0.22 52.61 L0.05 51.31 L0.00 50.00 L0.05 48.69 L0.22 47.39 L0.49 46.10 L0.87 44.84 L1.34 43.59 L1.92 42.38 L2.58 41.21 L3.32 40.08 L4.15 38.99 L5.03 37.95 L5.98 36.96 L6.98 36.02 L8.02 35.13 L9.09 34.29 L10.18 33.51 L11.28 32.76 L12.39 32.06 L13.49 31.40 L14.59 30.77 L15.66 30.17 L16.70 29.60 L17.72 29.04 L18.70 28.49 L19.64 27.94 L20.54 27.40 L21.40 26.84 L22.21 26.27 L22.98 25.67 L23.71 25.05 L24.40 24.40 L25.05 23.71 L25.67 22.98 L26.27 22.21 L26.84 21.40 L27.40 20.54 L27.94 19.64 L28.49 18.70 L29.04 17.72 L29.60 16.70 L30.17 15.66 L30.77 14.59 L31.40 13.49 L32.06 12.39 L32.76 11.28 L33.51 10.18 L34.29 9.09 L35.13 8.02 L36.02 6.98 L36.96 5.98 L37.95 5.03 L38.99 4.15 L40.08 3.32 L41.21 2.58 L42.38 1.92 L43.59 1.34 L44.84 0.87 L46.10 0.49 L47.39 0.22 L48.69 0.05Z' fill='black'/%3E%3C/svg%3E");--s-sunny:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50.00 0.00 L51.30 0.18 L52.58 0.69 L53.82 1.50 L54.99 2.52 L56.10 3.67 L57.15 4.84 L58.17 5.94 L59.17 6.88 L60.18 7.59 L61.25 8.02 L62.39 8.18 L63.62 8.07 L64.96 7.76 L66.38 7.32 L67.88 6.83 L69.42 6.39 L70.95 6.09 L72.42 6.01 L73.78 6.20 L75.00 6.70 L76.04 7.50 L76.89 8.59 L77.56 9.90 L78.06 11.38 L78.45 12.93 L78.77 14.47 L79.10 15.93 L79.50 17.24 L80.02 18.36 L80.73 19.27 L81.64 19.98 L82.76 20.50 L84.07 20.90 L85.53 21.23 L87.07 21.55 L88.62 21.94 L90.10 22.44 L91.41 23.11 L92.50 23.96 L93.30 25.00 L93.80 26.22 L93.99 27.58 L93.91 29.05 L93.61 30.58 L93.17 32.12 L92.68 33.62 L92.24 35.04 L91.93 36.38 L91.82 37.61 L91.98 38.75 L92.41 39.82 L93.12 40.83 L94.06 41.83 L95.16 42.85 L96.33 43.90 L97.48 45.01 L98.50 46.18 L99.31 47.42 L99.82 48.70 L100.00 50.00 L99.82 51.30 L99.31 52.58 L98.50 53.82 L97.48 54.99 L96.33 56.10 L95.16 57.15 L94.06 58.17 L93.12 59.17 L92.41 60.18 L91.98 61.25 L91.82 62.39 L91.93 63.62 L92.24 64.96 L92.68 66.38 L93.17 67.88 L93.61 69.42 L93.91 70.95 L93.99 72.42 L93.80 73.78 L93.30 75.00 L92.50 76.04 L91.41 76.89 L90.10 77.56 L88.62 78.06 L87.07 78.45 L85.53 78.77 L84.07 79.10 L82.76 79.50 L81.64 80.02 L80.73 80.73 L80.02 81.64 L79.50 82.76 L79.10 84.07 L78.77 85.53 L78.45 87.07 L78.06 88.62 L77.56 90.10 L76.89 91.41 L76.04 92.50 L75.00 93.30 L73.78 93.80 L72.42 93.99 L70.95 93.91 L69.42 93.61 L67.88 93.17 L66.38 92.68 L64.96 92.24 L63.62 91.93 L62.39 91.82 L61.25 91.98 L60.18 92.41 L59.17 93.12 L58.17 94.06 L57.15 95.16 L56.10 96.33 L54.99 97.48 L53.82 98.50 L52.58 99.31 L51.30 99.82 L50.00 100.00 L48.70 99.82 L47.42 99.31 L46.18 98.50 L45.01 97.48 L43.90 96.33 L42.85 95.16 L41.83 94.06 L40.83 93.12 L39.82 92.41 L38.75 91.98 L37.61 91.82 L36.38 91.93 L35.04 92.24 L33.62 92.68 L32.12 93.17 L30.58 93.61 L29.05 93.91 L27.58 93.99 L26.22 93.80 L25.00 93.30 L23.96 92.50 L23.11 91.41 L22.44 90.10 L21.94 88.62 L21.55 87.07 L21.23 85.53 L20.90 84.07 L20.50 82.76 L19.98 81.64 L19.27 80.73 L18.36 80.02 L17.24 79.50 L15.93 79.10 L14.47 78.77 L12.93 78.45 L11.38 78.06 L9.90 77.56 L8.59 76.89 L7.50 76.04 L6.70 75.00 L6.20 73.78 L6.01 72.42 L6.09 70.95 L6.39 69.42 L6.83 67.88 L7.32 66.38 L7.76 64.96 L8.07 63.62 L8.18 62.39 L8.02 61.25 L7.59 60.18 L6.88 59.17 L5.94 58.17 L4.84 57.15 L3.67 56.10 L2.52 54.99 L1.50 53.82 L0.69 52.58 L0.18 51.30 L0.00 50.00 L0.18 48.70 L0.69 47.42 L1.50 46.18 L2.52 45.01 L3.67 43.90 L4.84 42.85 L5.94 41.83 L6.88 40.83 L7.59 39.82 L8.02 38.75 L8.18 37.61 L8.07 36.38 L7.76 35.04 L7.32 33.62 L6.83 32.12 L6.39 30.58 L6.09 29.05 L6.01 27.58 L6.20 26.22 L6.70 25.00 L7.50 23.96 L8.59 23.11 L9.90 22.44 L11.38 21.94 L12.93 21.55 L14.47 21.23 L15.93 20.90 L17.24 20.50 L18.36 19.98 L19.27 19.27 L19.98 18.36 L20.50 17.24 L20.90 15.93 L21.23 14.47 L21.55 12.93 L21.94 11.38 L22.44 9.90 L23.11 8.59 L23.96 7.50 L25.00 6.70 L26.22 6.20 L27.58 6.01 L29.05 6.09 L30.58 6.39 L32.12 6.83 L33.62 7.32 L35.04 7.76 L36.38 8.07 L37.61 8.18 L38.75 8.02 L39.82 7.59 L40.83 6.88 L41.83 5.94 L42.85 4.84 L43.90 3.67 L45.01 2.52 L46.18 1.50 L47.42 0.69 L48.70 0.18Z' fill='black'/%3E%3C/svg%3E")}
+/* ===== Colophon · Material 3 Expressive ===== */
+:root{
+--md-primary:#006878;--md-on-primary:#fff;--md-primary-container:#a6eeff;--md-on-primary-container:#001f25;
+--md-secondary:#4b6268;--md-on-secondary:#fff;--md-secondary-container:#cde7ee;--md-on-secondary-container:#051f24;
+--md-tertiary:#555d7e;--md-on-tertiary:#fff;--md-tertiary-container:#dce1ff;--md-on-tertiary-container:#111a37;
+--md-error:#ba1a1a;--md-on-error:#fff;--md-error-container:#ffdad6;--md-on-error-container:#410002;
+--md-surface:#f8fafa;--md-on-surface:#191c1d;--md-on-surface-variant:#3f484b;--md-outline:#6f797b;--md-outline-variant:#bfc8cb;
+--md-inverse-surface:#2e3132;--md-inverse-on-surface:#eff1f2;--md-inverse-primary:#53d7f1;
+--md-sc-lowest:#fff;--md-sc-low:#f2f4f5;--md-sc:#eceeef;--md-sc-high:#e6e8e9;--md-sc-highest:#e1e3e4;
+--chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233f484b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
+--ease:cubic-bezier(.34,1.56,.64,1);--ease2:cubic-bezier(.2,0,0,1);
+--shadow1:0 1px 3px rgba(0,0,0,.14),0 1px 2px rgba(0,0,0,.1);--shadow3:0 4px 8px 3px rgba(0,0,0,.12),0 1px 3px rgba(0,0,0,.2);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--md-primary:#53d7f1;--md-on-primary:#00363f;--md-primary-container:#004e5b;--md-on-primary-container:#a6eeff;
+--md-secondary:#b2cbd1;--md-on-secondary:#1c3439;--md-secondary-container:#334a50;--md-on-secondary-container:#cde7ee;
+--md-tertiary:#bdc5eb;--md-on-tertiary:#272f4d;--md-tertiary-container:#3d4565;--md-on-tertiary-container:#dce1ff;
+--md-error:#ffb4ab;--md-on-error:#690005;--md-error-container:#93000a;--md-on-error-container:#ffb4ab;
+--md-surface:#111415;--md-on-surface:#e1e3e4;--md-on-surface-variant:#bfc8cb;--md-outline:#899295;--md-outline-variant:#3f484b;
+--md-inverse-surface:#e1e3e4;--md-inverse-on-surface:#2e3132;--md-inverse-primary:#006878;
+--md-sc-lowest:#0b0f10;--md-sc-low:#191c1d;--md-sc:#1d2021;--md-sc-high:#272a2b;--md-sc-highest:#323536;
+--chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bfc8cb' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
+--shadow1:0 1px 3px rgba(0,0,0,.5);--shadow3:0 4px 12px 3px rgba(0,0,0,.45)}}
+:root[data-theme="dark"]{
+--md-primary:#53d7f1;--md-on-primary:#00363f;--md-primary-container:#004e5b;--md-on-primary-container:#a6eeff;
+--md-secondary:#b2cbd1;--md-on-secondary:#1c3439;--md-secondary-container:#334a50;--md-on-secondary-container:#cde7ee;
+--md-tertiary:#bdc5eb;--md-on-tertiary:#272f4d;--md-tertiary-container:#3d4565;--md-on-tertiary-container:#dce1ff;
+--md-error:#ffb4ab;--md-on-error:#690005;--md-error-container:#93000a;--md-on-error-container:#ffb4ab;
+--md-surface:#111415;--md-on-surface:#e1e3e4;--md-on-surface-variant:#bfc8cb;--md-outline:#899295;--md-outline-variant:#3f484b;
+--md-inverse-surface:#e1e3e4;--md-inverse-on-surface:#2e3132;--md-inverse-primary:#006878;
+--md-sc-lowest:#0b0f10;--md-sc-low:#191c1d;--md-sc:#1d2021;--md-sc-high:#272a2b;--md-sc-highest:#323536;
+--chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bfc8cb' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
+--shadow1:0 1px 3px rgba(0,0,0,.5);--shadow3:0 4px 12px 3px rgba(0,0,0,.45)}
+/* nomi usati dal resto del codice */
+:root{--bg:var(--md-surface);--panel:var(--md-sc-low);--ink:var(--md-on-surface);--mute:var(--md-on-surface-variant);--line:var(--md-outline-variant);--acc:var(--md-primary);--acc-ink:var(--md-on-primary);--err:var(--md-error)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:var(--md-surface)}}
+
 *,*::before,*::after{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Public Sans",system-ui,sans-serif}
-main{max-width:720px;margin:0 auto;padding:20px 16px 40px}
-h1{font:700 1.7rem/1.2 Literata,Georgia,serif;margin:0 0 4px}
-.sub{color:var(--mute);margin:0 0 20px}
-.drop{border:2px dashed var(--line);border-radius:12px;padding:32px 16px;text-align:center;background:var(--panel);cursor:pointer}
-.drop.over,.drop:focus-visible{border-color:var(--acc);outline:none}
-.drop strong{display:block;font:600 1.15rem Literata,Georgia,serif;margin-bottom:4px}
-.drop span{color:var(--mute)}
-.book{display:none;margin-top:20px}
-.head{display:flex;gap:16px;align-items:flex-start}
-.cover{width:112px;flex:none;aspect-ratio:2/3;border-radius:2px 8px 8px 2px;background:var(--line) center/cover no-repeat;box-shadow:inset 7px 0 0 rgba(0,0,0,.2),0 2px 8px rgba(0,0,0,.25)}
-.head .info{min-width:0}
-.fname{font-weight:600;overflow-wrap:anywhere}
-.small{color:var(--mute);font-size:.88rem}
-label{display:block;font-weight:600;font-size:.92rem;margin:14px 0 4px}
-input[type=text],input[type=number],select,textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
-textarea{min-height:130px;resize:vertical}
-input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.row{display:grid;grid-template-columns:minmax(0,1fr) 100px;gap:12px}
-.check{display:flex;gap:8px;align-items:center;font-weight:400;margin-top:18px}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-.btn{font:600 1rem "Public Sans",system-ui,sans-serif;background:var(--acc);color:var(--acc-ink);border:1px solid var(--acc);border-radius:8px;padding:12px 18px;cursor:pointer}
-.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
-.msg{margin-top:14px;color:var(--mute);min-height:1.5em}
-.msg.err{color:var(--err)}
-#results{display:grid;gap:8px;margin-top:16px}
-.hit{display:flex;gap:12px;align-items:center;text-align:left;width:100%;font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px;cursor:pointer}
-.hit img{width:40px;height:60px;object-fit:cover;background:var(--line);border-radius:2px;flex:none}
-.hit span{display:grid;min-width:0}
-.hit small{color:var(--mute)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--md-surface);color:var(--md-on-surface);font:400 1rem/1.5 "Roboto Flex",system-ui,sans-serif;font-variation-settings:"opsz" 16;-webkit-font-smoothing:antialiased}
+main{max-width:760px;margin:0 auto;padding:12px 14px 28px}
 .vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.small{color:var(--md-on-surface-variant);font-size:.875rem;line-height:1.45}
+.bad{color:var(--md-error)}
+
+/* --- forme espressive (maschere) --- */
+.shp{--c:var(--md-primary-container);--ic:var(--md-on-primary-container);position:relative;display:grid;place-items:center;flex:none;color:var(--ic)}
+.shp::before{content:"";position:absolute;inset:0;background:var(--c);-webkit-mask:var(--s) center/100% 100% no-repeat;mask:var(--s) center/100% 100% no-repeat;transition:transform .6s var(--ease)}
+.shp>*{position:relative}
+
+/* --- hero --- */
+.hero{position:relative;overflow:hidden;border-radius:36px;background:var(--md-primary-container);color:var(--md-on-primary-container);padding:14px 18px 22px;margin-bottom:14px}
+.hero::before,.hero::after{content:"";position:absolute;pointer-events:none;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:100% 100%;mask-size:100% 100%}
+.hero::before{width:190px;height:190px;right:-52px;bottom:-70px;background:var(--md-tertiary-container);opacity:.75;-webkit-mask-image:var(--s-cookie);mask-image:var(--s-cookie);animation:spin 40s linear infinite}
+.hero::after{width:84px;height:84px;right:92px;top:-30px;background:var(--md-secondary-container);opacity:.85;-webkit-mask-image:var(--s-clover);mask-image:var(--s-clover);animation:spin 60s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero>*{position:relative;z-index:1}
+.lang{display:flex;justify-content:flex-end;gap:2px;margin:0 0 10px}
+.lang button{font:500 .8125rem/1 "Roboto Flex",system-ui,sans-serif;letter-spacing:.04em;min-width:44px;height:36px;padding:0 14px;border:0;border-radius:10px;background:color-mix(in srgb,var(--md-surface) 55%,transparent);color:var(--md-on-primary-container);cursor:pointer;transition:border-radius .35s var(--ease),background-color .2s,color .2s}
+.lang button:hover{background:color-mix(in srgb,var(--md-surface) 80%,transparent)}
+.lang button[aria-pressed="true"]{background:var(--md-primary);color:var(--md-on-primary);border-radius:999px}
+.top{display:flex;gap:16px;align-items:center;margin:0}
+.logo{--c:var(--md-primary);--ic:var(--md-on-primary);--s:var(--s-cookie);width:76px;height:76px}
+.logo:hover::before{transform:rotate(40deg) scale(1.06)}
+h1{font:800 clamp(2.1rem,8vw,2.9rem)/1 "Roboto Flex",system-ui,sans-serif;font-variation-settings:"wdth" 118,"opsz" 48;letter-spacing:-.025em;margin:0}
+.sub{margin:6px 0 0;font-size:.9375rem;line-height:1.4;color:color-mix(in srgb,var(--md-on-primary-container) 82%,transparent)}
+
+/* --- zona di caricamento --- */
+.drop{position:relative;display:block;border:0;border-radius:36px;padding:116px 20px 30px;text-align:center;background:var(--md-sc-high);cursor:pointer;transition:border-radius .5s var(--ease),background-color .2s}
+.drop::before{content:"";position:absolute;top:26px;left:50%;width:78px;height:78px;margin-left:-39px;background:var(--md-secondary-container);-webkit-mask:var(--s-sunny) center/100% 100% no-repeat;mask:var(--s-sunny) center/100% 100% no-repeat;transition:transform .7s var(--ease)}
+.drop::after{content:"";position:absolute;top:50px;left:50%;width:30px;height:30px;margin-left:-15px;background:var(--md-on-secondary-container);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M452-202h60v-201l82 82 42-42-156-152-154 154 42 42 84-84v201ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h361l219 219v521q0 24-18 42t-42 18H220Zm331-554v-186H220v680h520v-494H551ZM220-820v186-186 680-680Z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M452-202h60v-201l82 82 42-42-156-152-154 154 42 42 84-84v201ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h361l219 219v521q0 24-18 42t-42 18H220Zm331-554v-186H220v680h520v-494H551ZM220-820v186-186 680-680Z'/%3E%3C/svg%3E") center/contain no-repeat}
+.drop:hover,.drop.over{background:var(--md-sc-highest);border-radius:56px 36px 56px 36px}
+.drop:hover::before,.drop.over::before{transform:rotate(30deg) scale(1.08)}
+.drop:focus-visible{outline:3px solid var(--md-primary);outline-offset:3px}
+.drop strong{display:block;font:700 1.375rem/1.2 "Roboto Flex",system-ui,sans-serif;font-variation-settings:"wdth" 108,"opsz" 28;margin-bottom:4px}
+.drop span{color:var(--md-on-surface-variant)}
 label.drop{margin:0;font-weight:400}
-label.btn{display:inline-block;margin:0;text-align:center}
-.opt{margin-top:16px;border:1px solid var(--line);border-radius:8px;padding:0 12px 12px;background:var(--panel)}
-.opt summary{cursor:pointer;font-weight:600;padding:12px 0;list-style:none;display:flex;align-items:center;gap:10px}
-.opt summary::-webkit-details-marker{display:none}
-.opt summary::before{content:"";flex:none;width:7px;height:7px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:rotate(-45deg);transition:transform .15s}
-.opt[open] summary::before{transform:rotate(45deg)}
+
+/* --- libro --- */
+.book{display:none;margin-top:14px;animation:rise .5s var(--ease2) both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.head,.card{background:var(--md-sc-low);border-radius:32px}
+.head{display:flex;gap:18px;align-items:flex-start;padding:18px}
+.card{padding:6px 20px 22px;margin-top:12px}
+.cover{width:116px;flex:none;aspect-ratio:2/3;border-radius:6px 18px 18px 6px;background:var(--md-sc-highest) center/cover no-repeat;box-shadow:inset 7px 0 0 rgba(0,0,0,.2),var(--shadow3)}
+.head .info{min-width:0}
+.fname{font:700 1.125rem/1.3 "Roboto Flex",system-ui,sans-serif;font-variation-settings:"wdth" 104;overflow-wrap:anywhere}
+
+/* --- campi --- */
+label{display:block;font:500 .8125rem/1.2 "Roboto Flex",system-ui,sans-serif;letter-spacing:.03em;color:var(--md-on-surface-variant);margin:18px 0 6px;padding-left:4px}
+label .small{letter-spacing:0;font-weight:400}
+input[type=text],input[type=number],select,textarea{width:100%;max-width:100%;font:inherit;padding:14px 16px;border:1px solid var(--md-outline);border-radius:16px;background:var(--md-sc-lowest);color:var(--md-on-surface);transition:border-color .2s,box-shadow .2s}
+input[type=text]:hover,input[type=number]:hover,select:hover,textarea:hover{border-color:var(--md-on-surface)}
+input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outline:none;border-color:var(--md-primary);box-shadow:0 0 0 1px var(--md-primary)}
+input::placeholder,textarea::placeholder{color:color-mix(in srgb,var(--md-on-surface-variant) 70%,transparent)}
+textarea{min-height:130px;resize:vertical}
+select{appearance:none;-webkit-appearance:none;padding-right:46px;cursor:pointer;background-image:var(--chev);background-repeat:no-repeat;background-position:right 12px center;background-size:24px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:12px}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
 .grid2>div,.row>div{min-width:0}
-.opt .check{margin-top:10px}
-.lang{display:flex;justify-content:flex-end;gap:4px;margin:0 0 10px}
-.lang button{font:600 .8rem "Public Sans",system-ui,sans-serif;padding:4px 11px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;border-radius:999px}
-.lang button[aria-pressed="true"]{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
-.ob{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,18,26,.62);padding:16px}
-.ob[hidden]{display:none}
-.ob-card{background:var(--panel);color:var(--ink);border-radius:14px;padding:22px;max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.35)}
-.ob-card h2{font:700 1.2rem/1.3 Literata,Georgia,serif;margin:0 0 8px}
-.ob-btns{display:grid;gap:10px;margin-top:16px}
-.rv-card{max-width:520px;max-height:88vh;display:flex;flex-direction:column}.rv-body{overflow:auto;margin:10px 0}.rv-g{border:1px solid var(--line);border-radius:10px;padding:8px 14px 12px;margin-top:10px}.rv-g h3{font:600 .95rem Literata,Georgia,serif;margin:6px 0 0;color:var(--acc)}.rv-g .check{margin-top:8px;align-items:flex-start;overflow-wrap:anywhere}.rv-g .check input{margin-top:4px;flex:none}
-.sprow{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:10px}
-.sprow .check{margin-top:0}
-.sprow .ctx{margin:6px 0;overflow-wrap:anywhere}
-.sprow mark{background:color-mix(in srgb,var(--err) 18%,transparent);color:inherit;border-radius:3px;padding:0 2px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.pvbox{position:sticky;top:0;z-index:2;background:var(--bg);padding:10px 0 4px}
-#pv{max-height:32vh;overflow:auto;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-top:6px;font:16px/1.4 Georgia,"Times New Roman",serif}
-#pv h1{font-size:1.3em;margin:.2em 0 .5em}
-#pv p{margin:0 0 .6em}
-.tocrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
-.tocrow input{flex:1 1 100%}
-.btn.sm{padding:6px 10px;min-width:38px;font-size:.95rem}
-#report ul{margin:4px 0 0;padding-left:18px}
-.bad{color:var(--err)}
-select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%237a8896' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-input,select,textarea{max-width:100%}
-#pv{box-shadow:0 2px 8px rgba(0,0,0,.08)}
 
-/* ---- Tema v2 ---- */
-:root{--bg:#f2f5f7;--line:#dde4ea;--r:14px;--acc-soft:color-mix(in srgb,var(--acc) 11%,var(--panel));--sh:0 1px 2px rgba(16,32,43,.06),0 8px 24px rgba(16,32,43,.07)}
-body{background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 10%,var(--bg)) 0,var(--bg) 340px) no-repeat,var(--bg);-webkit-font-smoothing:antialiased}
-main{max-width:760px;padding:28px 16px 40px}
-.top{display:flex;gap:14px;align-items:center;margin-bottom:22px}
-.logo{flex:none;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;color:var(--acc-ink);background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 80%,#fff),var(--acc));box-shadow:var(--sh)}
-h1{font-size:1.55rem;letter-spacing:-.01em;margin:0}
-.sub{margin:2px 0 0;font-size:.92rem}
-.drop{border:2px dashed color-mix(in srgb,var(--acc) 38%,var(--line));border-radius:var(--r);padding:38px 16px;background:var(--acc-soft);transition:border-color .15s,background .15s}
-.drop::before{content:"";display:block;width:46px;height:46px;margin:0 auto 12px;background:var(--acc);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 16V4m0 0L8 8m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 16V4m0 0L8 8m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3'/%3E%3C/svg%3E") center/contain no-repeat}
-.drop:hover,.drop.over{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 17%,var(--panel))}
-.drop strong{font-size:1.2rem}
-.book{animation:rise .35s ease both}
-@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.head,.card,.opt{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
-.head{padding:16px}
-.card{padding:2px 16px 18px;margin-top:14px}
-.opt{margin-top:14px;padding:0 16px 16px}
-.opt summary{font:600 1.02rem Literata,Georgia,serif;padding:15px 0}
-.opt summary::before{border-color:var(--acc)}
-.opt[open] summary{border-bottom:1px solid var(--line);margin-bottom:4px}
-.cover{width:118px;box-shadow:inset 7px 0 0 rgba(0,0,0,.2),0 6px 18px rgba(0,0,0,.28)}
-.fname{font:700 1.05rem Literata,Georgia,serif}
-label{font-size:.84rem;color:var(--mute);margin:16px 0 5px}
-label.check{font-size:.95rem;color:var(--ink)}
-.opt .check,label.check{margin-top:12px}
-input[type=text],input[type=number],select,textarea{border-radius:10px;background-color:color-mix(in srgb,var(--panel) 94%,var(--bg));transition:border-color .15s,box-shadow .15s}
-input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 22%,transparent)}
-.btn{border-radius:10px;padding:11px 18px;box-shadow:0 1px 2px rgba(0,0,0,.14);background-image:linear-gradient(180deg,color-mix(in srgb,var(--acc) 86%,#fff),var(--acc));transition:transform .08s,filter .15s,background-color .15s}
-.btn:hover{filter:brightness(1.07)}
-.btn:active{transform:translateY(1px)}
-.btn.ghost{background-image:none;background-color:var(--panel);box-shadow:none}
-.btn.ghost:hover{background-color:var(--acc-soft);border-color:var(--acc);filter:none}
-.btn.sm{padding:6px 10px}
-.pvbox{top:8px;z-index:6;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:10px 12px}
+/* --- interruttori e caselle --- */
+.check{display:flex;gap:12px;align-items:center;font:400 .9375rem/1.35 "Roboto Flex",system-ui,sans-serif;letter-spacing:0;color:var(--md-on-surface);margin:10px 0 0;padding:0}
+.check.sw-row{flex-direction:row-reverse;justify-content:space-between;min-height:56px;padding:6px 4px 6px 8px;border-radius:20px;cursor:pointer;transition:background-color .2s}
+.check.sw-row:hover{background:color-mix(in srgb,var(--md-on-surface) 6%,transparent)}
+input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:none;margin:0;width:20px;height:20px;border:2px solid var(--md-on-surface-variant);border-radius:6px;background:transparent;position:relative;cursor:pointer;transition:background-color .2s,border-color .2s,border-radius .3s var(--ease)}
+input[type=checkbox]:checked{background:var(--md-primary);border-color:var(--md-primary);border-radius:7px}
+input[type=checkbox]:checked::after{content:"";position:absolute;left:4.5px;top:.5px;width:5px;height:10px;border:solid var(--md-on-primary);border-width:0 2.4px 2.4px 0;transform:rotate(45deg)}
+input[type=checkbox].sw{width:52px;height:32px;border:2px solid var(--md-outline);border-radius:16px;background:var(--md-sc-highest)}
+input[type=checkbox].sw::before{content:"";position:absolute;top:50%;left:6px;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:var(--md-outline);transition:left .35s var(--ease),width .35s var(--ease),height .35s var(--ease),margin-top .35s var(--ease),background-color .2s}
+input[type=checkbox].sw:checked{background:var(--md-primary);border-color:var(--md-primary);border-radius:16px}
+input[type=checkbox].sw:checked::before{left:20px;width:24px;height:24px;margin-top:-12px;background:var(--md-on-primary)}
+input[type=checkbox].sw:checked::after{content:"";position:absolute;left:28px;top:9px;width:5px;height:9px;border:solid var(--md-primary);border-width:0 2.2px 2.2px 0;transform:rotate(45deg);background:none}
+input[type=checkbox].sw:active::before{width:28px}
+input[type=checkbox]:disabled{opacity:.38;cursor:default}
+input:focus-visible,textarea:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--md-primary);outline-offset:2px}
+input[type=checkbox]:focus-visible{outline-offset:3px}
+
+/* --- icone Material Symbols (incorporate, funzionano offline) --- */
+[data-i]::before{content:"";flex:none;width:20px;height:20px;background:currentColor;-webkit-mask:var(--mi) center/contain no-repeat;mask:var(--mi) center/contain no-repeat}
+.btn.sm[data-i]::before{width:18px;height:18px}
+.btn[data-i]:empty{padding:0;width:40px}
+[data-i="add_photo_alternate"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-480ZM180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h365v60H180v600h600v-365h60v365q0 24-18 42t-42 18H180Zm60-162h480L576-474 449-307l-94-124-115 149Zm453-323v-87h-88v-60h88v-88h60v88h87v60h-87v87h-60Z'/%3E%3C/svg%3E")}
+[data-i="arrow_back"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m274-450 248 248-42 42-320-320 320-320 42 42-248 248h526v60H274Z'/%3E%3C/svg%3E")}
+[data-i="arrow_downward"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M450-800v526L202-522l-42 42 320 320 320-320-42-42-248 248v-526h-60Z'/%3E%3C/svg%3E")}
+[data-i="arrow_upward"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M450-160v-526L202-438l-42-42 320-320 320 320-42 42-248-248v526h-60Z'/%3E%3C/svg%3E")}
+[data-i="autorenew"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M196-331q-20-36-28-72.5t-8-74.5q0-131 94.5-225.5T480-798h43l-80-80 39-39 149 149-149 149-40-40 79-79h-41q-107 0-183.5 76.5T220-478q0 29 5.5 55t13.5 49l-43 43ZM476-40 327-189l149-149 39 39-80 80h45q107 0 183.5-76.5T740-479q0-29-5-55t-15-49l43-43q20 36 28.5 72.5T800-479q0 131-94.5 225.5T480-159h-45l80 80-39 39Z'/%3E%3C/svg%3E")}
+[data-i="bookmark_add"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M200-120v-665q0-24 18-42t42-18h290v60H260v574l220-93 220 93v-334h60v425L480-240 200-120Zm60-665h290-290Zm440 180v-90h-90v-60h90v-90h60v90h90v60h-90v90h-60Z'/%3E%3C/svg%3E")}
+[data-i="calculate"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M314-228h50v-88h88v-50h-88v-88h-50v88h-88v50h88v88Zm215-35h201v-49H529v49Zm0-107h201v-50H529v50Zm37-163 61-61 61 61 36-36-61-61 61-61-36-36-61 61-61-61-36 36 61 61-61 61 36 36Zm-325-72h196v-50H241v50Zm-61 485q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm0-600v600-600Z'/%3E%3C/svg%3E")}
+[data-i="check"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M378-246 154-470l43-43 181 181 384-384 43 43-427 427Z'/%3E%3C/svg%3E")}
+[data-i="close"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z'/%3E%3C/svg%3E")}
+[data-i="compress"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M160-410v-70h640v70H160Zm0-121v-60h640v60H160ZM449-80v-158l-77 76-42-42 149-148 147 148-42 42-75-76v158h-60Zm30-568L331-796l42-42 75 76v-158h60v158l77-76 42 42-148 148Z'/%3E%3C/svg%3E")}
+[data-i="delete"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M261-120q-24.75 0-42.37-17.63Q201-155.25 201-180v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570ZM367-266h60v-399h-60v399Zm166 0h60v-399h-60v399ZM261-750v570-570Z'/%3E%3C/svg%3E")}
+[data-i="folder_open"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M140-160q-23 0-41.5-18.5T80-220v-520q0-23 18.5-41.5T140-800h281l60 60h339q23 0 41.5 18.5T880-680H455l-60-60H140v520l102-400h698L833-206q-6 24-22 35t-41 11H140Zm63-60h572l84-340H287l-84 340Zm0 0 84-340-84 340Zm-63-460v-60 60Z'/%3E%3C/svg%3E")}
+[data-i="format_indent_decrease"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M120-120v-60h720v60H120Zm320-165v-60h400v60H440Zm0-165v-60h400v60H440Zm0-165v-60h400v60H440ZM120-780v-60h720v60H120Zm141 437L120-483l141-136v276Z'/%3E%3C/svg%3E")}
+[data-i="format_indent_increase"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M120-120v-60h720v60H120Zm320-165v-60h400v60H440Zm0-165v-60h400v60H440Zm0-165v-60h400v60H440ZM120-780v-60h720v60H120Zm0 437v-276l141 136-141 140Z'/%3E%3C/svg%3E")}
+[data-i="image_search"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M237-277h487L577-472 447-302l-93-126-117 151Zm-57 157q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h213v60H180v600h600v-272l60 60v212q0 24-18 42t-42 18H180Zm300-360Zm395 38L742-575q-21 14-41.5 20.5T652-548q-70 0-118-48t-48-118q0-70 48-118t118-48q70 0 118 48t48 118q0 28-8 53t-22 46l130 130-43 43ZM652-608q46 0 76-30t30-76q0-46-30-76t-76-30q-46 0-76 30t-30 76q0 46 30 76t76 30Z'/%3E%3C/svg%3E")}
+[data-i="manage_search"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M80-200v-60h400v60H80Zm0-210v-60h200v60H80Zm0-210v-60h200v60H80Zm758 420L678-360q-26 20-56 30t-62 10q-83 0-141.5-58.5T360-520q0-83 58.5-141.5T560-720q83 0 141.5 58.5T760-520q0 32-10 62t-30 56l160 160-42 42ZM559.76-380Q618-380 659-420.76q41-40.77 41-99Q700-578 659.24-619q-40.77-41-99-41Q502-660 461-619.24q-41 40.77-41 99Q420-462 460.76-421q40.77 41 99 41Z'/%3E%3C/svg%3E")}
+[data-i="save"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M840-683v503q0 24-18 42t-42 18H180q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h503l157 157Zm-60 27L656-780H180v600h600v-476ZM553.5-275.26q30.5-30.27 30.5-73.5 0-43.24-30.26-73.74-30.27-30.5-73.5-30.5-43.24 0-73.74 30.26-30.5 30.27-30.5 73.5 0 43.24 30.26 73.74 30.27 30.5 73.5 30.5 43.24 0 73.74-30.26ZM233-584h358v-143H233v143Zm-53-72v476-600 124Z'/%3E%3C/svg%3E")}
+[data-i="spellcheck"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M563-80 404-239l42-42 117 117 240-240 42 42L563-80ZM120-312l200-527h66l200 527h-67l-54-142H238l-54 142h-64Zm137-200h189l-92-254h-5l-92 254Z'/%3E%3C/svg%3E")}
+[data-i="tag"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m239-160 40-159H120l15-60h159l51-202H186l15-60h159l39-159h59l-39 159h203l39-159h59l-39 159h159l-15 60H666l-51 202h159l-15 60H600l-40 159h-59l40-159H338l-40 159h-59Zm114-219h203l51-202H404l-51 202Z'/%3E%3C/svg%3E")}
+[data-i="travel_explore"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M458-81q-79-4-148-37t-120-86.5Q139-258 109.5-329T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q149 0 259 94t135 236h-61q-17-84-71-150t-135-99v18q0 35-24 61t-59 26h-87v87q0 17-13.5 28T393-568h-83v88h110v125h-67L149-559q-5 20-7 39.5t-2 39.5q0 135 91 233t227 106v60Zm392-26L716-241q-21 15-45.5 23t-50.5 8q-71 0-120.5-49.5T450-380q0-71 49.5-120.5T620-550q71 0 120.5 49.5T790-380q0 26-8.5 50.5T759-283l134 133-43 43ZM698-302q32-32 32-78t-32-78q-32-32-78-32t-78 32q-32 32-32 78t32 78q32 32 78 32t78-32Z'/%3E%3C/svg%3E")}
+[data-i="upload_file"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M452-202h60v-201l82 82 42-42-156-152-154 154 42 42 84-84v201ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h361l219 219v521q0 24-18 42t-42 18H220Zm331-554v-186H220v680h520v-494H551ZM220-820v186-186 680-680Z'/%3E%3C/svg%3E")}
+[data-i="verified"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m346-60-76-130-151-31 17-147-96-112 96-111-17-147 151-31 76-131 134 62 134-62 77 131 150 31-17 147 96 111-96 112 17 147-150 31-77 130-134-62-134 62Zm27-79 107-45 110 45 67-100 117-30-12-119 81-92-81-94 12-119-117-28-69-100-108 45-110-45-67 100-117 28 12 119-81 94 81 92-12 121 117 28 70 100Zm107-341Zm-43 133 227-225-45-41-182 180-95-99-46 45 141 140Z'/%3E%3C/svg%3E")}
+
+/* --- pulsanti --- */
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;font:600 .9375rem/1 "Roboto Flex",system-ui,sans-serif;letter-spacing:.01em;background:var(--md-primary);color:var(--md-on-primary);border:0;border-radius:999px;cursor:pointer;position:relative;overflow:hidden;transition:border-radius .35s var(--ease),transform .2s var(--ease),box-shadow .2s,filter .2s}
+.btn::after{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity .2s;pointer-events:none}
+.btn:hover::after{opacity:.09}
+.btn:hover{border-radius:18px}
+.btn:active{border-radius:14px;transform:scale(.97)}
+.btn:active::after{opacity:.14}
+.btn.ghost{background:var(--md-secondary-container);color:var(--md-on-secondary-container)}
+.btn.sm{min-height:36px;min-width:40px;padding:0 14px;font-size:.875rem}
+.btn:disabled{opacity:.38;pointer-events:none}
+label.btn{margin:0;padding:0 24px;text-align:center;font:600 .9375rem/1 "Roboto Flex",system-ui,sans-serif;letter-spacing:.01em;color:var(--md-on-secondary-container)}
+label.btn:not(.ghost){color:var(--md-on-primary)}
+
+/* --- sezioni --- */
+.opt{margin-top:12px;background:var(--md-sc-low);border-radius:32px;padding:0 18px 4px;transition:background-color .25s,border-radius .4s var(--ease)}
+.opt[open]{background:var(--md-sc);padding-bottom:18px}
+.opt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;min-height:76px;padding:10px 0;font:600 1.0625rem/1.25 "Roboto Flex",system-ui,sans-serif;font-variation-settings:"wdth" 104,"opsz" 20;user-select:none}
+.opt summary::-webkit-details-marker{display:none}
+.opt summary>span:not(.si){flex:1 1 auto;min-width:0}
+.opt summary::after{content:"";flex:none;width:36px;height:36px;border-radius:50%;background:var(--md-sc-highest) var(--chev) center/24px no-repeat;transition:transform .4s var(--ease),background-color .2s}
+.opt[open] summary::after{transform:rotate(180deg);background-color:var(--md-secondary-container)}
+.opt summary:hover::after{background-color:var(--md-secondary-container)}
+.opt[open]>*:not(summary){animation:dropin .35s var(--ease2) both}
+@keyframes dropin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.si{width:48px;height:48px}
+.si svg{width:26px;height:26px;fill:currentColor;stroke:none}
+.opt:hover .si::before{transform:rotate(25deg) scale(1.05)}
+.t0 .si{--c:var(--md-primary-container);--ic:var(--md-on-primary-container);--s:var(--s-cookie)}
+.t1 .si{--c:var(--md-tertiary-container);--ic:var(--md-on-tertiary-container);--s:var(--s-clover)}
+.t2 .si{--c:var(--md-secondary-container);--ic:var(--md-on-secondary-container);--s:var(--s-sunny)}
+
+/* --- anteprima --- */
+.pvbox{position:sticky;top:8px;z-index:6;background:var(--md-sc-high);border-radius:28px;box-shadow:var(--shadow1);padding:10px 14px 12px}
 .pvhead{display:flex;justify-content:space-between;align-items:center;gap:8px}
-#pv{max-height:24vh;border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none;padding:8px 4px 0;margin-top:8px}
+#pv{max-height:24vh;overflow:auto;background:var(--md-sc-lowest);color:var(--md-on-surface);border-radius:18px;padding:12px 16px;margin-top:8px;font:16px/1.45 Georgia,"Times New Roman",serif}
+#pv h1{font:700 1.3em/1.2 Georgia,"Times New Roman",serif;font-variation-settings:normal;letter-spacing:0;margin:.2em 0 .5em}
+#pv p{margin:0 0 .6em}
 .pvbox.collapsed #pv{display:none}
 @media (max-height:700px){.pvbox{position:static}}
-.hit{border-radius:10px;transition:border-color .15s,background-color .15s}
-.hit:hover{border-color:var(--acc);background:var(--acc-soft)}
-.savebar{position:sticky;bottom:0;z-index:5;margin:22px -16px 0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 84%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
-.savebar .btn:first-child{flex:1 1 auto}
-.msg{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:20;max-width:92vw;margin:0;min-height:0;text-align:center;padding:9px 16px;border-radius:999px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--sh);color:var(--ink)}
+
+/* --- elenchi --- */
+#results{display:grid;gap:8px;margin-top:12px}
+.hit{display:flex;gap:14px;align-items:center;text-align:left;width:100%;font:inherit;color:var(--md-on-surface);background:var(--md-sc);border:0;border-radius:22px;padding:10px 14px 10px 10px;cursor:pointer;transition:background-color .2s,border-radius .4s var(--ease)}
+.hit:hover{background:var(--md-sc-highest);border-radius:28px}
+.hit img{width:44px;height:66px;object-fit:cover;background:var(--md-sc-highest);border-radius:6px 10px 10px 6px;flex:none}
+.hit span{display:grid;min-width:0}
+.hit small{color:var(--md-on-surface-variant)}
+.sprow{background:var(--md-sc-low);border-radius:22px;padding:12px 16px;margin-top:10px}
+.opt[open] .sprow{background:var(--md-sc-high)}
+.sprow .check{margin-top:0}
+.sprow .ctx{margin:6px 0;overflow-wrap:anywhere}
+.sprow mark{background:color-mix(in srgb,var(--md-error) 20%,transparent);color:inherit;border-radius:4px;padding:0 3px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tocrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+.tocrow input{flex:1 1 100%}
+#report ul{margin:4px 0 0;padding-left:20px}
+
+/* --- barra di salvataggio e messaggi --- */
+.savebar{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:5;display:flex;gap:8px;margin:22px 0 0;padding:8px;border-radius:36px;background:color-mix(in srgb,var(--md-sc-high) 92%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:var(--shadow3)}
+.savebar .btn{min-height:56px}
+.savebar .btn:first-child{flex:1 1 auto;font-size:1rem}
+.msg{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:20;width:max-content;max-width:min(92vw,560px);margin:0;min-height:0;text-align:left;padding:14px 20px;border-radius:18px;background:var(--md-inverse-surface);color:var(--md-inverse-on-surface);font-size:.9375rem;box-shadow:var(--shadow3);animation:rise .35s var(--ease) both}
 .msg:empty{display:none}
-.msg.err{border-color:var(--err);color:var(--err)}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.msg.err{background:var(--md-error-container);color:var(--md-on-error-container)}
+
+/* --- finestre di dialogo --- */
+.ob{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(0,0,0,.42);padding:16px}
+.ob[hidden]{display:none}
+.ob-card{background:var(--md-sc-high);color:var(--md-on-surface);border-radius:32px;padding:26px 24px 22px;max-width:400px;width:100%;box-shadow:var(--shadow3);animation:pop .45s var(--ease) both}
+@keyframes pop{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:none}}
+.ob-card h2{font:700 1.5rem/1.25 "Roboto Flex",system-ui,sans-serif;font-variation-settings:"wdth" 106,"opsz" 28;margin:0 0 10px}
+.ob-btns{display:grid;gap:8px;margin-top:18px}
+.rv-card{max-width:540px;max-height:88vh;display:flex;flex-direction:column}
+.rv-body{overflow:auto;margin:8px -6px;padding:0 6px}
+.rv-g{background:var(--md-sc);border-radius:24px;padding:8px 16px 14px;margin-top:10px}
+.rv-g h3{font:700 .9375rem/1.3 "Roboto Flex",system-ui,sans-serif;font-variation-settings:"wdth" 106;margin:8px 0 0;color:var(--md-primary)}
+.rv-g .check{margin-top:10px;align-items:flex-start;overflow-wrap:anywhere}
+.rv-g .check input{margin-top:1px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+@media (max-width:420px){.hero{padding:12px 14px 20px;border-radius:32px}.logo{width:64px;height:64px}.top{gap:12px}}
 </style>
 </head>
 <body>
 <main>
+  <div class="hero">
   <div class="lang" id="lang-sw" role="group" aria-label="Lingua / Language" data-notr><button type="button" data-l="it" aria-pressed="false">IT</button><button type="button" data-l="en" aria-pressed="false">EN</button></div>
   <header class="top">
-    <span class="logo" aria-hidden="true"><svg viewBox="60 70 392 340" width="30" height="26"><path d="M256 214 Q176 168 92 192 L92 366 Q176 342 256 388 Z" fill="currentColor"/><path d="M256 214 Q336 168 420 192 L420 366 Q336 342 256 388 Z" fill="currentColor" fill-opacity=".72"/><path d="M256 96 l30 36 l-30 36 l-30 -36 z" fill="#f2b84b"/></svg></span>
+    <span class="logo shp" aria-hidden="true"><svg viewBox="60 70 392 340" width="38" height="33"><path d="M256 214 Q176 168 92 192 L92 366 Q176 342 256 388 Z" fill="currentColor"/><path d="M256 214 Q336 168 420 192 L420 366 Q336 342 256 388 Z" fill="currentColor" fill-opacity=".72"/><path d="M256 96 l30 36 l-30 36 l-30 -36 z" fill="#f2b84b"/></svg></span>
     <div><h1>Colophon</h1>
     <p class="sub">Apri un EPUB, modifica metadati, copertina, stile e indice, poi salva. Il file resta sul tuo dispositivo.</p></div>
   </header>
+  </div>
 
   <label class="drop" id="drop" for="file">
     <strong>Scegli un file EPUB</strong>
@@ -159,8 +269,8 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
         <div class="fname" id="fname"></div>
         <div class="small" id="fsize"></div>
         <div class="actions" style="margin-top:12px">
-          <label class="btn ghost" for="coverfile">Cambia copertina</label>
-          <button class="btn" id="search" type="button">Cerca online</button>
+          <label data-i="add_photo_alternate" class="btn ghost" for="coverfile">Cambia copertina</label>
+          <button data-i="travel_explore" class="btn" id="search" type="button">Cerca online</button>
         </div>
       </div>
     </div>
@@ -189,7 +299,7 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
 
     <div class="optwrap">
     <div class="pvbox" id="pvbox"><div class="pvhead"><span class="small">Anteprima del primo capitolo con testo</span><button class="btn ghost sm" id="pv-toggle" type="button" aria-expanded="true">Nascondi</button></div><style id="pvstyle"></style><div id="pv"></div></div>
-    <details class="opt"><summary>Stile e impaginazione</summary>
+    <details class="opt t0"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-85 32-158t87.5-127q55.5-54 130-84.5T489-880q79 0 150 26.5T763.5-780q53.5 47 85 111.5T880-527q0 108-63 170.5T650-294h-75q-18 0-31 14t-13 31q0 27 14.5 46t14.5 44q0 38-21 58.5T480-80Zm0-400Zm-198 11q15-15 15-35t-15-35q-15-15-35-15t-35 15q-15 15-15 35t15 35q15 15 35 15t35-15Zm126-170q15-15 15-35t-15-35q-15-15-35-15t-35 15q-15 15-15 35t15 35q15 15 35 15t35-15Zm214 0q15-15 15-35t-15-35q-15-15-35-15t-35 15q-15 15-15 35t15 35q15 15 35 15t35-15Zm131 170q15-15 15-35t-15-35q-15-15-35-15t-35 15q-15 15-15 35t15 35q15 15 35 15t35-15ZM480-140q11 0 15.5-4.5T500-159q0-14-14.5-26T471-238q0-46 30-81t76-35h73q76 0 123-44.5T820-527q0-132-100-212.5T489-820q-146 0-247.5 98.5T140-480q0 141 99.5 240.5T480-140Z"/></svg></span><span>Stile e impaginazione</span></summary>
       <div class="small">Lascia vuoto per non cambiare nulla.</div>
       <div class="grid2">
         <div><label for="s-margin">Margini laterali (%)</label><input type="number" id="s-margin" step="any" min="0" max="20"></div>
@@ -204,110 +314,110 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
         <div><label for="s-heads">Titoli</label><select id="s-heads"><option value="">Invariati</option><option value="center">Centrati</option><option value="left">A sinistra</option></select></div>
       </div>
     </details>
-    <details class="opt"><summary>Carattere incorporato</summary>
+    <details class="opt t1"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M290-160v-540H80v-100h520v100H390v540H290Zm360 0v-340H520v-100h360v100H750v340H650Z"/></svg></span><span>Carattere incorporato</span></summary>
       <div class="small">Inserisce un carattere nel libro, così appare uguale su tutti i lettori. Usa solo caratteri di cui hai la licenza.</div>
-      <div class="actions" style="margin-top:12px"><label class="btn ghost" for="fo-file">Scegli i file del carattere</label><input type="file" id="fo-file" class="vh" accept=".ttf,.otf,.woff,.woff2" multiple><button class="btn ghost" id="fo-clear" type="button">Togli</button></div>
+      <div class="actions" style="margin-top:12px"><label data-i="upload_file" class="btn ghost" for="fo-file">Scegli i file del carattere</label><input type="file" id="fo-file" class="vh" accept=".ttf,.otf,.woff,.woff2" multiple><button data-i="close" class="btn ghost" id="fo-clear" type="button">Togli</button></div>
       <div class="small" id="fo-list" style="margin-top:8px"></div>
       <label for="fo-name">Nome del carattere</label>
       <input type="text" id="fo-name" placeholder="es. OpenDyslexic">
-      <label class="check"><input type="checkbox" id="fo-use" checked> Usalo per tutto il testo</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="fo-use" checked> Usalo per tutto il testo</label>
       <div class="small" style="margin-top:8px">Puoi scegliere più file insieme (normale, grassetto, corsivo): lo stile viene riconosciuto dal nome del file.</div>
     </details>
-    <details class="opt"><summary>Pulizia del testo</summary>
+    <details class="opt t2"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M120-40v-290q0-78.85 55.57-134.42Q231.15-520 310-520h60v-340q0-24.75 17.63-42.38Q405.25-920 430-920h100q24.75 0 42.38 17.62Q590-884.75 590-860v340h60q78.85 0 134.42 55.58Q840-408.85 840-330v290H120Zm60-60h105v-130q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v130h105v-130q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v130h105v-130q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v130h105v-230q0-54.17-37.92-92.08Q704.17-460 650-460H310q-54.17 0-92.08 37.92Q180-384.17 180-330v230Zm350-420v-340H430v340h100Zm0 0H430h100Z"/></svg></span><span>Pulizia del testo</span></summary>
       <label for="t-quotes">Virgolette</label>
       <select id="t-quotes"><option value="">Invariate</option><option value="it">Caporali «…»</option><option value="en">Inglesi “…”</option></select>
-      <label class="check"><input type="checkbox" id="t-apos"> Apostrofi tipografici (l’amico)</label>
-      <label class="check"><input type="checkbox" id="t-dots"> Tre puntini diventano …</label>
-      <label class="check"><input type="checkbox" id="t-spaces"> Elimina gli spazi doppi</label>
-      <label class="check"><input type="checkbox" id="t-punct"> Elimina lo spazio prima della punteggiatura</label>
-      <label class="check"><input type="checkbox" id="t-dash"> Dialoghi con trattino lungo (—)</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="t-apos"> Apostrofi tipografici (l’amico)</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="t-dots"> Tre puntini diventano …</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="t-spaces"> Elimina gli spazi doppi</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="t-punct"> Elimina lo spazio prima della punteggiatura</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="t-dash"> Dialoghi con trattino lungo (—)</label>
     </details>
 
-    <details class="opt"><summary>Pulizia da scansione (OCR)</summary>
+    <details class="opt t0"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M80-745v-175h175v60H140v115H80Zm740 0v-115H705v-60h175v175h-60ZM80-40v-175h60v115h115v60H80Zm625 0v-60h115v-115h60v175H705ZM260-220h440v-520H260v520Zm0 60q-24 0-42-18t-18-42v-520q0-24 18-42t42-18h440q24 0 42 18t18 42v520q0 24-18 42t-42 18H260Zm110-410h220v-60H370v60Zm0 120h220v-60H370v60Zm0 120h220v-60H370v60ZM260-220v-520 520Z"/></svg></span><span>Pulizia da scansione (OCR)</span></summary>
       <div class="small">Per libri convertiti da PDF o da scansioni. «Analizza» mostra cosa verrebbe corretto, senza cambiare nulla.</div>
-      <label class="check"><input type="checkbox" id="t-hyph"> Unisci le parole spezzate dal trattino a fine riga</label>
-      <label class="check"><input type="checkbox" id="t-merge"> Unisci i paragrafi interrotti a metà frase</label>
-      <label class="check"><input type="checkbox" id="t-pages"> Togli i numeri di pagina isolati</label>
-      <div class="actions"><button class="btn ghost" id="sc-run" type="button">Analizza il libro</button></div>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="t-hyph"> Unisci le parole spezzate dal trattino a fine riga</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="t-merge"> Unisci i paragrafi interrotti a metà frase</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="t-pages"> Togli i numeri di pagina isolati</label>
+      <div class="actions"><button data-i="manage_search" class="btn ghost" id="sc-run" type="button">Analizza il libro</button></div>
       <div class="small" id="sc-out" style="margin-top:8px"></div>
       <div id="sc-list"></div>
     </details>
 
-    <details class="opt"><summary>Cerca, sostituisci ed elimina</summary>
+    <details class="opt t1"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M796-121 533-384q-30 26-70 40.5T378-329q-108 0-183-75t-75-181q0-106 75-181t182-75q106 0 180.5 75T632-585q0 43-14 83t-42 75l264 262-44 44ZM377-389q81 0 138-57.5T572-585q0-81-57-138.5T377-781q-82 0-139.5 57.5T180-585q0 81 57.5 138.5T377-389Z"/></svg></span><span>Cerca, sostituisci ed elimina</span></summary>
       <label for="r-del">Elimina questi testi <span class="small">(uno per riga)</span></label>
       <textarea id="r-del" style="min-height:70px"></textarea>
       <label for="r-rep">Sostituisci <span class="small">(una regola per riga: cerca =&gt; sostituisci)</span></label>
       <textarea id="r-rep" style="min-height:70px"></textarea>
-      <label class="check"><input type="checkbox" id="r-case"> Distingui maiuscole e minuscole</label>
-      <label class="check"><input type="checkbox" id="r-rx"> Usa espressioni regolari (avanzato)</label>
-      <div class="actions"><button class="btn ghost" id="r-count" type="button">Conta le occorrenze</button></div>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="r-case"> Distingui maiuscole e minuscole</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="r-rx"> Usa espressioni regolari (avanzato)</label>
+      <div class="actions"><button data-i="tag" class="btn ghost" id="r-count" type="button">Conta le occorrenze</button></div>
       <div class="small" id="r-out" style="margin-top:8px"></div>
     </details>
-    <details class="opt"><summary>Controllo ortografico</summary>
+    <details class="opt t2"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M563-80 404-239l42-42 117 117 240-240 42 42L563-80ZM120-312l200-527h66l200 527h-67l-54-142H238l-54 142h-64Zm137-200h189l-92-254h-5l-92 254Z"/></svg></span><span>Controllo ortografico</span></summary>
       <div class="small">Cerca le parole che non sono nel dizionario e propone una correzione. Scegli tu quali applicare: la correzione vale per tutto il libro e viene scritta quando salvi.</div>
       <label for="sp-lang">Dizionario</label>
       <select id="sp-lang"><option value="it">Italiano</option><option value="en">English</option></select>
-      <label class="check"><input type="checkbox" id="sp-names" checked> Ignora le parole con l'iniziale maiuscola (nomi propri)</label>
-      <div class="actions"><button class="btn ghost" id="sp-run" type="button">Controlla l'ortografia</button></div>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="sp-names" checked> Ignora le parole con l'iniziale maiuscola (nomi propri)</label>
+      <div class="actions"><button data-i="spellcheck" class="btn ghost" id="sp-run" type="button">Controlla l'ortografia</button></div>
       <div class="small" id="sp-out" style="margin-top:8px"></div>
       <div class="actions" id="sp-bulk" style="display:none"><button class="btn ghost sm" id="sp-all" type="button">Seleziona tutte</button><button class="btn ghost sm" id="sp-none" type="button">Deseleziona tutte</button><button class="btn ghost sm" id="sp-reset" type="button">Dimentica le parole ignorate</button></div>
       <div id="sp-list"></div>
     </details>
     </div>
-    <details class="opt"><summary>Preset di stile</summary>
+    <details class="opt t0"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M200-120v-665q0-24 18-42t42-18h440q24 0 42 18t18 42v665L480-240 200-120Zm60-91 220-93 220 93v-574H260v574Zm0-574h440-440Z"/></svg></span><span>Preset di stile</span></summary>
       <div class="small">Salva le impostazioni di stile, pulizia e ricerca per riapplicarle ad altri libri.</div>
       <label for="p-name">Nome del preset</label>
       <input type="text" id="p-name" placeholder="es. Romanzi">
-      <div class="actions" style="margin-top:10px"><button class="btn ghost" id="p-save" type="button">Salva preset</button></div>
+      <div class="actions" style="margin-top:10px"><button data-i="bookmark_add" class="btn ghost" id="p-save" type="button">Salva preset</button></div>
       <label for="p-sel">Preset salvati</label>
       <select id="p-sel"></select>
-      <div class="actions" style="margin-top:10px"><button class="btn ghost" id="p-apply" type="button">Applica</button><button class="btn ghost" id="p-del" type="button">Elimina</button></div>
+      <div class="actions" style="margin-top:10px"><button data-i="check" class="btn ghost" id="p-apply" type="button">Applica</button><button data-i="delete" class="btn ghost" id="p-del" type="button">Elimina</button></div>
     </details>
-    <details class="opt"><summary>Pulizia dello stile del libro</summary>
+    <details class="opt t1"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="m507-524-77-76 24-56h-79L271-760h529v100H565l-58 136ZM806-56 457-406l-88 206H260l120-282L56-806l42-42L848-98l-42 42Z"/></svg></span><span>Pulizia dello stile del libro</span></summary>
       <div class="small">Toglie ciò che l'editore ha imposto, così il tuo lettore usa le sue impostazioni.</div>
-      <label class="check"><input type="checkbox" id="c-color"> Togli i colori (testo e sfondo)</label>
-      <label class="check"><input type="checkbox" id="c-font"> Togli caratteri e dimensioni imposti</label>
-      <label class="check"><input type="checkbox" id="c-all"> Togli tutti i fogli di stile e gli stili nel testo</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="c-color"> Togli i colori (testo e sfondo)</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="c-font"> Togli caratteri e dimensioni imposti</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="c-all"> Togli tutti i fogli di stile e gli stili nel testo</label>
     </details>
-    <details class="opt"><summary>Ottimizza le immagini</summary>
+    <details class="opt t2"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z"/></svg></span><span>Ottimizza le immagini</span></summary>
       <div class="small">Ricomprime le immagini (copertina compresa) per ridurre il peso del file. Le immagini già leggere non vengono toccate.</div>
       <label for="i-width">Larghezza massima</label>
       <select id="i-width"><option value="">Invariata</option><option value="800">800 px</option><option value="1000">1000 px</option><option value="1200">1200 px</option><option value="1600">1600 px</option><option value="2000">2000 px</option></select>
       <label for="i-q">Qualità JPG</label>
       <select id="i-q"><option value="">Non ottimizzare</option><option value="0.6">Bassa (60)</option><option value="0.75">Media (75)</option><option value="0.85">Alta (85)</option><option value="0.92">Molto alta (92)</option></select>
-      <div class="actions"><button class="btn ghost" id="i-run" type="button">Calcola il risparmio</button></div>
+      <div class="actions"><button data-i="compress" class="btn ghost" id="i-run" type="button">Calcola il risparmio</button></div>
       <div class="small" id="i-out" style="margin-top:8px"></div>
     </details>
-    <details class="opt"><summary>EPUB 3 e accessibilità</summary>
+    <details class="opt t0"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M428.5-755.5Q407-777 407-807t21.5-51.5Q450-880 480-880t51.5 21.5Q553-837 553-807t-21.5 51.5Q510-734 480-734t-51.5-21.5ZM373-80v-533q-68-5-131.5-14T120-650l15-60q85 20 169 28.5t176 8.5q92 0 176-8.5T825-710l15 60q-58 14-121.5 23T587-613v533h-60v-260h-94v260h-60Z"/></svg></span><span>EPUB 3 e accessibilità</span></summary>
       <div class="small" id="a-ver"></div>
-      <label class="check"><input type="checkbox" id="a-v3"> Aggiorna a EPUB 3 (l'indice resta compatibile con i vecchi lettori)</label>
-      <label class="check"><input type="checkbox" id="a-lang"> Imposta la lingua del libro in ogni pagina</label>
-      <label class="check"><input type="checkbox" id="a-meta"> Aggiungi i metadati di accessibilità (aggiorna anche a EPUB 3)</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="a-v3"> Aggiorna a EPUB 3 (l'indice resta compatibile con i vecchi lettori)</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="a-lang"> Imposta la lingua del libro in ogni pagina</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="a-meta"> Aggiungi i metadati di accessibilità (aggiorna anche a EPUB 3)</label>
       <div class="small" style="margin-top:8px">I metadati dichiarano ciò che l'app riconosce nel libro: testo, immagini, indice e ordine di lettura.</div>
-      <div class="actions"><button class="btn ghost" id="a-alt" type="button">Cerca le immagini senza descrizione</button></div>
+      <div class="actions"><button data-i="image_search" class="btn ghost" id="a-alt" type="button">Cerca le immagini senza descrizione</button></div>
       <div class="small" id="a-out" style="margin-top:8px"></div>
       <div id="a-list"></div>
     </details>
-    <details class="opt"><summary>Indice del libro</summary>
+    <details class="opt t1"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M377-198v-60h463v60H377Zm0-252v-60h463v60H377Zm0-253v-60h463v60H377ZM189-161q-28.05 0-48.02-19Q121-199 121-227.5t19.5-48q19.5-19.5 48-19.5t47.5 19.98q19 19.97 19 48.02 0 27.23-19.39 46.61Q216.23-161 189-161Zm0-252q-28.05 0-48.02-19.5Q121-452 121-480t19.98-47.5Q160.95-547 189-547q27.23 0 46.61 19.5Q255-508 255-480t-19.39 47.5Q216.23-413 189-413Zm-48.5-272.5Q121-705 121-733t19.5-47.5Q160-800 188-800t47.5 19.5Q255-761 255-733t-19.5 47.5Q216-666 188-666t-47.5-19.5Z"/></svg></span><span>Indice del libro</span></summary>
       <div class="small">Rinomina, sposta o elimina le voci. Il rientro mostra il livello.</div>
       <div id="toc"></div>
-      <div class="actions"><button class="btn ghost" id="toc-gen" type="button">Rigenera dai capitoli</button></div>
+      <div class="actions"><button data-i="autorenew" class="btn ghost" id="toc-gen" type="button">Rigenera dai capitoli</button></div>
     </details>
-    <details class="opt"><summary>Controllo del libro</summary>
-      <div class="actions" style="margin-top:0;padding-top:10px"><button class="btn ghost" id="check" type="button">Controlla il libro</button></div>
+    <details class="opt t2"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="m346-60-76-130-151-31 17-147-96-112 96-111-17-147 151-31 76-131 134 62 134-62 77 131 150 31-17 147 96 111-96 112 17 147-150 31-77 130-134-62-134 62Zm27-79 107-45 110 45 67-100 117-30-12-119 81-92-81-94 12-119-117-28-69-100-108 45-110-45-67 100-117 28 12 119-81 94 81 92-12 121 117 28 70 100Zm107-341Zm-43 133 227-225-45-41-182 180-95-99-46 45 141 140Z"/></svg></span><span>Controllo del libro</span></summary>
+      <div class="actions" style="margin-top:0;padding-top:10px"><button data-i="verified" class="btn ghost" id="check" type="button">Controlla il libro</button></div>
       <div id="report" class="small" style="margin-top:10px"></div>
     </details>
-    <details class="opt"><summary>Statistiche del libro</summary>
-      <div class="actions" style="margin-top:0;padding-top:10px"><button class="btn ghost" id="stats-btn" type="button">Calcola</button></div>
+    <details class="opt t0"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M284-277h60v-205h-60v205Zm332 0h60v-420h-60v420Zm-166 0h60v-118h-60v118Zm0-205h60v-60h-60v60ZM180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm0-600v600-600Z"/></svg></span><span>Statistiche del libro</span></summary>
+      <div class="actions" style="margin-top:0;padding-top:10px"><button data-i="calculate" class="btn ghost" id="stats-btn" type="button">Calcola</button></div>
       <div id="stats" class="small" style="margin-top:10px"></div>
     </details>
-    <label class="check"><input type="checkbox" id="rename" checked> Rinomina il file con questo modello</label>
+    <label class="check sw-row"><input class="sw" type="checkbox" id="rename" checked> Rinomina il file con questo modello</label>
     <input type="text" id="f-tpl" value="{autore} - {titolo}" aria-label="Modello del nome del file">
     <div class="small">Puoi usare {autore} {titolo} {serie} {numero} {anno}</div>
 
     <div class="actions savebar">
-      <button class="btn" id="save" type="button">Salva EPUB</button>
-      <button class="btn ghost" id="another" type="button">Apri un altro file</button>
+      <button data-i="save" class="btn" id="save" type="button">Salva EPUB</button>
+      <button data-i="folder_open" class="btn ghost" id="another" type="button">Apri un altro file</button>
     </div>
   </section>
   <div class="msg" id="msg" role="status"></div>
@@ -317,7 +427,7 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
     <h2 id="rv-title">Riepilogo delle modifiche</h2>
     <div class="small">Togli la spunta alle modifiche che non vuoi applicare.</div>
     <div class="rv-body" id="rv-body"></div>
-    <div class="ob-btns" style="grid-template-columns:1fr 1fr;margin-top:6px"><button class="btn" id="rv-ok" type="button">Salva EPUB</button><button class="btn ghost" id="rv-cancel" type="button">Torna indietro</button></div>
+    <div class="ob-btns" style="grid-template-columns:1fr 1fr;margin-top:6px"><button data-i="save" class="btn" id="rv-ok" type="button">Salva EPUB</button><button data-i="arrow_back" class="btn ghost" id="rv-cancel" type="button">Torna indietro</button></div>
   </div>
 </div>
 <div class="ob" id="onboard" role="dialog" aria-modal="true" aria-labelledby="ob-title" data-notr hidden>
@@ -1349,8 +1459,8 @@ input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{outl
       var inp = document.createElement("input"); inp.type = "text"; inp.value = e.label;
       inp.addEventListener("input", function () { e.label = inp.value; tocDirty = true; });
       row.appendChild(inp);
-      [["↑", -1, "Sposta su"], ["↓", 1, "Sposta giù"], ["←", "l", "Livello precedente"], ["→", "r", "Livello successivo"], ["✕", "x", "Elimina"]].forEach(function (b) {
-        var bt = document.createElement("button"); bt.type = "button"; bt.className = "btn ghost sm"; bt.textContent = b[0]; bt.title = T(b[2]); bt.setAttribute("aria-label", T(b[2]));
+      [["arrow_upward", -1, "Sposta su"], ["arrow_downward", 1, "Sposta giù"], ["format_indent_decrease", "l", "Livello precedente"], ["format_indent_increase", "r", "Livello successivo"], ["close", "x", "Elimina"]].forEach(function (b) {
+        var bt = document.createElement("button"); bt.type = "button"; bt.className = "btn ghost sm"; bt.setAttribute("data-i", b[0]); bt.title = T(b[2]); bt.setAttribute("aria-label", T(b[2]));
         bt.addEventListener("click", function () {
           var k = b[1];
           if (k === "x") toc.splice(i, 1);
