@@ -1,4 +1,4 @@
-var C = "colophon-v6";
+var C = "colophon-v8";
 var SHELL = ["./", "index.html", "manifest.webmanifest", "icon.svg", "icon-192.png", "icon-512.png",
   "hunspell.bundle.js", "dict/it.aff", "dict/it.dic", "dict/en.aff", "dict/en.dic",
   "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"];
