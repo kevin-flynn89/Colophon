@@ -162,6 +162,23 @@ input[type=checkbox]:focus-visible{outline-offset:3px}
 [data-i="upload_file"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M452-202h60v-201l82 82 42-42-156-152-154 154 42 42 84-84v201ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h361l219 219v521q0 24-18 42t-42 18H220Zm331-554v-186H220v680h520v-494H551ZM220-820v186-186 680-680Z'/%3E%3C/svg%3E")}
 [data-i="verified"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m346-60-76-130-151-31 17-147-96-112 96-111-17-147 151-31 76-131 134 62 134-62 77 131 150 31-17 147 96 111-96 112 17 147-150 31-77 130-134-62-134 62Zm27-79 107-45 110 45 67-100 117-30-12-119 81-92-81-94 12-119-117-28-69-100-108 45-110-45-67 100-117 28 12 119-81 94 81 92-12 121 117 28 70 100Zm107-341Zm-43 133 227-225-45-41-182 180-95-99-46 45 141 140Z'/%3E%3C/svg%3E")}
 
+[data-i="compare"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M422-40v-80H180q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h242v-80h60v880h-60ZM180-222h242v-277L180-222Zm362 102v-375l238 273v-558H542v-60h238q24 0 42 18t18 42v600q0 24-18 42t-42 18H542Z'/%3E%3C/svg%3E")}
+[data-i="difference"]{--mi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M490-526h60v-84h84v-60h-84v-84h-60v84h-84v60h84v84Zm-84 156h228v-60H406v60ZM260-160q-24 0-42-18t-18-42v-640q0-24 18-42t42-18h348l232 232v468q0 24-18 42t-42 18H260Zm0-60h520v-442L578-860H260v640ZM140-40q-24 0-42-18t-18-42v-619h60v619h498v60H140Zm120-180v-640 640Z'/%3E%3C/svg%3E")}
+/* --- confronto prima/dopo --- */
+:root{--cmp-add-bg:#c4efcf;--cmp-add:#00210c}
+@media (prefers-color-scheme:dark){:root{--cmp-add-bg:#1d4a2e;--cmp-add:#c4efcf}}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px}
+.seg .btn[aria-pressed=true]{background:var(--md-primary);color:var(--md-on-primary)}
+.cmpv{margin-top:12px;max-height:62vh;overflow:auto;background:var(--md-surface);border:1px solid var(--md-outline-variant);border-radius:20px;padding:14px 16px;font:400 1rem/1.6 Georgia,"Times New Roman",serif;overflow-wrap:anywhere}
+.cmpv p{margin:0 0 .7em}
+.cmp-same{opacity:.55}
+.cmp-chg{border-left:4px solid var(--md-primary);padding-left:10px;margin:.4em 0 .9em}
+.cmp-gap{font:500 .8125rem/1.3 "Roboto Flex",system-ui,sans-serif;color:var(--md-on-surface-variant);text-align:center;padding:6px 0;opacity:.8}
+.cd{background:var(--md-error-container);color:var(--md-on-error-container);border-radius:4px;padding:0 2px}
+.ca{background:var(--cmp-add-bg);color:var(--cmp-add);border-radius:4px;padding:0 2px}
+.m-diff .cd{text-decoration:line-through}
+.pil{font-weight:700}
+
 /* --- pulsanti --- */
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;font:600 .9375rem/1 "Roboto Flex",system-ui,sans-serif;letter-spacing:.01em;background:var(--md-primary);color:var(--md-on-primary);border:0;border-radius:999px;cursor:pointer;position:relative;overflow:hidden;transition:border-radius .35s var(--ease),transform .2s var(--ease),box-shadow .2s,filter .2s}
@@ -415,6 +432,19 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
       <div class="actions" style="margin-top:0;padding-top:10px"><button data-i="calculate" class="btn ghost" id="stats-btn" type="button">Calcola</button></div>
       <div id="stats" class="small" style="margin-top:10px"></div>
     </details>
+    <details class="opt t1" id="cmp-sec"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M422-40v-80H180q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h242v-80h60v880h-60ZM180-222h242v-277L180-222Zm362 102v-375l238 273v-558H542v-60h238q24 0 42 18t18 42v600q0 24-18 42t-42 18H542Z"/></svg></span><span>Confronto prima e dopo</span></summary>
+      <div class="small">Mostra capitolo per capitolo come cambia il testo con le opzioni impostate (pulizia, cerca e sostituisci, ortografia, scansione). Le modifiche di stile si vedono nell'anteprima in alto.</div>
+      <div class="actions"><button data-i="difference" class="btn ghost" id="cmp-run" type="button">Confronta</button></div>
+      <div class="small" id="cmp-info" style="margin-top:8px"></div>
+      <div id="cmp-ctl" style="display:none">
+        <label for="cmp-ch">Capitolo da vedere</label>
+        <select id="cmp-ch"></select>
+        <div class="seg" id="cmp-seg"><button type="button" class="btn ghost sm" data-m="diff" aria-pressed="true">Differenze</button><button type="button" class="btn ghost sm" data-m="prima" aria-pressed="false">Prima</button><button type="button" class="btn ghost sm" data-m="dopo" aria-pressed="false">Dopo</button></div>
+        <label class="check sw-row"><input class="sw" type="checkbox" id="cmp-same"> Mostra anche il testo invariato</label>
+        <div class="small">Rosso: testo tolto · Verde: testo aggiunto · ¶ = a capo</div>
+        <div id="cmp-view" class="cmpv"></div>
+      </div>
+    </details>
     <label class="check sw-row"><input class="sw" type="checkbox" id="rename" checked> Rinomina il file con questo modello</label>
     <input type="text" id="f-tpl" value="{autore} - {titolo}" aria-label="Modello del nome del file">
     <div class="small">Puoi usare {autore} {titolo} {serie} {numero} {anno}</div>
@@ -431,6 +461,7 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
     <h2 id="rv-title">Riepilogo delle modifiche</h2>
     <div class="small">Togli la spunta alle modifiche che non vuoi applicare.</div>
     <div class="rv-body" id="rv-body"></div>
+    <button data-i="compare" class="btn ghost" id="rv-cmp" type="button" style="width:100%;margin-top:10px">Confronta il testo prima e dopo</button>
     <div class="ob-btns" style="grid-template-columns:1fr 1fr;margin-top:6px"><button data-i="save" class="btn" id="rv-ok" type="button">Salva EPUB</button><button data-i="arrow_back" class="btn ghost" id="rv-cancel" type="button">Torna indietro</button></div>
   </div>
 </div>
@@ -515,7 +546,7 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
   function plain(s) { return s ? (new DOMParser().parseFromString(s, "text/html").body.textContent || "").trim() : ""; }
 
   async function openFile(file) {
-    IMG.cache = null;
+    IMG.cache = null; cmpReset();
     say(T("Apro il file…"));
     try {
       if (typeof JSZip === "undefined") { say(T("Libreria non caricata. Ricarica la pagina."), true); return; }
@@ -1080,6 +1111,181 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
     closeReview(); await save(sk);
   });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("review").hidden) closeReview(); });
+
+  // ---- Confronto prima e dopo ----
+  Object.assign(EN, {
+    "Confronto prima e dopo": "Before and after comparison",
+    "Mostra capitolo per capitolo come cambia il testo con le opzioni impostate (pulizia, cerca e sostituisci, ortografia, scansione). Le modifiche di stile si vedono nell'anteprima in alto.": "Shows, chapter by chapter, how the text changes with the options you set (cleanup, find and replace, spelling, scan). Style changes show in the preview at the top.",
+    "Confronta": "Compare", "Capitolo da vedere": "Chapter to view", "Differenze": "Differences", "Prima": "Before", "Dopo": "After",
+    "Mostra anche il testo invariato": "Also show unchanged text",
+    "Confronto in corso…": "Comparing…",
+    "Nessuna opzione di testo attiva: imposta almeno una pulizia o una regola e riprova.": "No text option is active: set at least one cleanup or rule and try again.",
+    "Nessuna differenza nel testo: le opzioni attive non cambiano nulla.": "No difference in the text: the active options change nothing.",
+    "Punti modificati: {0} · capitoli interessati: {1} su {2}": "Changed spots: {0} · chapters affected: {1} of {2}",
+    "{0} modifiche": "{0} changes", "1 modifica": "1 change", "nessuna modifica": "no changes",
+    "Nessuna modifica in questo capitolo.": "No changes in this chapter.",
+    "{0} paragrafi invariati": "{0} unchanged paragraphs", "1 paragrafo invariato": "1 unchanged paragraph",
+    "Rosso: testo tolto · Verde: testo aggiunto · ¶ = a capo": "Red: text removed · Green: text added · ¶ = paragraph break",
+    "Confronta il testo prima e dopo": "Compare the text before and after",
+    "Non riesco a completare il confronto.": "I couldn't complete the comparison."
+  });
+  var CMP = null, CMPMODE = "diff";
+  function cmpReset() { CMP = null; var v = $("cmp-view"); if (v) { v.textContent = ""; $("cmp-info").textContent = ""; $("cmp-ctl").style.display = "none"; } }
+  function cmpNorm(s) { return s.replace(/\s*\n\s*/g, " ").replace(/^\s+|\s+$/g, ""); }
+  function cmpBlocks(d) {
+    var root = d.getElementsByTagName("body")[0], out = [];
+    if (!root) return out;
+    var sel = "p,h1,h2,h3,h4,h5,h6,li,blockquote,td,th,dd,dt,div,pre,figcaption";
+    Array.prototype.forEach.call(root.querySelectorAll(sel), function (e) {
+      if (e.querySelector(sel)) return;
+      var t = cmpNorm(e.textContent || ""); if (t) out.push(t);
+    });
+    if (!out.length) { var t0 = cmpNorm(root.textContent || ""); if (t0) out.push(t0); }
+    return out;
+  }
+  function lcsDiff(a, b) {
+    var s = 0, ops = [];
+    while (s < a.length && s < b.length && a[s] === b[s]) s++;
+    var ea = a.length, eb = b.length;
+    while (ea > s && eb > s && a[ea - 1] === b[eb - 1]) { ea--; eb--; }
+    function push(t, v) {
+      if (!v.length) return;
+      var l = ops[ops.length - 1];
+      if (l && l.t === t) l.v = l.v.concat(v); else ops.push({ t: t, v: v });
+    }
+    push("eq", a.slice(0, s));
+    var A = a.slice(s, ea), B = b.slice(s, eb), n = A.length, m = B.length;
+    if (n && m && n * m <= 4000000) {
+      var W = m + 1, L = new Uint16Array((n + 1) * W), i, j;
+      for (i = n - 1; i >= 0; i--) for (j = m - 1; j >= 0; j--)
+        L[i * W + j] = A[i] === B[j] ? L[(i + 1) * W + j + 1] + 1 : Math.max(L[(i + 1) * W + j], L[i * W + j + 1]);
+      i = 0; j = 0;
+      while (i < n && j < m) {
+        if (A[i] === B[j]) { push("eq", [A[i]]); i++; j++; }
+        else if (L[(i + 1) * W + j] >= L[i * W + j + 1]) { push("del", [A[i]]); i++; }
+        else { push("ins", [B[j]]); j++; }
+      }
+      push("del", A.slice(i)); push("ins", B.slice(j));
+    } else { push("del", A); push("ins", B); }
+    push("eq", a.slice(ea));
+    return ops;
+  }
+  function cmpTok(paras) { return paras.join("\u0001").match(/\u0001|\s+|[^\s\u0001]+/g) || []; }
+  function cmpItems(a, b) {
+    var ops = lcsDiff(a, b), items = [], dl = [], ins = [], changes = 0;
+    function flush() {
+      if (!dl.length && !ins.length) return;
+      changes++;
+      items.push({ pure: !(dl.length && ins.length), parts: lcsDiff(cmpTok(dl), cmpTok(ins)) });
+      dl = []; ins = [];
+    }
+    ops.forEach(function (o) {
+      if (o.t === "eq") { flush(); items.push({ same: o.v }); }
+      else if (o.t === "del") dl = dl.concat(o.v); else ins = ins.concat(o.v);
+    });
+    flush();
+    return { items: items, changes: changes };
+  }
+  function spineXhtml() {
+    var byId = {}, order = [];
+    items().forEach(function (i) { byId[i.getAttribute("id")] = i; });
+    Array.prototype.forEach.call(doc.getElementsByTagNameNS(OPF, "itemref"), function (r) {
+      var it = byId[r.getAttribute("idref")];
+      if (it && it.getAttribute("media-type") === "application/xhtml+xml" && order.indexOf(it) < 0) order.push(it);
+    });
+    return order.length ? order : xhtmlItems();
+  }
+  async function cmpRun() {
+    if (!zip) return;
+    var o = readOpts(), info = $("cmp-info"), view = $("cmp-view"), ctl = $("cmp-ctl");
+    view.textContent = ""; ctl.style.display = "none"; CMP = null;
+    if (!(o.quotes || o.apos || o.dots || o.spaces || o.punct || o.dash || o.rules.length || o.scanOn)) { info.textContent = T("Nessuna opzione di testo attiva: imposta almeno una pulizia o una regola e riprova."); return; }
+    info.textContent = T("Confronto in corso…");
+    try {
+      var dp = new DOMParser(), list = spineXhtml(), res = [], tot = 0, aff = 0;
+      for (var k = 0; k < list.length; k++) {
+        var href = list[k].getAttribute("href"), f = zip.file(resolve(href));
+        if (!f) continue;
+        var src = await f.async("string"), d0 = dp.parseFromString(src, "application/xml");
+        if (d0.getElementsByTagName("parsererror").length) continue;
+        var d1 = dp.parseFromString(src, "application/xml");
+        fixDoc(d1, o);
+        var r = cmpItems(cmpBlocks(d0), cmpBlocks(d1)), h = d0.getElementsByTagName("h1")[0] || d0.getElementsByTagName("h2")[0] || d0.getElementsByTagName("h3")[0];
+        var lab = h ? cmpNorm(h.textContent || "") : "";
+        if (!lab) lab = href.split("/").pop();
+        if (lab.length > 48) lab = lab.slice(0, 47) + "…";
+        res.push({ label: lab, items: r.items, changes: r.changes });
+        tot += r.changes; if (r.changes) aff++;
+        if (k % 4 === 3) await new Promise(function (ok) { setTimeout(ok, 0); });
+      }
+      if (!tot) { info.textContent = T("Nessuna differenza nel testo: le opzioni attive non cambiano nulla."); return; }
+      CMP = res;
+      var sel = $("cmp-ch"), first = -1; sel.textContent = "";
+      res.forEach(function (c, i) {
+        var op = document.createElement("option");
+        op.value = i; op.textContent = (i + 1) + ". " + c.label + " — " + (c.changes === 0 ? T("nessuna modifica") : c.changes === 1 ? T("1 modifica") : TF("{0} modifiche", c.changes));
+        sel.appendChild(op); if (first < 0 && c.changes) first = i;
+      });
+      sel.value = first;
+      info.textContent = TF("Punti modificati: {0} · capitoli interessati: {1} su {2}", tot, aff, res.length);
+      ctl.style.display = ""; cmpShow();
+    } catch (e) { info.textContent = T("Non riesco a completare il confronto."); }
+  }
+  function cmpChg(it, mode, host) {
+    var p = null;
+    function put(n) { if (!p) { p = document.createElement("p"); host.appendChild(p); } p.appendChild(n); }
+    it.parts.forEach(function (pt) {
+      pt.v.forEach(function (tk) {
+        if (tk === "\u0001") {
+          if (it.pure) { if ((pt.t === "del" && mode === "dopo") || (pt.t === "ins" && mode === "prima")) return; p = null; return; }
+          if (mode === "diff" && pt.t !== "eq") { var m = document.createElement("span"); m.className = (pt.t === "del" ? "cd" : "ca") + " pil"; m.textContent = "¶"; put(m); return; }
+          if (pt.t === "eq" || (mode === "prima" && pt.t === "del") || (mode === "dopo" && pt.t === "ins")) p = null;
+          return;
+        }
+        if (pt.t === "eq") { put(document.createTextNode(tk)); return; }
+        if ((pt.t === "del" && mode === "dopo") || (pt.t === "ins" && mode === "prima")) return;
+        var s = document.createElement("span"); s.className = pt.t === "del" ? "cd" : "ca";
+        s.textContent = /^\s+$/.test(tk) ? tk.replace(/\s/g, "·") : tk; put(s);
+      });
+    });
+  }
+  function cmpShow() {
+    var view = $("cmp-view"); view.textContent = ""; view.className = "cmpv m-" + CMPMODE;
+    if (!CMP) return;
+    var c = CMP[+$("cmp-ch").value], all = $("cmp-same").checked, gap = 0;
+    if (!c || !c.changes) { view.textContent = T("Nessuna modifica in questo capitolo."); return; }
+    function flushGap() {
+      if (!gap) return;
+      var g = document.createElement("div"); g.className = "cmp-gap";
+      g.textContent = gap === 1 ? T("1 paragrafo invariato") : TF("{0} paragrafi invariati", gap);
+      view.appendChild(g); gap = 0;
+    }
+    c.items.forEach(function (it) {
+      if (it.same) {
+        if (all) it.same.forEach(function (t) { var p = document.createElement("p"); p.className = "cmp-same"; p.textContent = t; view.appendChild(p); });
+        else gap += it.same.length;
+        return;
+      }
+      flushGap();
+      var box = document.createElement("div"); box.className = "cmp-chg"; cmpChg(it, CMPMODE, box);
+      if (box.childNodes.length) view.appendChild(box);
+    });
+    flushGap();
+  }
+  $("cmp-run").addEventListener("click", cmpRun);
+  $("cmp-ch").addEventListener("change", cmpShow);
+  $("cmp-same").addEventListener("change", cmpShow);
+  Array.prototype.forEach.call(document.querySelectorAll("#cmp-seg button"), function (b) {
+    b.addEventListener("click", function () {
+      CMPMODE = b.getAttribute("data-m");
+      Array.prototype.forEach.call(document.querySelectorAll("#cmp-seg button"), function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      cmpShow();
+    });
+  });
+  $("rv-cmp").addEventListener("click", function () {
+    closeReview(); var s = $("cmp-sec"); s.open = true;
+    s.scrollIntoView({ behavior: "smooth", block: "start" }); cmpRun();
+  });
 
   // ---- Carattere incorporato ----
   var FONTS = [], PF = [];

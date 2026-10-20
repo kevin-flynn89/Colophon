@@ -96,6 +96,7 @@ Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (O
 - **Indice:** rinomina, sposta, cambia livello o elimina le voci; rigenera l'indice dai capitoli
 - **Controllo del libro:** segnala file mancanti o non dichiarati, collegamenti e immagini rotti, codice non valido, dati mancanti
 - **Statistiche:** capitoli, parole e tempo di lettura stimato
+- **Confronto prima e dopo:** capitolo per capitolo, con le differenze evidenziate (rosso = tolto, verde = aggiunto) e la possibilità di vedere solo "prima" o solo "dopo"
 
 **Interfaccia**
 - **Italiano e inglese:** al primo avvio propone la lingua del dispositivo; si cambia in ogni momento con i pulsanti IT / EN
@@ -174,6 +175,7 @@ An EPUB is a ZIP archive of XHTML pages, images and a description file (OPF). Co
 - **Table of contents:** rename, move, change level or delete entries; regenerate it from the chapters
 - **Book check:** reports missing or undeclared files, broken links and images, invalid markup, missing data
 - **Statistics:** chapters, words and estimated reading time
+- **Before and after comparison:** chapter by chapter, with differences highlighted (red = removed, green = added) and a "before" or "after" only view
 
 **Interface**
 - **Italian and English:** on first launch it proposes your device's language; switch at any time with the IT / EN buttons
