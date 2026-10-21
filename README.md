@@ -98,6 +98,8 @@ Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (O
 - **Statistiche:** capitoli, parole e tempo di lettura stimato
 - **Confronto prima e dopo:** capitolo per capitolo, con le differenze evidenziate (rosso = tolto, verde = aggiunto) e la possibilità di vedere solo "prima" o solo "dopo"
 - **Editor dei capitoli:** elimina capitoli inutili, cambia l'ordine, unisci o dividi capitoli, correggi il testo a mano; collegamenti e indice vengono aggiornati da soli
+- **Titoli e struttura:** trova i titoli scritti come testo semplice (grassetto, maiuscolo, «Capitolo 3») e li trasforma in veri titoli, aggiungendoli anche all'indice
+- **Pulizia del codice:** toglie span inutili, tratti di formattazione spezzati, paragrafi vuoti, a capo doppi, commenti e attributi vuoti
 
 **Interfaccia**
 - **Italiano e inglese:** al primo avvio propone la lingua del dispositivo; si cambia in ogni momento con i pulsanti IT / EN
@@ -178,6 +180,8 @@ An EPUB is a ZIP archive of XHTML pages, images and a description file (OPF). Co
 - **Statistics:** chapters, words and estimated reading time
 - **Before and after comparison:** chapter by chapter, with differences highlighted (red = removed, green = added) and a "before" or "after" only view
 - **Chapter editor:** delete unwanted chapters, reorder, merge or split chapters, fix text by hand; links and table of contents are updated automatically
+- **Headings and structure:** finds headings written as plain text (bold, uppercase, “Chapter 3”) and turns them into real headings, also adding them to the table of contents
+- **Code cleanup:** removes useless spans, split formatting runs, empty paragraphs, double line breaks, comments and empty attributes
 
 **Interface**
 - **Italian and English:** on first launch it proposes your device's language; switch at any time with the IT / EN buttons

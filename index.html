@@ -253,6 +253,7 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
 .sprow{background:var(--md-sc-low);border-radius:22px;padding:12px 16px;margin-top:10px}
 .opt[open] .sprow{background:var(--md-sc-high)}
 .sprow .check{margin-top:0}
+.hd-row select{margin-top:10px}
 .sprow .ctx{margin:6px 0;overflow-wrap:anywhere}
 .sprow mark{background:color-mix(in srgb,var(--md-error) 20%,transparent);color:inherit;border-radius:4px;padding:0 3px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -388,7 +389,23 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
       <div id="sc-list"></div>
     </details>
 
-    <details class="opt t1"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M796-121 533-384q-30 26-70 40.5T378-329q-108 0-183-75t-75-181q0-106 75-181t182-75q106 0 180.5 75T632-585q0 43-14 83t-42 75l264 262-44 44ZM377-389q81 0 138-57.5T572-585q0-81-57-138.5T377-781q-82 0-139.5 57.5T180-585q0 81 57.5 138.5T377-389Z"/></svg></span><span>Cerca, sostituisci ed elimina</span></summary>
+        <details class="opt t1" id="hd-sec"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M430-160v-540H200v-100h560v100H530v540H430Z"/></svg></span><span>Titoli e struttura</span></summary>
+      <div class="small">Trova i titoli scritti come semplice testo (in grassetto, in maiuscolo o come «Capitolo 3») e li trasforma in veri titoli: migliorano l'indice, la navigazione e l'accessibilità.</div>
+      <div class="actions"><button data-i="manage_search" class="btn ghost" id="hd-run" type="button">Cerca i titoli finti</button></div>
+      <div class="small" id="hd-out" style="margin-top:8px"></div>
+      <div id="hd-list"></div>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="hd-toc" checked> Aggiungi i nuovi titoli all'indice</label>
+    </details>
+    <details class="opt t2" id="td-sec"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M320-242 80-482l242-242 43 43-199 199 197 197-43 43Zm318 2-43-43 199-199-197-197 43-43 240 240-242 242Z"/></svg></span><span>Pulizia del codice</span></summary>
+      <div class="small">Toglie il codice inutile lasciato da Word, dai convertitori o da altri programmi: il libro diventa più leggero e rispetta meglio le impostazioni del tuo lettore. Il testo non cambia.</div>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="td-span"> Semplifica la formattazione (togli gli span inutili, unisci i tratti in corsivo o grassetto spezzati)</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="td-empty"> Togli i paragrafi vuoti</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="td-br"> Trasforma gli a capo doppi in veri paragrafi</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="td-attr"> Togli commenti e attributi vuoti</label>
+      <div class="actions"><button data-i="calculate" class="btn ghost" id="td-run" type="button">Controlla quanto si può pulire</button></div>
+      <div class="small" id="td-out" style="margin-top:8px"></div>
+    </details>
+<details class="opt t1"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M796-121 533-384q-30 26-70 40.5T378-329q-108 0-183-75t-75-181q0-106 75-181t182-75q106 0 180.5 75T632-585q0 43-14 83t-42 75l264 262-44 44ZM377-389q81 0 138-57.5T572-585q0-81-57-138.5T377-781q-82 0-139.5 57.5T180-585q0 81 57.5 138.5T377-389Z"/></svg></span><span>Cerca, sostituisci ed elimina</span></summary>
       <label for="r-del">Elimina questi testi <span class="small">(uno per riga)</span></label>
       <textarea id="r-del" style="min-height:70px"></textarea>
       <label for="r-rep">Sostituisci <span class="small">(una regola per riga: cerca =&gt; sostituisci)</span></label>
@@ -554,7 +571,7 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
     if (persist) { try { localStorage.setItem(LKEY, l); } catch (e) {} }
     applyLang();
     if (!initial) {
-      ["report", "stats", "r-out", "sp-out", "results", "sp-list", "sc-out", "sc-list", "i-out", "a-out", "a-list"].forEach(function (id) { $(id).textContent = ""; });
+      ["report", "stats", "r-out", "sp-out", "results", "sp-list", "sc-out", "sc-list", "i-out", "a-out", "a-list", "hd-out", "hd-list", "td-out"].forEach(function (id) { $(id).textContent = ""; });
       $("sp-bulk").style.display = "none"; say("");
       if (toc.length) renderToc();
       if (doc) epubInfo();
@@ -678,8 +695,12 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
       }
 
       if (!sk.chap) await ceCommit();
+      await headsPass(sk);
       if (!sk.toc) await writeToc();
+      await tidyPass(sk);
       await applyBook(sk);
+      if (headNote) bookNote += ", " + headNote;
+      if (tidyNote) bookNote += ", " + tidyNote;
       a11yNote = ""; await a11yPass(sk); if (a11yNote) bookNote += ", " + a11yNote;
       if (!sk.img) { var ir = await optimizeImages(true); if (ir && ir.n) bookNote += ", " + TF("immagini: {0} → {1}", fmtSize(ir.before), fmtSize(ir.after)); }
       zip.file(opfPath, new XMLSerializer().serializeToString(doc));
@@ -1085,6 +1106,12 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
     if (FONTS.length) {
       var ftot = FONTS.reduce(function (a, f) { return a + f.buf.byteLength; }, 0);
       row(grp("Carattere"), "font", TF("Carattere incorporato: {0} ({1}, {2})", fontFamily(), FONTS.length === 1 ? T("1 file") : TF("{0} file", FONTS.length), fmtSize(ftot)));
+    }
+    var hsn = hdSel().n;
+    if (hsn) row(grp("Titoli e struttura"), "heads", hsn === 1 ? T("1 paragrafo diventa un titolo") : TF("{0} paragrafi diventano titoli", hsn));
+    if (tidyOn(tidyOpts())) {
+      var tst = await tidyScan(false);
+      if (tst.span + tst.empty + tst.br + tst.attr) row(grp("Pulizia del codice"), "tidy", TF("Pulizia del codice: {0} elementi semplificati, {1} paragrafi vuoti, {2} a capo doppi, {3} attributi o commenti", tst.span, tst.empty, tst.br, tst.attr));
     }
     var gt = grp("Testo"), fm = [];
     if (o.quotes) fm.push(T("virgolette")); if (o.apos) fm.push(T("apostrofi")); if (o.dots) fm.push(T("puntini"));
@@ -1681,6 +1708,265 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
     ceReset(); cmpReset(); renderToc();
   }
   var bookNoteCe = "";
+
+  // ---- Titoli e struttura ----
+  Object.assign(EN, {
+    "Titoli e struttura": "Headings and structure",
+    "Trova i titoli scritti come semplice testo (in grassetto, in maiuscolo o come «Capitolo 3») e li trasforma in veri titoli: migliorano l'indice, la navigazione e l'accessibilità.": "Finds headings written as plain text (bold, uppercase or like “Chapter 3”) and turns them into real headings: this improves the table of contents, navigation and accessibility.",
+    "Cerca i titoli finti": "Find fake headings", "Cerco i titoli…": "Looking for headings…",
+    "Nessun titolo finto trovato.": "No fake headings found.",
+    "Trovati {0} tipi di titolo ({1} paragrafi). Spunta quelli da trasformare e scegli il livello.": "Found {0} kinds of heading ({1} paragraphs). Tick the ones to convert and choose the level.",
+    "Livello del titolo": "Heading level", "Livello 1 (h1)": "Level 1 (h1)", "Livello 2 (h2)": "Level 2 (h2)", "Livello 3 (h3)": "Level 3 (h3)", "Livello 4 (h4)": "Level 4 (h4)",
+    "Aggiungi i nuovi titoli all'indice": "Add the new headings to the table of contents",
+    "{0} volte": "{0} times", "{0} paragrafi diventano titoli": "{0} paragraphs become headings", "1 paragrafo diventa un titolo": "1 paragraph becomes a heading",
+    "titoli: {0}": "headings: {0}",
+    "Pulizia del codice": "Code cleanup",
+    "Toglie il codice inutile lasciato da Word, dai convertitori o da altri programmi: il libro diventa più leggero e rispetta meglio le impostazioni del tuo lettore. Il testo non cambia.": "Removes useless code left by Word, converters or other programs: the book gets lighter and respects your reader's settings better. The text does not change.",
+    "Semplifica la formattazione (togli gli span inutili, unisci i tratti in corsivo o grassetto spezzati)": "Simplify formatting (remove useless spans, merge split italic or bold runs)",
+    "Togli i paragrafi vuoti": "Remove empty paragraphs",
+    "Trasforma gli a capo doppi in veri paragrafi": "Turn double line breaks into real paragraphs",
+    "Togli commenti e attributi vuoti": "Remove comments and empty attributes",
+    "Controlla quanto si può pulire": "Check how much can be cleaned",
+    "Nessun codice da pulire trovato.": "No code to clean found.",
+    "Trovati: {0} elementi semplificati, {1} paragrafi vuoti, {2} a capo doppi, {3} attributi o commenti.": "Found: {0} simplified elements, {1} empty paragraphs, {2} double line breaks, {3} attributes or comments.",
+    "Pulizia del codice: {0} elementi semplificati, {1} paragrafi vuoti, {2} a capo doppi, {3} attributi o commenti": "Code cleanup: {0} simplified elements, {1} empty paragraphs, {2} double line breaks, {3} attributes or comments",
+    "codice pulito": "code cleaned"
+  });
+  var HD_RX = /^(capitolo|cap\.|chapter|parte|part|libro|book|prologo|prologue|epilogo|epilogue|prefazione|preface|introduzione|introduction|appendice|appendix|ringraziamenti|acknowledg(?:e)?ments|dedica|dedication)(?![\p{L}])/iu;
+  var HD_TOP = /^(parte|part|libro|book)(?![\p{L}])/i;
+  function hdBlocks(d) {
+    var root = d.getElementsByTagName("body")[0], out = [];
+    if (!root) return out;
+    Array.prototype.forEach.call(root.querySelectorAll("p,div"), function (e) {
+      if (e.querySelector(CE_SEL) || hasMedia(e)) return;
+      if (e.closest("h1,h2,h3,h4,h5,h6,li,td,th,pre,figure,figcaption,nav,blockquote")) return;
+      out.push(e);
+    });
+    return out;
+  }
+  function isBoldOnly(e) {
+    var w = e.ownerDocument.createTreeWalker(e, NodeFilter.SHOW_TEXT), n, any = false;
+    while ((n = w.nextNode())) {
+      if (!/\S/.test(n.nodeValue)) continue;
+      any = true;
+      var ok = false;
+      for (var x = n.parentNode; x; x = x.parentNode) {
+        var ln = x.localName, st = x.getAttribute ? (x.getAttribute("style") || "") : "";
+        if (ln === "b" || ln === "strong" || /font-weight\s*:\s*(bold|[6-9]00)/i.test(st)) { ok = true; break; }
+        if (x === e) break;
+      }
+      if (!ok) return false;
+    }
+    return any;
+  }
+  function hdKind(e) {
+    var t = norm(e.textContent || "");
+    if (!t || t.length > 80 || /^\d+$/.test(t)) return null;
+    if (HD_RX.test(t) && t.length <= 60) return "B";
+    if (/[.,;:]$/.test(t) || t.split(/\s+/).length > 12) return null;
+    if (isBoldOnly(e)) return "A";
+    if (/\p{L}{3}/u.test(t) && t === t.toUpperCase() && t !== t.toLowerCase() && t.split(/\s+/).length <= 8) return "C";
+    return null;
+  }
+  async function hdRun() {
+    var out = $("hd-out"), list = $("hd-list");
+    out.textContent = T("Cerco i titoli…"); list.innerHTML = "";
+    var chs = xhtmlItems(), dp = new DOMParser(), rows = {}, order = [];
+    for (var i = 0; i < chs.length; i++) {
+      var pth = resolve(chs[i].getAttribute("href")), f = zip.file(pth);
+      if (!f || pth === tocSrc.nav) continue;
+      var d = dp.parseFromString(await f.async("string"), "application/xml");
+      if (d.getElementsByTagName("parsererror").length) continue;
+      hdBlocks(d).forEach(function (e) {
+        var kd = hdKind(e); if (!kd) return;
+        var t = norm(e.textContent || ""), k = scKey(t);
+        var r = rows[k]; if (!r) { r = rows[k] = { k: k, sample: t, kind: kd, n: 0, ch: {} }; order.push(k); }
+        r.n++; r.ch[pth] = 1;
+      });
+      if (i % 5 === 4) await new Promise(function (ok) { setTimeout(ok, 0); });
+    }
+    var cand = order.map(function (k) { return rows[k]; }).filter(function (r) {
+      return r.kind === "B" || !(Object.keys(r.ch).length >= 3 && r.n >= 3);
+    }).slice(0, 80);
+    if (!cand.length) { out.textContent = T("Nessun titolo finto trovato."); return; }
+    var hasTop = cand.some(function (r) { return HD_TOP.test(r.sample); }), total = 0;
+    cand.forEach(function (r) { total += r.n; });
+    out.textContent = TF("Trovati {0} tipi di titolo ({1} paragrafi). Spunta quelli da trasformare e scegli il livello.", cand.length, total);
+    cand.forEach(function (r) {
+      var lvl = r.kind === "B" ? (/^(capitolo|cap\.|chapter)/i.test(r.sample) && hasTop ? 2 : 1) : 2;
+      var row = document.createElement("div"); row.className = "sprow hd-row"; row.setAttribute("data-k", r.k); row.setAttribute("data-n", r.n);
+      var lb = document.createElement("label"), cb = document.createElement("input"), sp = document.createElement("span");
+      lb.className = "check"; cb.type = "checkbox"; cb.className = "hd-on"; cb.checked = r.kind !== "C";
+      sp.textContent = "«" + r.sample + "» (" + (r.n === 1 ? T("1 volta") : TF("{0} volte", r.n)) + ")";
+      lb.appendChild(cb); lb.appendChild(sp); row.appendChild(lb);
+      var sel = document.createElement("select"); sel.className = "hd-lv"; sel.setAttribute("aria-label", T("Livello del titolo"));
+      [1, 2, 3, 4].forEach(function (n) { var op = document.createElement("option"); op.value = n; op.textContent = T("Livello " + n + " (h" + n + ")"); sel.appendChild(op); });
+      sel.value = lvl; row.appendChild(sel); list.appendChild(row);
+    });
+  }
+  function hdSel() {
+    var sel = {}, n = 0;
+    document.querySelectorAll("#hd-list .hd-row").forEach(function (r) {
+      if (!r.querySelector(".hd-on").checked) return;
+      sel[r.getAttribute("data-k")] = +r.querySelector(".hd-lv").value; n += +r.getAttribute("data-n");
+    });
+    return { sel: sel, n: n };
+  }
+  var headNote = "";
+  async function headsPass(sk) {
+    headNote = "";
+    if (sk && sk.heads) return;
+    var hs = hdSel(); if (!hs.n) return;
+    var sel = hs.sel, dp = new DOMParser(), ser = new XMLSerializer(), order = spineXhtml(), idx = {}, entries = [], total = 0;
+    order.forEach(function (it, k) { idx[resolve(it.getAttribute("href"))] = k; });
+    var useToc = $("hd-toc").checked && (tocSrc.nav || tocSrc.ncx);
+    for (var k = 0; k < order.length; k++) {
+      var pth = resolve(order[k].getAttribute("href")), f = zip.file(pth);
+      if (!f || pth === tocSrc.nav) continue;
+      var d = dp.parseFromString(await f.async("string"), "application/xml");
+      if (d.getElementsByTagName("parsererror").length) continue;
+      var done = 0, used = {}, root = d.getElementsByTagName("body")[0];
+      Array.prototype.forEach.call(d.querySelectorAll("[id]"), function (e) { used[e.getAttribute("id")] = 1; });
+      var first = hdBlocks(d)[0];
+      hdBlocks(d).forEach(function (e) {
+        var t = norm(e.textContent || ""), lv = sel[scKey(t)];
+        if (!lv || !t || t.length > 80) return;
+        var h = d.createElementNS(e.namespaceURI, "h" + lv);
+        ["id", "lang", "xml:lang"].forEach(function (a) { if (e.hasAttribute(a)) h.setAttribute(a, e.getAttribute(a)); });
+        while (e.firstChild) h.appendChild(e.firstChild);
+        if (h.children.length === 1 && /^(b|strong)$/.test(h.firstElementChild.localName) && norm(h.textContent) === norm(h.firstElementChild.textContent) && h.childNodes.length === 1) {
+          var inner = h.firstElementChild; while (inner.firstChild) h.insertBefore(inner.firstChild, inner); h.removeChild(inner);
+        }
+        if (!h.getAttribute("id")) { var n2 = 1, id; do { id = "ct-" + k + "-" + (n2++); } while (used[id]); used[id] = 1; h.setAttribute("id", id); }
+        e.parentNode.replaceChild(h, e); done++;
+        entries.push({ label: t.replace(/[.]+$/, ""), path: pth, hash: "#" + h.getAttribute("id"), depth: Math.min(lv - 1, 3), ch: k, first: e === first });
+      });
+      if (done) { zip.file(pth, ser.serializeToString(d)); total += done; }
+    }
+    if (useToc && entries.length) {
+      var tidx = function (e) { return idx[e.path] === undefined ? -1 : idx[e.path]; };
+      entries.forEach(function (en) {
+        var lab = en.label.toLowerCase();
+        if (toc.some(function (e) { return e.path === en.path && norm(e.label).toLowerCase() === lab; })) return;
+        var at = -1; toc.forEach(function (e, j) { if (tidx(e) !== -1 && tidx(e) <= en.ch) at = j; });
+        if (en.first) { var top = -1; toc.forEach(function (e, j) { if (top < 0 && e.path === en.path && !e.hash) top = j; }); if (top >= 0) at = top - 1; }
+        toc.splice(at + 1, 0, { label: en.label, path: en.path, hash: en.hash, depth: en.depth });
+        tocDirty = true;
+      });
+    }
+    if (total) headNote = TF("titoli: {0}", total);
+  }
+
+  // ---- Pulizia del codice ----
+  function tidyOpts() { return { span: $("td-span").checked, empty: $("td-empty").checked, br: $("td-br").checked, attr: $("td-attr").checked }; }
+  function tidyOn(t) { return t.span || t.empty || t.br || t.attr; }
+  function attrsEq(a, b) {
+    if (a.attributes.length !== b.attributes.length) return false;
+    for (var i = 0; i < a.attributes.length; i++) { var x = a.attributes[i]; if (b.getAttribute(x.name) !== x.value) return false; }
+    return true;
+  }
+  function tidyDoc(d, t, st) {
+    var root = d.getElementsByTagName("body")[0]; if (!root) return;
+    var changed = false;
+    if (t.attr) {
+      var w = d.createTreeWalker(root, NodeFilter.SHOW_COMMENT), cm = [];
+      while (w.nextNode()) cm.push(w.currentNode);
+      cm.forEach(function (c) { c.parentNode.removeChild(c); st.attr++; changed = true; });
+      Array.prototype.forEach.call(root.querySelectorAll("[class],[style]"), function (e) {
+        ["class", "style"].forEach(function (a) { if (e.hasAttribute(a) && !e.getAttribute(a).trim()) { e.removeAttribute(a); st.attr++; changed = true; } });
+      });
+    }
+    if (t.span) {
+      Array.prototype.slice.call(root.querySelectorAll("span,font")).forEach(function (e) {
+        if (!e.parentNode || e.closest("pre") || e.attributes.length) return;
+        while (e.firstChild) e.parentNode.insertBefore(e.firstChild, e);
+        e.parentNode.removeChild(e); st.span++; changed = true;
+      });
+      root.normalize();
+      Array.prototype.slice.call(root.querySelectorAll("em,i,b,strong,u,sub,sup,small,span")).forEach(function (e) {
+        if (!e.parentNode || e.closest("pre")) return;
+        for (;;) {
+          var n = e.nextSibling, ws = null;
+          if (n && n.nodeType === 3 && /^[ \t\r\n]*$/.test(n.nodeValue) && n.nextSibling) { ws = n; n = n.nextSibling; }
+          if (n && n.nodeType === 1 && n.localName === e.localName && attrsEq(e, n)) {
+            if (ws) e.appendChild(ws);
+            while (n.firstChild) e.appendChild(n.firstChild);
+            n.parentNode.removeChild(n); st.span++; changed = true;
+          } else break;
+        }
+      });
+      Array.prototype.slice.call(root.querySelectorAll("span,em,i,b,strong,u,font,small")).forEach(function (e) {
+        if (!e.parentNode || e.closest("pre") || e.hasAttribute("id") || hasMedia(e) || (e.textContent || "").length || e.firstElementChild) return;
+        e.parentNode.removeChild(e); st.span++; changed = true;
+      });
+    }
+    if (t.br) {
+      Array.prototype.slice.call(root.querySelectorAll("p")).forEach(function (p) {
+        if (!p.parentNode || p.closest("pre") || p.querySelector(CE_SEL)) return;
+        var kids = Array.prototype.slice.call(p.childNodes), pieces = [[]], i = 0;
+        function isBr(x) { return x && x.nodeType === 1 && x.localName === "br"; }
+        while (i < kids.length) {
+          if (isBr(kids[i])) {
+            var j = i, cnt = 0, last = i;
+            while (j < kids.length && (isBr(kids[j]) || (kids[j].nodeType === 3 && !/\S/.test(kids[j].nodeValue)))) { if (isBr(kids[j])) { cnt++; last = j; } j++; }
+            if (cnt >= 2) { pieces.push([]); i = last + 1; continue; }
+          }
+          pieces[pieces.length - 1].push(kids[i]); i++;
+        }
+        pieces = pieces.filter(function (pc) { return pc.some(function (x) { return (x.nodeType === 3 ? /\S/.test(x.nodeValue) : true); }); });
+        if (pieces.length < 2) return;
+        var prev = p;
+        pieces.forEach(function (pc, k) {
+          if (k === 0) { while (p.firstChild) p.removeChild(p.firstChild); pc.forEach(function (x) { p.appendChild(x); }); return; }
+          var np = p.cloneNode(false); np.removeAttribute("id");
+          pc.forEach(function (x) { np.appendChild(x); });
+          prev.parentNode.insertBefore(np, prev.nextSibling); prev = np; st.br++;
+        });
+        changed = true;
+      });
+    }
+    if (t.empty) {
+      Array.prototype.slice.call(root.querySelectorAll("p,div")).forEach(function (e) {
+        if (!e.parentNode || e.hasAttribute("id") || hasMedia(e) || e.querySelector(CE_SEL)) return;
+        if (e.closest("pre,td,th")) return;
+        if (/\S/.test(e.textContent || "")) return;
+        var onlyBr = Array.prototype.every.call(e.children, function (c) { return c.localName === "br"; });
+        if (!onlyBr) return;
+        e.parentNode.removeChild(e); st.empty++; changed = true;
+      });
+    }
+    if (changed) root.normalize();
+    return changed;
+  }
+  async function tidyScan(apply) {
+    var t = tidyOpts(), st = { span: 0, empty: 0, br: 0, attr: 0, ch: 0 };
+    if (!tidyOn(t)) return st;
+    var chs = xhtmlItems(), dp = new DOMParser(), ser = new XMLSerializer();
+    for (var i = 0; i < chs.length; i++) {
+      var pth = resolve(chs[i].getAttribute("href")), f = zip.file(pth);
+      if (!f || pth === tocSrc.nav) continue;
+      var d = dp.parseFromString(await f.async("string"), "application/xml");
+      if (d.getElementsByTagName("parsererror").length) continue;
+      if (tidyDoc(d, t, st)) { st.ch++; if (apply) zip.file(pth, ser.serializeToString(d)); }
+      if (i % 5 === 4) await new Promise(function (ok) { setTimeout(ok, 0); });
+    }
+    return st;
+  }
+  var tidyNote = "";
+  async function tidyPass(sk) {
+    tidyNote = "";
+    if (sk && sk.tidy) return;
+    var st = await tidyScan(true);
+    if (st.span + st.empty + st.br + st.attr) tidyNote = T("codice pulito");
+  }
+  async function tdRun() {
+    var out = $("td-out"); out.textContent = T("Analizzo…");
+    if (!tidyOn(tidyOpts())) { out.textContent = T("Nessun codice da pulire trovato."); return; }
+    var st = await tidyScan(false);
+    out.textContent = (st.span + st.empty + st.br + st.attr) ? TF("Trovati: {0} elementi semplificati, {1} paragrafi vuoti, {2} a capo doppi, {3} attributi o commenti.", st.span, st.empty, st.br, st.attr) : T("Nessun codice da pulire trovato.");
+  }
+  $("hd-run").addEventListener("click", hdRun);
+  $("td-run").addEventListener("click", tdRun);
 
   // ---- Carattere incorporato ----
   var FONTS = [], PF = [];
