@@ -100,6 +100,8 @@ Un EPUB è un archivio ZIP di pagine XHTML, immagini e un file di descrizione (O
 - **Editor dei capitoli:** elimina capitoli inutili, cambia l'ordine, unisci o dividi capitoli, correggi il testo a mano; collegamenti e indice vengono aggiornati da soli
 - **Titoli e struttura:** trova i titoli scritti come testo semplice (grassetto, maiuscolo, «Capitolo 3») e li trasforma in veri titoli, aggiungendoli anche all'indice
 - **Pulizia del codice:** toglie span inutili, tratti di formattazione spezzati, paragrafi vuoti, a capo doppi, commenti e attributi vuoti
+- **Controllo dei metadati:** legge il libro e propone correzioni a titolo, autori, lingua e serie (nomi di file usati come titolo, maiuscolo, «Cognome, Nome», più autori nello stesso campo, lingua rilevata dal testo); scegli tu cosa applicare
+- **Note a piè di pagina:** controlla i riferimenti, aggiunge i link di ritorno, rinumera le note, toglie i collegamenti rotti e crea note a comparsa per i lettori EPUB 3
 
 **Interfaccia**
 - **Italiano e inglese:** al primo avvio propone la lingua del dispositivo; si cambia in ogni momento con i pulsanti IT / EN
@@ -182,6 +184,8 @@ An EPUB is a ZIP archive of XHTML pages, images and a description file (OPF). Co
 - **Chapter editor:** delete unwanted chapters, reorder, merge or split chapters, fix text by hand; links and table of contents are updated automatically
 - **Headings and structure:** finds headings written as plain text (bold, uppercase, “Chapter 3”) and turns them into real headings, also adding them to the table of contents
 - **Code cleanup:** removes useless spans, split formatting runs, empty paragraphs, double line breaks, comments and empty attributes
+- **Metadata check:** reads the book and suggests fixes for title, authors, language and series (file names used as titles, all caps, “Surname, Name”, several authors in one field, language detected from the text); you choose what to apply
+- **Footnotes:** checks references, adds links back, renumbers notes, removes broken links and creates pop-up notes for EPUB 3 readers
 
 **Interface**
 - **Italian and English:** on first launch it proposes your device's language; switch at any time with the IT / EN buttons

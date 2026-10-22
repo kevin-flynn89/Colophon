@@ -389,7 +389,25 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
       <div id="sc-list"></div>
     </details>
 
-        <details class="opt t1" id="hd-sec"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M430-160v-540H200v-100h560v100H530v540H430Z"/></svg></span><span>Titoli e struttura</span></summary>
+            <details class="opt t0" id="mq-sec"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M132-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h696q24 0 42 18t18 42v600q0 24-18 42t-42 18H132Zm0-60h696v-600H132v600Zm68-100h200v-80H200v80Zm382-80 198-198-57-57-141 142-57-57-56 57 113 113Zm-382-80h200v-80H200v80Zm0-160h200v-80H200v80Zm-68 420v-600 600Z"/></svg></span><span>Controllo dei metadati</span></summary>
+      <div class="small">Legge il libro e propone correzioni per titolo, autori, lingua e serie. Scegli tu quali applicare: i campi in alto vengono compilati e potrai ricontrollarli prima di salvare.</div>
+      <div class="actions"><button data-i="manage_search" class="btn ghost" id="mq-run" type="button">Analizza i metadati</button></div>
+      <div class="small" id="mq-out" style="margin-top:8px"></div>
+      <div id="mq-list"></div>
+      <div class="actions" style="margin-top:12px"><button data-i="check" class="btn" id="mq-apply" type="button" style="display:none">Applica i suggerimenti spuntati</button></div>
+    </details>
+    <details class="opt t1" id="fn-sec"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm189 431v-60h471v60H369Zm0-243v-60h471v60H369Zm0-243v-60h471v60H369Z"/></svg></span><span>Note a piè di pagina</span></summary>
+      <div class="small">Controlla i riferimenti alle note (numeri nel testo) e le note stesse: collegamenti che non tornano al testo, numerazione irregolare, note a comparsa.</div>
+      <div class="actions"><button data-i="manage_search" class="btn ghost" id="fn-run" type="button">Controlla le note</button></div>
+      <div class="small" id="fn-out" style="margin-top:8px"></div>
+      <div id="fn-list"></div>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="fn-back"> Aggiungi il link di ritorno alle note che non l'hanno</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="fn-num"> Rinumera le note (1, 2, 3…) quando la numerazione è irregolare</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="fn-pop"> Note a comparsa nei lettori EPUB 3 (attiva anche l'EPUB 3)</label>
+      <label class="check sw-row"><input class="sw" type="checkbox" id="fn-broken"> Togli i collegamenti rotti delle note (resta il numero)</label>
+      <div class="small" style="margin-top:8px">La rinumerazione agisce solo sui capitoli in cui le note stanno nello stesso file dei numeri e sono tutte collegate.</div>
+    </details>
+<details class="opt t1" id="hd-sec"><summary><span class="si shp" aria-hidden="true"><svg viewBox="0 -960 960 960"><path d="M430-160v-540H200v-100h560v100H530v540H430Z"/></svg></span><span>Titoli e struttura</span></summary>
       <div class="small">Trova i titoli scritti come semplice testo (in grassetto, in maiuscolo o come «Capitolo 3») e li trasforma in veri titoli: migliorano l'indice, la navigazione e l'accessibilità.</div>
       <div class="actions"><button data-i="manage_search" class="btn ghost" id="hd-run" type="button">Cerca i titoli finti</button></div>
       <div class="small" id="hd-out" style="margin-top:8px"></div>
@@ -571,7 +589,7 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
     if (persist) { try { localStorage.setItem(LKEY, l); } catch (e) {} }
     applyLang();
     if (!initial) {
-      ["report", "stats", "r-out", "sp-out", "results", "sp-list", "sc-out", "sc-list", "i-out", "a-out", "a-list", "hd-out", "hd-list", "td-out"].forEach(function (id) { $(id).textContent = ""; });
+      ["report", "stats", "r-out", "sp-out", "results", "sp-list", "sc-out", "sc-list", "i-out", "a-out", "a-list", "hd-out", "hd-list", "td-out", "mq-out", "mq-list", "fn-out", "fn-list"].forEach(function (id) { $(id).textContent = ""; });
       $("sp-bulk").style.display = "none"; say("");
       if (toc.length) renderToc();
       if (doc) epubInfo();
@@ -697,10 +715,12 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
       if (!sk.chap) await ceCommit();
       await headsPass(sk);
       if (!sk.toc) await writeToc();
+      await fnPass(sk);
       await tidyPass(sk);
       await applyBook(sk);
       if (headNote) bookNote += ", " + headNote;
       if (tidyNote) bookNote += ", " + tidyNote;
+      if (fnNote) bookNote += ", " + fnNote;
       a11yNote = ""; await a11yPass(sk); if (a11yNote) bookNote += ", " + a11yNote;
       if (!sk.img) { var ir = await optimizeImages(true); if (ir && ir.n) bookNote += ", " + TF("immagini: {0} → {1}", fmtSize(ir.before), fmtSize(ir.after)); }
       zip.file(opfPath, new XMLSerializer().serializeToString(doc));
@@ -1109,6 +1129,11 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
     }
     var hsn = hdSel().n;
     if (hsn) row(grp("Titoli e struttura"), "heads", hsn === 1 ? T("1 paragrafo diventa un titolo") : TF("{0} paragrafi diventano titoli", hsn));
+    var fo = fnOpts();
+    if (fnOn(fo)) {
+      var fst = await fnScan(false, fo);
+      if (fst.back + fst.pop + fst.renumN + fst.unlink) row(grp("Note a piè di pagina"), "fn", TF("Note a piè di pagina: {0} link di ritorno, {1} note a comparsa, {2} note rinumerate, collegamenti rotti tolti: {3}", fst.back, fst.pop, fst.renumN, fst.unlink));
+    }
     if (tidyOn(tidyOpts())) {
       var tst = await tidyScan(false);
       if (tst.span + tst.empty + tst.br + tst.attr) row(grp("Pulizia del codice"), "tidy", TF("Pulizia del codice: {0} elementi semplificati, {1} paragrafi vuoti, {2} a capo doppi, {3} attributi o commenti", tst.span, tst.empty, tst.br, tst.attr));
@@ -1967,6 +1992,325 @@ label.btn:not(.ghost){color:var(--md-on-primary)}
   }
   $("hd-run").addEventListener("click", hdRun);
   $("td-run").addEventListener("click", tdRun);
+
+  // ---- Controllo dei metadati ----
+  Object.assign(EN, {
+    "Controllo dei metadati": "Metadata check",
+    "Legge il libro e propone correzioni per titolo, autori, lingua e serie. Scegli tu quali applicare: i campi in alto vengono compilati e potrai ricontrollarli prima di salvare.": "Reads the book and suggests fixes for title, authors, language and series. You choose which to apply: the fields above are filled in and you can double-check them before saving.",
+    "Analizza i metadati": "Analyze the metadata", "Applica i suggerimenti spuntati": "Apply the ticked suggestions",
+    "Nessun suggerimento: i metadati sembrano a posto.": "No suggestions: the metadata looks fine.",
+    "Trovati {0} suggerimenti. Spunta quelli da applicare.": "Found {0} suggestions. Tick the ones to apply.",
+    "Suggerimenti applicati nei campi in alto. Controlla e salva.": "Suggestions applied to the fields above. Check and save.",
+    "Il titolo sembrava un nome di file o era tutto in maiuscolo o in minuscolo.": "The title looked like a file name or was all upper or lower case.",
+    "Titolo trovato nelle prime pagine del libro.": "Title found in the first pages of the book.",
+    "Titolo e numero della serie ricavati dal titolo.": "Series and number taken from the title.",
+    "Nome scritto come «Cognome, Nome».": "Name written as “Surname, Name”.",
+    "Nome tutto in maiuscolo.": "Name in all capitals.",
+    "Più autori scritti nello stesso campo.": "Several authors written in the same field.",
+    "Autore trovato nelle prime pagine del libro.": "Author found in the first pages of the book.",
+    "Lingua mancante: rilevata dal testo ({0}).": "Language missing: detected from the text ({0}).",
+    "La lingua indicata sembra diversa da quella del testo ({0}).": "The language set seems different from the text ({0}).",
+    "italiano": "Italian", "inglese": "English", "spagnolo": "Spanish", "francese": "French", "tedesco": "German", "portoghese": "Portuguese"
+  });
+  var MQ_SMALL = new Set("di a da in con su per tra fra il lo la i gli le un uno una e ed o del dello della dei degli delle al allo alla ai agli alle dal dalla nel nella sul sulla che the of and a an in on at to for by with or as from".split(" "));
+  var MQ_PART = new Set("de van von der den dos das da".split(" "));
+  function mqCap(w) {
+    return w.replace(/(^|['’\-])(\p{L})/gu, function (m, p, c) { return p + c.toUpperCase(); });
+  }
+  function mqTitle(s) {
+    return s.toLowerCase().split(/\s+/).map(function (w, i) {
+      var bare = w.replace(/[^\p{L}]/gu, "");
+      if (i > 0 && MQ_SMALL.has(bare)) return w;
+      var el = /^(dell|nell|sull|all|dall|l|un|quest|quell)(['’])(.+)$/iu.exec(w);
+      if (el && i > 0) return el[1] + el[2] + mqCap(el[3]);
+      return mqCap(w);
+    }).join(" ");
+  }
+  function mqName(s) {
+    return s.toLowerCase().split(/\s+/).map(function (w, i) { return i > 0 && MQ_PART.has(w) ? w : mqCap(w); }).join(" ");
+  }
+  function mqIsCaps(s) { return /\p{L}{3}/u.test(s) && s === s.toUpperCase() && s !== s.toLowerCase(); }
+  function mqIsLower(s) { return /\p{L}{3}/u.test(s) && s === s.toLowerCase() && s !== s.toUpperCase(); }
+  var MQ_LANG = {
+    it: "il lo la le gli di che e un una per non con del della dei delle sono è ha ho come più ma anche se si mi ti ci nel nella al alla",
+    en: "the and of to a in is that it was for on with as he she his her they you not but be at by have had this from",
+    es: "el la los las de que y en un una por con no es se su para como más pero lo del al",
+    fr: "le la les de des et en un une que qui est pas pour dans sur il elle ne se ce au du plus",
+    de: "der die das und ist nicht ein eine zu mit den von sie er es auf für dem im auch",
+    pt: "o a os as de que e em um uma para com não é se mais mas do da dos das"
+  };
+  var MQ_LNAME = { it: "italiano", en: "inglese", es: "spagnolo", fr: "francese", de: "tedesco", pt: "portoghese" };
+  function mqDetect(text) {
+    var words = text.toLowerCase().match(/\p{L}+/gu) || [];
+    if (words.length < 150) return null;
+    var sc = {};
+    Object.keys(MQ_LANG).forEach(function (l) {
+      var set = new Set(MQ_LANG[l].split(" ")), n = 0;
+      words.forEach(function (w) { if (set.has(w)) n++; });
+      sc[l] = n / words.length;
+    });
+    var ks = Object.keys(sc).sort(function (a, b) { return sc[b] - sc[a]; });
+    if (sc[ks[0]] < 0.12 || sc[ks[0]] < sc[ks[1]] * 1.35) return null;
+    return ks[0];
+  }
+  var MQ_BADT = /^(unknown|untitled|senza titolo|sconosciuto|book|libro|document|documento|titolo)$/i, MQ_BADA = /^(unknown|sconosciuto|autore sconosciuto|sconosciuta|n\/a|author|autore)$/i;
+  var MQ_FRONT = /^(copyright|indice|sommario|contents?|table of contents|dedica|ringraziamenti|prefazione|prologo|capitolo|chapter|note|cover|copertina|frontespizio|title page|colophon|introduzione)/i;
+  async function mqRun() {
+    var out = $("mq-out"), list = $("mq-list"); list.innerHTML = ""; $("mq-apply").style.display = "none"; out.textContent = T("Analizzo…");
+    try {
+      var dp = new DOMParser(), sp = spineXhtml(), docs = [], sample = "", sugg = [];
+      for (var k = 0; k < sp.length && docs.length < 8; k++) {
+        var pth = resolve(sp[k].getAttribute("href")), f = zip.file(pth);
+        if (!f || pth === tocSrc.nav) continue;
+        var d = dp.parseFromString(await f.async("string"), "application/xml");
+        if (d.getElementsByTagName("parsererror").length) continue;
+        docs.push(d);
+        if (docs.length > 1 && sample.length < 20000) sample += " " + (d.documentElement.textContent || "").replace(/\s+/g, " ").slice(0, 4000);
+      }
+      if (sample.length < 3000 && docs[0]) sample += " " + (docs[0].documentElement.textContent || "").replace(/\s+/g, " ").slice(0, 8000);
+      function add(f, nv, why, on) { var cur = $("f-" + f).value.trim(); if (nv && nv !== cur) sugg.push({ f: f, old: cur, nv: nv, why: why, on: on !== false }); }
+      // titolo e serie
+      var title = val("title"), series = val("series"), tnew = title, why = "";
+      var sm = /^(.*?)\s*[\(\[]\s*(.+?)\s*(?:#|n\.?\s*|vol\.?\s*|volume\s+|libro\s+|book\s+)(\d+(?:[.,]\d+)?)\s*[\)\]]\s*$/i.exec(title);
+      if (sm && !series && sm[1].length >= 2) {
+        tnew = sm[1].trim(); add("series", sm[2].replace(/[,\-–:\s]+$/, ""), T("Titolo e numero della serie ricavati dal titolo.")); add("index", sm[3].replace(",", "."), T("Titolo e numero della serie ricavati dal titolo."));
+        why = T("Titolo e numero della serie ricavati dal titolo.");
+      }
+      var base = tnew.replace(/\.(epub|mobi|azw3?|pdf|docx?|txt)$/i, "");
+      if (!/\s/.test(base) && /[_\-]/.test(base)) base = base.replace(/[_\-]+/g, " "); else base = base.replace(/_+/g, " ");
+      base = base.replace(/\s+/g, " ").trim();
+      var bad = !title || MQ_BADT.test(title) || /[_]/.test(title) || /\.(epub|mobi|pdf|docx?)$/i.test(title) || (!/\s/.test(title) && /-/.test(title));
+      if (base && (mqIsCaps(base) || mqIsLower(base) || base !== tnew)) { var tc = (mqIsCaps(base) || mqIsLower(base)) ? mqTitle(base) : base; if (tc !== tnew || why) { why = why || T("Il titolo sembrava un nome di file o era tutto in maiuscolo o in minuscolo."); tnew = tc; } }
+      if (bad && (!title || MQ_BADT.test(title))) {
+        for (var i = 0; i < Math.min(docs.length, 4); i++) {
+          var h = docs[i].getElementsByTagName("h1")[0] || docs[i].getElementsByTagName("title")[0], ht = h ? norm(h.textContent || "") : "";
+          if (ht && ht.length <= 80 && !MQ_FRONT.test(ht) && !MQ_BADT.test(ht)) { tnew = ht; why = T("Titolo trovato nelle prime pagine del libro."); break; }
+        }
+      }
+      if (tnew !== title) add("title", tnew, why || T("Il titolo sembrava un nome di file o era tutto in maiuscolo o in minuscolo."));
+      // autori
+      var au = val("authors"), parts = au ? au.split(";").map(function (x) { return x.trim(); }).filter(Boolean) : [], na = [], awhy = "", changed = false;
+      parts.forEach(function (p) {
+        var m = /^([^,]+),\s*([^,]+)$/.exec(p);
+        if (m && /^[\p{L}'’.,\- ]+$/u.test(p) && m[1].trim().split(/\s+/).length <= 3 && m[2].trim().split(/\s+/).length <= 3) { p = m[2].trim() + " " + m[1].trim(); awhy = T("Nome scritto come «Cognome, Nome»."); }
+        var capsFix = p.split(/\s+/).map(function (w) { return (w.replace(/[^\p{L}]/gu, "").length >= 3 && !/\./.test(w) && w === w.toUpperCase() && w !== w.toLowerCase()) ? mqName(w) : w; }).join(" ");
+        if (capsFix !== p) { p = capsFix; awhy = awhy || T("Nome tutto in maiuscolo."); }
+        var sp2 = p.split(/\s+(?:e|ed|and|&|y|et)\s+/i);
+        if (sp2.length > 1 && sp2.every(function (x) { return x.trim().split(/\s+/).length >= 2; })) { sp2.forEach(function (x) { na.push(x.trim()); }); awhy = T("Più autori scritti nello stesso campo."); }
+        else na.push(p);
+      });
+      var anew = na.join("; ");
+      if (anew && anew !== au) add("authors", anew, awhy);
+      if (!au || MQ_BADA.test(au)) {
+        outer: for (var j = 0; j < Math.min(docs.length, 4); j++) {
+          var bl = Array.prototype.slice.call(docs[j].querySelectorAll("p,div,h1,h2,h3")).filter(function (e) { return !e.querySelector("p,div"); }).slice(0, 25);
+          for (var q = 0; q < bl.length; q++) {
+            var mt = /^(?:di|by|a cura di|testo di|written by|autore:|author:)\s+(\p{Lu}[\p{L}'’.\-]*(?:\s+\p{Lu}[\p{L}'’.\-]*){1,3})$/iu.exec(norm(bl[q].textContent || ""));
+            if (mt) { add("authors", mqIsCaps(mt[1]) ? mqName(mt[1]) : mt[1], T("Autore trovato nelle prime pagine del libro.")); break outer; }
+          }
+        }
+      }
+      // lingua
+      var lg = mqDetect(sample), cur = val("lang").toLowerCase().slice(0, 2);
+      if (lg) {
+        if (!cur || /^(un|mu|zx)/.test(cur)) add("lang", lg, TF("Lingua mancante: rilevata dal testo ({0}).", T(MQ_LNAME[lg])));
+        else if (cur !== lg) add("lang", lg, TF("La lingua indicata sembra diversa da quella del testo ({0}).", T(MQ_LNAME[lg])), false);
+      }
+      var ord = ["title", "authors", "series", "index", "lang"];
+      sugg.sort(function (a, b) { return ord.indexOf(a.f) - ord.indexOf(b.f); });
+      if (!sugg.length) { out.textContent = T("Nessun suggerimento: i metadati sembrano a posto."); return; }
+      out.textContent = TF("Trovati {0} suggerimenti. Spunta quelli da applicare.", sugg.length);
+      var lab = { title: "Titolo", authors: "Autori", series: "Serie", index: "Numero", lang: "Lingua" };
+      sugg.forEach(function (s) {
+        var row = document.createElement("div"); row.className = "sprow mq-row";
+        var lb = document.createElement("label"), cb = document.createElement("input"), sp3 = document.createElement("span");
+        lb.className = "check"; cb.type = "checkbox"; cb.className = "mq-on"; cb.checked = s.on; cb.setAttribute("data-f", s.f); cb.setAttribute("data-v", s.nv);
+        sp3.textContent = T(lab[s.f]) + ": «" + (s.old || "—") + "» → «" + s.nv + "»";
+        lb.appendChild(cb); lb.appendChild(sp3); row.appendChild(lb);
+        var w = document.createElement("div"); w.className = "small"; w.style.marginTop = "6px"; w.textContent = s.why; row.appendChild(w);
+        list.appendChild(row);
+      });
+      $("mq-apply").style.display = "";
+    } catch (e) { out.textContent = T("Non riesco a completare il confronto."); }
+  }
+  function mqApply() {
+    var n = 0;
+    document.querySelectorAll("#mq-list .mq-on").forEach(function (cb) {
+      if (!cb.checked) return;
+      var el = $("f-" + cb.getAttribute("data-f")); el.value = cb.getAttribute("data-v");
+      el.dispatchEvent(new Event("input", { bubbles: true })); n++;
+    });
+    if (n) say(T("Suggerimenti applicati nei campi in alto. Controlla e salva."));
+  }
+  $("mq-run").addEventListener("click", mqRun);
+  $("mq-apply").addEventListener("click", mqApply);
+
+  // ---- Note a piè di pagina ----
+  Object.assign(EN, {
+    "Note a piè di pagina": "Footnotes",
+    "Controlla i riferimenti alle note (numeri nel testo) e le note stesse: collegamenti che non tornano al testo, numerazione irregolare, note a comparsa.": "Checks note references (numbers in the text) and the notes themselves: links that don't lead back to the text, irregular numbering, pop-up notes.",
+    "Controlla le note": "Check the notes",
+    "Aggiungi il link di ritorno alle note che non l'hanno": "Add a link back to notes that don't have one",
+    "Rinumera le note (1, 2, 3…) quando la numerazione è irregolare": "Renumber the notes (1, 2, 3…) when numbering is irregular",
+    "Note a comparsa nei lettori EPUB 3 (attiva anche l'EPUB 3)": "Pop-up notes in EPUB 3 readers (also turns on EPUB 3)",
+    "La rinumerazione agisce solo sui capitoli in cui le note stanno nello stesso file dei numeri e sono tutte collegate.": "Renumbering only acts on chapters where the notes are in the same file as their numbers and are all linked.",
+    "Nessuna nota a piè di pagina trovata.": "No footnotes found.",
+    "Riferimenti alle note: {0} · collegati bene: {1} · rotti: {2} · senza link di ritorno: {3} · capitoli con numerazione irregolare: {4}": "Note references: {0} · linked correctly: {1} · broken: {2} · without a link back: {3} · chapters with irregular numbering: {4}",
+    "Riferimento rotto in {0}: nota «{1}»": "Broken reference in {0}: note “{1}”",
+    "…e altri {0}": "…and {0} more",
+    "Note a piè di pagina: {0} link di ritorno, {1} note a comparsa, {2} note rinumerate, collegamenti rotti tolti: {3}": "Footnotes: {0} links back, {1} pop-up notes, {2} notes renumbered, broken links removed: {3}",
+    "Togli i collegamenti rotti delle note (resta il numero)": "Remove broken note links (the number stays)",
+    "note sistemate": "notes fixed", "Analizzo…": "Analyzing…"
+  });
+  var EPUBNS = "http://www.idpf.org/2007/ops", FN_NUM = /^[\[(]?(\d{1,3}|[*†‡§]{1,3})[\])]?\.?$/, SUPD = { "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4", "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9" };
+  function decU(h) { try { return decodeURIComponent(h); } catch (e) { return h; } }
+  function fnLabel(a) {
+    var t = norm(a.textContent || "").replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, function (c) { return SUPD[c]; }), m = FN_NUM.exec(t);
+    return m ? m[1] : null;
+  }
+  function fnIds(e) {
+    if (!e.ids) {
+      e.ids = new Map();
+      Array.prototype.forEach.call(e.doc.querySelectorAll("[id]"), function (x) { e.ids.set(x.getAttribute("id"), x); });
+      Array.prototype.forEach.call(e.doc.querySelectorAll("a[name]"), function (x) { if (!e.ids.has(x.getAttribute("name"))) e.ids.set(x.getAttribute("name"), x); });
+    }
+    return e.ids;
+  }
+  function fnBody(el) {
+    if (/^(p|li|aside|div|dd|section|blockquote)$/.test(el.localName)) return el;
+    return el.closest("li,aside,dd,p,div") || el.parentNode;
+  }
+  function fnEpubNs(e) {
+    var r = e.doc.documentElement;
+    if (!r.hasAttributeNS("http://www.w3.org/2000/xmlns/", "epub")) r.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:epub", EPUBNS);
+  }
+  function fnSetType(e, el, v) { if (el.hasAttributeNS(EPUBNS, "type")) return; fnEpubNs(e); el.setAttributeNS(EPUBNS, "epub:type", v); e.dirty = true; }
+  function fnSetNum(root, old, nw) {
+    var w = root.ownerDocument.createTreeWalker(root, NodeFilter.SHOW_TEXT), n;
+    while ((n = w.nextNode())) {
+      if (!/\S/.test(n.nodeValue)) continue;
+      var rx = new RegExp("^(\\s*[\\[(]?)" + old + "(?![0-9])");
+      if (rx.test(n.nodeValue)) { n.nodeValue = n.nodeValue.replace(rx, "$1" + nw); return true; }
+      return false;
+    }
+    return false;
+  }
+  async function fnScan(apply, o) {
+    o = o || { back: $("fn-back").checked, num: $("fn-num").checked, pop: $("fn-pop").checked, broken: $("fn-broken").checked };
+    var dp = new DOMParser(), L = [], byPath = {}, ser = new XMLSerializer(), list = spineXhtml();
+    for (var k = 0; k < list.length; k++) {
+      var pth = resolve(list[k].getAttribute("href")), f = zip.file(pth);
+      if (!f || pth === tocSrc.nav) continue;
+      var d = dp.parseFromString(await f.async("string"), "application/xml");
+      if (d.getElementsByTagName("parsererror").length) continue;
+      var en = { path: pth, doc: d, idx: L.length, ids: null, dirty: false }; L.push(en); byPath[pth] = en;
+    }
+    var st = { refs: 0, ok: 0, broken: [], nobk: 0, back: 0, pop: 0, renumN: 0, irregular: 0, unlink: 0 }, all = [];
+    L.forEach(function (e) {
+      Array.prototype.forEach.call(e.doc.querySelectorAll("a[href]"), function (a) {
+        var lab = fnLabel(a); if (lab === null || a.closest("nav")) return;
+        var href = a.getAttribute("href");
+        if (!href || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+        var tp, hs;
+        if (href.charAt(0) === "#") { tp = e.path; hs = href.slice(1); } else { var ap = absPath(href, e.path); tp = ap.path; hs = ap.hash.slice(1); }
+        if (!hs) return;
+        hs = decU(hs);
+        var te = byPath[tp], tel = te ? fnIds(te).get(hs) : null;
+        all.push({ e: e, a: a, lab: lab, tp: tp, hs: hs, te: te, tel: tel });
+      });
+    });
+    var refs = all.filter(function (r) {
+      if (!r.tel) return true;
+      if (r.te !== r.e) return r.te.idx > r.e.idx;
+      var pos = r.a.compareDocumentPosition(r.tel);
+      return !!(pos & Node.DOCUMENT_POSITION_FOLLOWING) && !(pos & Node.DOCUMENT_POSITION_CONTAINS);
+    });
+    var seen = new Set(), pairs = [];
+    refs.forEach(function (r) {
+      if (!r.tel && o.broken) { st.unlink++; if (apply) { var par = r.a.parentNode; while (r.a.firstChild) par.insertBefore(r.a.firstChild, r.a); par.removeChild(r.a); r.e.dirty = true; } }
+      st.refs++;
+      if (!r.tel) { st.broken.push(r); return; }
+      r.body = fnBody(r.tel);
+      if (seen.has(r.body)) { st.ok++; return; }
+      seen.add(r.body); st.ok++; pairs.push(r);
+    });
+    function hasBack(r) {
+      return Array.prototype.some.call(r.body.querySelectorAll("a[href]"), function (b) {
+        var h = b.getAttribute("href"); if (!h || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(h)) return false;
+        var p, id;
+        if (h.charAt(0) === "#") { p = r.te.path; id = h.slice(1); } else { var q = absPath(h, r.te.path); p = q.path; id = q.hash.slice(1); }
+        if (p !== r.e.path || !id) return false;
+        var el2 = fnIds(r.e).get(decU(id));
+        return !!el2 && (el2 === r.a || r.a.contains(el2) || el2.contains(r.a));
+      });
+    }
+    pairs.forEach(function (r) {
+      if (hasBack(r)) return;
+      st.nobk++;
+      if (!o.back) return;
+      st.back++;
+      if (!apply) return;
+      var rid = r.a.getAttribute("id");
+      if (!rid) { var n2 = 1; do { rid = "fnref-" + (n2++); } while (fnIds(r.e).has(rid)); r.a.setAttribute("id", rid); fnIds(r.e).set(rid, r.a); r.e.dirty = true; }
+      var host = r.body, bl = r.body.querySelectorAll("p"); if (!/^(p|li)$/.test(r.body.localName) && bl.length) host = bl[bl.length - 1];
+      var href = (r.te === r.e ? "" : encodeURI(relPath(dirOf(r.te.path), r.e.path))) + "#" + rid;
+      var bk = r.body.ownerDocument.createElementNS(r.body.namespaceURI, "a");
+      bk.setAttribute("href", href); bk.textContent = "↩";
+      host.appendChild(r.body.ownerDocument.createTextNode(" ")); host.appendChild(bk);
+      if (o.pop) fnSetType(r.te, bk, "backlink");
+      r.te.dirty = true;
+    });
+    if (o.pop) pairs.forEach(function (r) {
+      st.pop++;
+      if (!apply) return;
+      fnSetType(r.e, r.a, "noteref");
+      fnSetType(r.te, r.body, r.te === r.e ? "footnote" : "endnote");
+    });
+    // numerazione
+    L.forEach(function (e) {
+      var mine = pairs.filter(function (r) { return r.e === e; });
+      var all2 = refs.filter(function (r) { return r.e === e; });
+      if (mine.length < 2 || mine.length !== all2.length || !mine.every(function (r) { return r.te === e && /^\d+$/.test(r.lab); })) return;
+      if (mine.every(function (r, i) { return +r.lab === i + 1; })) return;
+      st.irregular++;
+      if (!o.num) return;
+      st.renumN += mine.length;
+      if (!apply) return;
+      mine.forEach(function (r, i) {
+        var nw = String(i + 1);
+        fnSetNum(r.a, r.lab, nw); fnSetNum(r.body, r.lab, nw); e.dirty = true;
+      });
+    });
+    if (apply) L.forEach(function (e) { if (e.dirty) zip.file(e.path, ser.serializeToString(e.doc)); });
+    return st;
+  }
+  async function fnRun() {
+    var out = $("fn-out"), list = $("fn-list"); list.innerHTML = ""; out.textContent = T("Analizzo…");
+    try {
+      var st = await fnScan(false, { back: false, num: false, pop: false, broken: false });
+      if (!st.refs) { out.textContent = T("Nessuna nota a piè di pagina trovata."); return; }
+      out.textContent = TF("Riferimenti alle note: {0} · collegati bene: {1} · rotti: {2} · senza link di ritorno: {3} · capitoli con numerazione irregolare: {4}", st.refs, st.ok, st.broken.length, st.nobk, st.irregular);
+      st.broken.slice(0, 15).forEach(function (r) {
+        var d = document.createElement("div"); d.className = "small bad"; d.textContent = TF("Riferimento rotto in {0}: nota «{1}»", r.e.path.split("/").pop(), r.lab); list.appendChild(d);
+      });
+      if (st.broken.length > 15) { var m = document.createElement("div"); m.className = "small"; m.textContent = TF("…e altri {0}", st.broken.length - 15); list.appendChild(m); }
+    } catch (e) { out.textContent = T("Non riesco a completare il confronto."); }
+  }
+  function fnOpts() {
+    var pop = $("fn-pop").checked && (isV3() || $("a-v3").checked || $("a-meta").checked);
+    return { back: $("fn-back").checked, num: $("fn-num").checked, pop: pop, broken: $("fn-broken").checked };
+  }
+  function fnOn(o) { return o.back || o.num || o.pop || o.broken; }
+  var fnNote = "";
+  async function fnPass(sk) {
+    fnNote = "";
+    if (sk && sk.fn) return;
+    var o = fnOpts(); if (!fnOn(o)) return;
+    var st = await fnScan(true, o);
+    if (st.back + st.pop + st.renumN + st.unlink) fnNote = T("note sistemate");
+  }
+  $("fn-run").addEventListener("click", fnRun);
+  $("fn-pop").addEventListener("change", function () { if (this.checked && !isV3()) $("a-v3").checked = true; });
 
   // ---- Carattere incorporato ----
   var FONTS = [], PF = [];
